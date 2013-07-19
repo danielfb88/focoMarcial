@@ -8,7 +8,6 @@ import java.util.List;
 
 import controller.Faixa;
 import controller.Movimento;
-import controller.VozComando;
 import util.DAO;
 
 public class MovimentoDAO extends DAO {
@@ -30,11 +29,11 @@ public class MovimentoDAO extends DAO {
 
 		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos) VALUES ("
 				+ id_faixa
-				+ ", "
+				+ ", '"
 				+ descricao
-				+ ", "
+				+ "', '"
 				+ observacao
-				+ ", "
+				+ "', "
 				+ qtd_repeticao + ", " + intervalo_segundos + ");");
 
 		try {
@@ -78,11 +77,11 @@ public class MovimentoDAO extends DAO {
 		}
 
 		if (descricao != null) {
-			builder.append("descricao = " + descricao + " ");
+			builder.append("descricao = '" + descricao + "' ");
 		}
 
 		if (observacao != null) {
-			builder.append("observacao = " + observacao + " ");
+			builder.append("observacao = '" + observacao + "' ");
 		}
 
 		if (qtd_repeticao != null) {
@@ -169,7 +168,7 @@ public class MovimentoDAO extends DAO {
 					rs.getString("observacao"), 
 					rs.getInt("qtd_repeticao"), 
 					rs.getInt("intervalo_segundos"), 
-					new VozComando()
+					rs.getString("voz_path")
 				);
 
 			rs.close();
@@ -216,7 +215,7 @@ public class MovimentoDAO extends DAO {
 								rs.getString("observacao"), 
 								rs.getInt("qtd_repeticao"), 
 								rs.getInt("intervalo_segundos"),
-								null
+								rs.getString("voz_path")
 								)
 						);
 			}

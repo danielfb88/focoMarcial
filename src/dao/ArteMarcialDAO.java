@@ -22,7 +22,7 @@ public class ArteMarcialDAO extends DAO {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO artemarcial (descricao) VALUES (" + descricao + ");");
+		builder.append("INSERT INTO artemarcial (descricao) VALUES ('" + descricao + "');");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -56,8 +56,8 @@ public class ArteMarcialDAO extends DAO {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("UPDATE TABLE artemarcial SET descricao = " + descricao
-				+ " WHERE id_artemarcial = " + id_artemarcial + ";");
+		builder.append("UPDATE TABLE artemarcial SET descricao = '" + descricao
+				+ "' WHERE id_artemarcial = " + id_artemarcial + ";");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(

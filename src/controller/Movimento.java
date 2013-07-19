@@ -7,7 +7,7 @@ public class Movimento {
 	private String observacao;
 	private Integer qtdRepeticao;
 	private Integer intervaloSegundos;
-	private VozComando vozComando;
+	private String voz_path;
 
 	public Movimento() {
 		super();
@@ -20,7 +20,7 @@ public class Movimento {
 
 	public Movimento(Integer id, Faixa faixa, String descricao,
 			String observacao, Integer qtdRepeticao, Integer intervaloSegundos,
-			VozComando vozComando) {
+			String voz_path) {
 		super();
 		this.id = id;
 		this.faixa = faixa;
@@ -28,7 +28,7 @@ public class Movimento {
 		this.observacao = observacao;
 		this.qtdRepeticao = qtdRepeticao;
 		this.intervaloSegundos = intervaloSegundos;
-		this.vozComando = vozComando;
+		this.voz_path = voz_path;
 	}
 
 	public Integer getId() {
@@ -79,12 +79,12 @@ public class Movimento {
 		this.intervaloSegundos = intervaloSegundos;
 	}
 
-	public VozComando getVozComando() {
-		return vozComando;
+	public String getVoz_path() {
+		return voz_path;
 	}
 
-	public void setVozComando(VozComando vozComando) {
-		this.vozComando = vozComando;
+	public void setVoz_path(String voz_path) {
+		this.voz_path = voz_path;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class Movimento {
 		result = prime * result
 				+ ((qtdRepeticao == null) ? 0 : qtdRepeticao.hashCode());
 		result = prime * result
-				+ ((vozComando == null) ? 0 : vozComando.hashCode());
+				+ ((voz_path == null) ? 0 : voz_path.hashCode());
 		return result;
 	}
 
@@ -147,11 +147,12 @@ public class Movimento {
 				return false;
 		} else if (!qtdRepeticao.equals(other.qtdRepeticao))
 			return false;
-		if (vozComando == null) {
-			if (other.vozComando != null)
+		if (voz_path == null) {
+			if (other.voz_path != null)
 				return false;
-		} else if (!vozComando.equals(other.vozComando))
+		} else if (!voz_path.equals(other.voz_path))
 			return false;
 		return true;
 	}
+
 }

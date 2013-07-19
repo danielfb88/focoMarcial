@@ -25,7 +25,7 @@ public class FaixaDAO extends DAO {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("INSERT INTO faixa (id_artemarcial, gub, descricao) VALUES ("
-				+ id_artemarcial + ", " + gub + " ," + descricao + ");");
+				+ id_artemarcial + ", " + gub + ", '" + descricao + "');");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -70,7 +70,7 @@ public class FaixaDAO extends DAO {
 		}
 
 		if (descricao != null) {
-			builder.append("descricao = " + descricao + " ");
+			builder.append("descricao = '" + descricao + "' ");
 		}
 
 		builder.append("WHERE id_faixa = " + id_faixa + ";");

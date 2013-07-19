@@ -19,16 +19,9 @@ descricao VARCHAR(50) NOT NULL,
 observacao VARCHAR(200), 
 qtd_repeticao INTEGER NOT NULL, 
 intervalo_segundos INTEGER NOT NULL, 
+voz_path VARCHAR(50) NOT NULL,
 FOREIGN KEY (id_faixa) REFERENCES faixa (id_faixa) ON DELETE CASCADE
-);
-
-CREATE TABLE vozcomando ( id_vozcomando INTEGER PRIMARY KEY, 
-id_movimento INTEGER NOT NULL, 
-encoded_data BLOB NOT NULL, 
-filename VARCHAR(50) NOT NULL, 
-FOREIGN KEY (id_movimento) REFERENCES movimento (id_movimento) ON DELETE CASCADE
-); "
-
+);"
 
 chmod +x focoMarcial.db;
 
