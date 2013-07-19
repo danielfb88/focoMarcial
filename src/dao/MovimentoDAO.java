@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Faixa;
-import controller.Movimento;
+import ddd.Faixa;
+import ddd.Movimento;
 import util.DAO;
 
 public class MovimentoDAO extends DAO {
@@ -23,19 +23,19 @@ public class MovimentoDAO extends DAO {
 	 * @return
 	 */
 	public int adicionar(Integer id_faixa, String descricao, String observacao,
-			Integer qtd_repeticao, Integer intervalo_segundos) {
+			Integer qtd_repeticao, Integer intervalo_segundos, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos) VALUES ("
-				+ id_faixa
-				+ ", '"
-				+ descricao
-				+ "', '"
-				+ observacao
-				+ "', "
-				+ qtd_repeticao + ", " + intervalo_segundos + ");");
-
+		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, voz_path) VALUES (");
+		builder.append(id_faixa + ", ");
+		builder.append("'" + descricao + "', ");
+		builder.append("'" + observacao + "', ");
+		builder.append(qtd_repeticao + ", ");
+		builder.append(intervalo_segundos + ", ");
+		builder.append("'" + voz_path + "'");
+		builder.append(");");
+		
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
 					builder.toString());
@@ -45,11 +45,9 @@ public class MovimentoDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -66,48 +64,33 @@ public class MovimentoDAO extends DAO {
 	 * @return
 	 */
 	public int editar(Integer id_movimento, Integer id_faixa, String descricao,
-			String observacao, Integer qtd_repeticao, Integer intervalo_segundos) {
+			String observacao, Integer qtd_repeticao, Integer intervalo_segundos, String voz_path) {
+		
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("UPDATE TABLE movimento SET ");
+		builder.append("UPDATE movimento SET ");
 
-		if (id_faixa != null) {
-			builder.append("id_faixa = " + id_faixa + " ");
-		}
-
-		if (descricao != null) {
-			builder.append("descricao = '" + descricao + "' ");
-		}
-
-		if (observacao != null) {
-			builder.append("observacao = '" + observacao + "' ");
-		}
-
-		if (qtd_repeticao != null) {
-			builder.append("qtd_repeticao = " + qtd_repeticao + " ");
-		}
-
-		if (intervalo_segundos != null) {
-			builder.append("intervalo_segundos = " + intervalo_segundos + " ");
-		}
+		builder.append("id_faixa = " + id_faixa + ", ");
+		builder.append("descricao = '" + descricao + "', ");
+		builder.append("observacao = '" + observacao + "', ");
+		builder.append("qtd_repeticao = " + qtd_repeticao + ", ");
+		builder.append("intervalo_segundos = " + intervalo_segundos + ", ");
+		builder.append("voz_path = '" + voz_path + "' ");
 
 		builder.append("WHERE id_movimento = " + id_movimento + ";");
 
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			linhasAfetadas = ps.executeUpdate();
 			ps.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -122,8 +105,7 @@ public class MovimentoDAO extends DAO {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("DELETE FROM movimento WHERE id_faixa = " + id_movimento
-				+ ");");
+		builder.append("DELETE FROM movimento WHERE id_movimento = " + id_movimento	+ ";");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -134,11 +116,9 @@ public class MovimentoDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -176,11 +156,9 @@ public class MovimentoDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 
 		return movimento;
@@ -197,8 +175,7 @@ public class MovimentoDAO extends DAO {
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
 
-		builder.append("SELECT * FROM movimento WHERE id_faixa = " + id_faixa
-				+ ";");
+		builder.append("SELECT * FROM movimento WHERE id_faixa = " + id_faixa + ";");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -225,11 +202,9 @@ public class MovimentoDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 
 		return movimentos;

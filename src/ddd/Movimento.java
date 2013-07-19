@@ -1,4 +1,4 @@
-package controller;
+package ddd;
 
 public class Movimento {
 	private Integer id;

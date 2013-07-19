@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.DAO;
-import controller.ArteMarcial;
+import ddd.ArteMarcial;
 
 public class ArteMarcialDAO extends DAO {
 
@@ -33,11 +33,9 @@ public class ArteMarcialDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -56,7 +54,7 @@ public class ArteMarcialDAO extends DAO {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("UPDATE TABLE artemarcial SET descricao = '" + descricao
+		builder.append("UPDATE artemarcial SET descricao = '" + descricao
 				+ "' WHERE id_artemarcial = " + id_artemarcial + ";");
 
 		try {
@@ -68,11 +66,9 @@ public class ArteMarcialDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -101,12 +97,11 @@ public class ArteMarcialDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
+		
 		return linhasAfetadas;
 	}
 	
@@ -133,11 +128,9 @@ public class ArteMarcialDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 
 		return arteMarcial;
@@ -175,11 +168,9 @@ public class ArteMarcialDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 
 		return artesMarciais;

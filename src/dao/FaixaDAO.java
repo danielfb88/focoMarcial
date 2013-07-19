@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.DAO;
-import controller.ArteMarcial;
-import controller.Faixa;
+import ddd.ArteMarcial;
+import ddd.Faixa;
 
 public class FaixaDAO extends DAO {
 
@@ -36,11 +36,9 @@ public class FaixaDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -54,27 +52,18 @@ public class FaixaDAO extends DAO {
 	 * @param descricao
 	 * @return
 	 */
-	public int editar(Integer id_faixa, Integer id_artemarcial, Integer gub,
-			String descricao) {
+	public int editar(Integer id_faixa, Integer id_artemarcial, Integer gub, String descricao) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
-
-		builder.append("UPDATE TABLE artemarcial SET ");
-
-		if (id_artemarcial != null) {
-			builder.append("id_artemarcial = " + id_artemarcial + " ");
-		}
-
-		if (gub != null) {
-			builder.append("gub = " + gub + " ");
-		}
-
-		if (descricao != null) {
-			builder.append("descricao = '" + descricao + "' ");
-		}
+		
+		builder.append("UPDATE faixa SET ");
+		
+		builder.append("id_artemarcial = " + id_artemarcial + ", ");
+		builder.append("gub = " + gub + ", ");
+		builder.append("descricao = '" + descricao + "' ");
 
 		builder.append("WHERE id_faixa = " + id_faixa + ";");
-
+		
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
 					builder.toString());
@@ -84,11 +73,9 @@ public class FaixaDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -103,7 +90,7 @@ public class FaixaDAO extends DAO {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("DELETE FROM faixa WHERE id_faixa = " + id_faixa + ");");
+		builder.append("DELETE FROM faixa WHERE id_faixa = " + id_faixa + ";");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -114,11 +101,9 @@ public class FaixaDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			System.exit(0);
 		}
 		return linhasAfetadas;
 	}
@@ -147,11 +132,9 @@ public class FaixaDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 
 		return faixa;
@@ -202,11 +185,9 @@ public class FaixaDAO extends DAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.exit(0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
 		}
 
 		return faixas;
