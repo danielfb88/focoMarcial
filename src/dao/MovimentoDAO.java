@@ -22,8 +22,8 @@ public class MovimentoDAO extends DAO {
 	 * @param intervalo_segundos
 	 * @return
 	 */
-	public int adicionar(Integer id_faixa, String descricao, String observacao,
-			Integer qtd_repeticao, Integer intervalo_segundos, String voz_path) {
+	public int adicionar(int id_faixa, String descricao, String observacao,
+			int qtd_repeticao, int intervalo_segundos, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -63,8 +63,8 @@ public class MovimentoDAO extends DAO {
 	 * @param intervalo_segundos
 	 * @return
 	 */
-	public int editar(Integer id_movimento, Integer id_faixa, String descricao,
-			String observacao, Integer qtd_repeticao, Integer intervalo_segundos, String voz_path) {
+	public int editar(int id_movimento, int id_faixa, String descricao,
+			String observacao, int qtd_repeticao, int intervalo_segundos, String voz_path) {
 		
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
@@ -101,7 +101,7 @@ public class MovimentoDAO extends DAO {
 	 * @param id_movimento
 	 * @return
 	 */
-	public int excluir(Integer id_movimento) {
+	public int excluir(int id_movimento) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -129,7 +129,7 @@ public class MovimentoDAO extends DAO {
 	 * @param id_movimento
 	 * @return
 	 */
-	public Movimento getById(Integer id_movimento) {
+	public Movimento getById(int id_movimento) {
 		Movimento movimento = null;
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
@@ -170,7 +170,7 @@ public class MovimentoDAO extends DAO {
 	 * @param id_faixa
 	 * @return
 	 */
-	public List<Movimento> getMovimentos(Integer id_faixa) {
+	public List<Movimento> getMovimentos(int id_faixa) {
 		ArrayList<Movimento> movimentos = new ArrayList<Movimento>();
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;

@@ -20,7 +20,7 @@ public class FaixaDAO extends DAO {
 	 * @param descricao
 	 * @return
 	 */
-	public int adicionar(Integer id_artemarcial, Integer gub, String descricao) {
+	public int adicionar(int id_artemarcial, int gub, String descricao) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -52,7 +52,7 @@ public class FaixaDAO extends DAO {
 	 * @param descricao
 	 * @return
 	 */
-	public int editar(Integer id_faixa, Integer id_artemarcial, Integer gub, String descricao) {
+	public int editar(int id_faixa, int id_artemarcial, int gub, String descricao) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 		
@@ -86,7 +86,7 @@ public class FaixaDAO extends DAO {
 	 * @param id
 	 * @return
 	 */
-	public int excluir(Integer id_faixa) {
+	public int excluir(int id_faixa) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -108,7 +108,7 @@ public class FaixaDAO extends DAO {
 		return linhasAfetadas;
 	}
 	
-	public Faixa getById(Integer id_faixa) {
+	public Faixa getById(int id_faixa) {
 		Faixa faixa = null;
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
@@ -143,10 +143,10 @@ public class FaixaDAO extends DAO {
 	/**
 	 * Obtém todas as faixas da Arte Marcial especificada pelo ID
 	 * 
-	 * @param id_artemarcial
+	 * @param id_artemarcial ID da arte marcial a ser retornada
 	 * @return
 	 */
-	public List<Faixa> getFaixas(Integer id_artemarcial) {
+	public List<Faixa> getFaixas(int id_artemarcial) {
 		ArrayList<Faixa> faixas = new ArrayList<Faixa>();
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
@@ -156,7 +156,7 @@ public class FaixaDAO extends DAO {
 		builder.append("id_faixa, ");
 		builder.append("id_artemarcial, ");
 		builder.append("gub, ");
-		builder.append("descricao, ");
+		builder.append("descricao ");
 
 		builder.append("FROM faixa ");
 
@@ -173,7 +173,7 @@ public class FaixaDAO extends DAO {
 				faixas.add(
 						new Faixa(
 								rs.getInt("id_faixa"), 
-								new ArteMarcial(rs.getInt("id_artemarcial"), null, null), 
+								null, 
 								rs.getInt("gub"), 
 								rs.getString("descricao")
 								)
@@ -191,6 +191,18 @@ public class FaixaDAO extends DAO {
 		}
 
 		return faixas;
-
+	}
+	
+	/**
+	 * TODO: Obter faixas seguindo o mesmo padrão do método anterior, utilizando como filtro o gub inicial e o gub final
+	 * 
+	 * @param id_artemarcial
+	 * @param gub_inicial
+	 * @param gub_final
+	 * @return
+	 */
+	public List<Faixa> getFaixas(int id_artemarcial, int gub_inicial, int gub_final) {
+		
+		return null;
 	}
 }

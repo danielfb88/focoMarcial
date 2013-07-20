@@ -50,7 +50,7 @@ public class ArteMarcialDAO extends DAO {
 	 * 
 	 * @return int
 	 */
-	public int editar(Integer id_artemarcial, String descricao) {
+	public int editar(int id_artemarcial, String descricao) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -81,7 +81,7 @@ public class ArteMarcialDAO extends DAO {
 	 * 
 	 * @return int
 	 */
-	public int excluir(Integer id_artemarcial) {
+	public int excluir(int id_artemarcial) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -110,7 +110,7 @@ public class ArteMarcialDAO extends DAO {
 	 * 
 	 * @return
 	 */
-	public ArteMarcial getById(Integer id_artemarcial) {
+	public ArteMarcial getById(int id_artemarcial) {
 		ArteMarcial arteMarcial = null;
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;

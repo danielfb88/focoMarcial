@@ -2,7 +2,14 @@ package ddd;
 
 import java.util.List;
 
+import dao.ArteMarcialDAO;
+import dao.FaixaDAO;
+import dao.MovimentoDAO;
+
 public class ArteMarcial {
+	private FaixaDAO faixaDAO = new FaixaDAO();
+	private ArteMarcialDAO arteMarcialDAO = new ArteMarcialDAO();
+	private MovimentoDAO movimentoDAO = new MovimentoDAO();
 	private Integer id;
 	private String descricao;
 	private List<Faixa> faixas;
@@ -41,6 +48,39 @@ public class ArteMarcial {
 
 	public void setFaixas(List<Faixa> faixas) {
 		this.faixas = faixas;
+	}
+	
+	/**
+	 * Obtém todas as faixas desta Arte Marcial
+	 * 
+	 * @return List<Faixa>
+	 */
+	public List<Faixa> getTodasAsFaixas() {
+		List<Faixa> faixas = faixaDAO.getFaixas(this.getId());
+		
+		for(int i=0; i<faixas.size(); i++) {
+			Faixa faixa = faixas.get(i);
+			Integer idFaixa = faixa.getId();
+			
+			faixa.setArteMarcial(this);
+			faixa.setMovimentos(movimentoDAO.getMovimentos(idFaixa));
+		}
+		
+		return faixas;
+	}
+	
+	/**
+	 * TODO: Obter faixas seguindo o mesmo padrão do método anterior, utilizando como filtro o gub inicial e o gub final
+	 * 
+	 * @return
+	 */
+	public List<Faixa> getFaixasEntreGubs(int id_arteMarcial, int id_gubInicial, int id_gubFinal) {
+		
+		return null;
+	}
+	
+	public ArteMarcial getById(int id) {
+		return arteMarcialDAO.getById(id);
 	}
 
 	@Override
