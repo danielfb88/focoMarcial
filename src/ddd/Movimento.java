@@ -35,10 +35,6 @@ public class Movimento {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public Faixa getFaixa() {
 		return faixa;
 	}

@@ -22,22 +22,23 @@ public class ArteMarcial {
 		this.descricao = descricao;
 		this.faixas = faixas;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public List<Faixa> getFaixas() {
 		return faixas;
 	}
+
 	public void setFaixas(List<Faixa> faixas) {
 		this.faixas = faixas;
 	}
