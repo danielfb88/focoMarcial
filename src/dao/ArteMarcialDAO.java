@@ -18,11 +18,11 @@ public class ArteMarcialDAO extends DAO {
 	 *            Nome da Arte Marcial
 	 * @return int
 	 */
-	public int adicionar(String descricao) {
+	public int adicionar(String descricao, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO artemarcial (descricao) VALUES ('" + descricao + "');");
+		builder.append("INSERT INTO artemarcial (descricao, voz_path) VALUES ('" + descricao + "', '" + voz_path + "');");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -50,12 +50,16 @@ public class ArteMarcialDAO extends DAO {
 	 * 
 	 * @return int
 	 */
-	public int editar(int id_artemarcial, String descricao) {
+	public int editar(int id_artemarcial, String descricao, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("UPDATE artemarcial SET descricao = '" + descricao
-				+ "' WHERE id_artemarcial = " + id_artemarcial + ";");
+		builder.append("UPDATE artemarcial SET ");
+		
+		builder.append("descricao = '" + descricao + "', ");
+		builder.append("voz_path = '" + voz_path + "' ");
+		
+		builder.append("WHERE id_artemarcial = " + id_artemarcial + ";");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -121,7 +125,7 @@ public class ArteMarcialDAO extends DAO {
 					builder.toString());
 
 			rs = ps.executeQuery();
-			arteMarcial = new ArteMarcial(rs.getInt("id_artemarcial"), rs.getString("descricao"), null);
+			arteMarcial = new ArteMarcial(rs.getInt("id_artemarcial"), rs.getString("descricao"), rs.getString("voz_path"));
 
 			rs.close();
 			ps.close();
@@ -158,7 +162,7 @@ public class ArteMarcialDAO extends DAO {
 						new ArteMarcial(
 								rs.getInt("id_artemarcial"), 
 								rs.getString("descricao"), 
-								null
+								rs.getString("voz_comando")
 								)
 						);
 			}

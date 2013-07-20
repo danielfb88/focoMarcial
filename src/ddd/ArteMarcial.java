@@ -10,8 +10,11 @@ public class ArteMarcial {
 	private FaixaDAO faixaDAO = new FaixaDAO();
 	private ArteMarcialDAO arteMarcialDAO = new ArteMarcialDAO();
 	private MovimentoDAO movimentoDAO = new MovimentoDAO();
+	
 	private Integer id;
 	private String descricao;
+	private String voz_path;
+	
 	private List<Faixa> faixas;
 	
 	public ArteMarcial() {
@@ -22,16 +25,28 @@ public class ArteMarcial {
 		super();
 		this.id = id;
 	}
-
-	public ArteMarcial(Integer id, String descricao, List<Faixa> faixas) {
+	
+	public ArteMarcial(Integer id, String descricao, String voz_path) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
+		this.voz_path = voz_path;
+	}
+
+	public ArteMarcial(Integer id, String descricao, String voz_path, List<Faixa> faixas) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.voz_path = voz_path;
 		this.faixas = faixas;
 	}
 	
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getDescricao() {
@@ -42,6 +57,14 @@ public class ArteMarcial {
 		this.descricao = descricao;
 	}
 
+	public String getVoz_path() {
+		return voz_path;
+	}
+
+	public void setVoz_path(String voz_path) {
+		this.voz_path = voz_path;
+	}
+
 	public List<Faixa> getFaixas() {
 		return faixas;
 	}
@@ -49,7 +72,7 @@ public class ArteMarcial {
 	public void setFaixas(List<Faixa> faixas) {
 		this.faixas = faixas;
 	}
-	
+
 	/**
 	 * Obtém todas as faixas desta Arte Marcial
 	 * 
@@ -70,13 +93,22 @@ public class ArteMarcial {
 	}
 	
 	/**
-	 * TODO: Obter faixas seguindo o mesmo padrão do método anterior, utilizando como filtro o gub inicial e o gub final
+	 * Obtém todas as faixas entre os GUBs especificados.
 	 * 
 	 * @return
 	 */
-	public List<Faixa> getFaixasEntreGubs(int id_arteMarcial, int id_gubInicial, int id_gubFinal) {
+	public List<Faixa> getFaixasEntreGubs(int gubInicial, int gubFinal) {
+		List<Faixa> faixas = faixaDAO.getFaixas(this.id, gubInicial, gubFinal);
 		
-		return null;
+		for(int i=0; i<faixas.size(); i++) {
+			Faixa faixa = faixas.get(i);
+			Integer idFaixa = faixa.getId();
+			
+			faixa.setArteMarcial(this);
+			faixa.setMovimentos(movimentoDAO.getMovimentos(idFaixa));
+		}
+		
+		return faixas;
 	}
 	
 	public ArteMarcial getById(int id) {
@@ -91,6 +123,8 @@ public class ArteMarcial {
 				+ ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((faixas == null) ? 0 : faixas.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((voz_path == null) ? 0 : voz_path.hashCode());
 		return result;
 	}
 
@@ -117,6 +151,11 @@ public class ArteMarcial {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (voz_path == null) {
+			if (other.voz_path != null)
+				return false;
+		} else if (!voz_path.equals(other.voz_path))
 			return false;
 		return true;
 	}

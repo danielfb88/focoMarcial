@@ -20,12 +20,12 @@ public class FaixaDAO extends DAO {
 	 * @param descricao
 	 * @return
 	 */
-	public int adicionar(int id_artemarcial, int gub, String descricao) {
+	public int adicionar(int id_artemarcial, int gub, String descricao, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO faixa (id_artemarcial, gub, descricao) VALUES ("
-				+ id_artemarcial + ", " + gub + ", '" + descricao + "');");
+		builder.append("INSERT INTO faixa (id_artemarcial, gub, descricao, voz_path) VALUES ("
+				+ id_artemarcial + ", " + gub + ", '" + descricao + "', '" + voz_path + "');");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(
@@ -52,7 +52,7 @@ public class FaixaDAO extends DAO {
 	 * @param descricao
 	 * @return
 	 */
-	public int editar(int id_faixa, int id_artemarcial, int gub, String descricao) {
+	public int editar(int id_faixa, int id_artemarcial, int gub, String descricao, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 		
@@ -60,7 +60,8 @@ public class FaixaDAO extends DAO {
 		
 		builder.append("id_artemarcial = " + id_artemarcial + ", ");
 		builder.append("gub = " + gub + ", ");
-		builder.append("descricao = '" + descricao + "' ");
+		builder.append("descricao = '" + descricao + "', ");
+		builder.append("voz_path = '" + voz_path + "' ");
 
 		builder.append("WHERE id_faixa = " + id_faixa + ";");
 		
@@ -124,7 +125,8 @@ public class FaixaDAO extends DAO {
 					rs.getInt("id_faixa"), 
 					new ArteMarcial(rs.getInt("id_artemarcial")), 
 					rs.getInt("gub"), 
-					rs.getString("descricao")
+					rs.getString("descricao"),
+					rs.getString("voz_path")
 				);
 
 			rs.close();
@@ -175,7 +177,8 @@ public class FaixaDAO extends DAO {
 								rs.getInt("id_faixa"), 
 								null, 
 								rs.getInt("gub"), 
-								rs.getString("descricao")
+								rs.getString("descricao"),
+								rs.getString("voz_path")
 								)
 						);
 			}
@@ -194,7 +197,7 @@ public class FaixaDAO extends DAO {
 	}
 	
 	/**
-	 * TODO: Obter faixas seguindo o mesmo padrão do método anterior, utilizando como filtro o gub inicial e o gub final
+	 * Obtém todas as faixas da Arte Marcial especificada pelo ID e Pelo GUB INICIAL e GUB FINAL
 	 * 
 	 * @param id_artemarcial
 	 * @param gub_inicial
@@ -202,7 +205,45 @@ public class FaixaDAO extends DAO {
 	 * @return
 	 */
 	public List<Faixa> getFaixas(int id_artemarcial, int gub_inicial, int gub_final) {
-		
-		return null;
+		ArrayList<Faixa> faixas = new ArrayList<Faixa>();
+		StringBuilder builder = new StringBuilder();
+		ResultSet rs = null;
+
+		builder.append("SELECT * FROM faixa ");
+
+		builder.append("WHERE ");
+		builder.append("id_artemarcial = " + id_artemarcial + " ");
+		builder.append("AND gub <= " + gub_inicial + " ");
+		builder.append("AND gub >= " + gub_final + " ");
+
+		try {
+			PreparedStatement ps = getConnection().prepareStatement(
+					builder.toString());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				faixas.add(
+						new Faixa(
+								rs.getInt("id_faixa"), 
+								null, 
+								rs.getInt("gub"), 
+								rs.getString("descricao"),
+								rs.getString("voz_path")
+								)
+						);
+			}
+
+			rs.close();
+			ps.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return faixas;
 	}
 }

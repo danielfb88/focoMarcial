@@ -5,10 +5,12 @@ import java.util.List;
 public class Faixa {
 	private Integer id;
 	private ArteMarcial arteMarcial;
-	private List<Movimento> movimentos;
 	private Integer gub;
 	private String descricao;
-
+	private String voz_path;
+	
+	private List<Movimento> movimentos;
+	
 	public Faixa() {
 		super();
 	}
@@ -17,46 +19,42 @@ public class Faixa {
 		super();
 		this.id = id;
 	}
-	
-	
 
 	public Faixa(Integer id, ArteMarcial arteMarcial, Integer gub,
-			String descricao) {
+			String descricao, String voz_path) {
 		super();
 		this.id = id;
 		this.arteMarcial = arteMarcial;
 		this.gub = gub;
 		this.descricao = descricao;
+		this.voz_path = voz_path;
 	}
 
-	public Faixa(Integer id, ArteMarcial arteMarcial,
-			List<Movimento> movimentos, Integer gub, String descricao) {
+	public Faixa(Integer id, ArteMarcial arteMarcial, Integer gub,
+			String descricao, String voz_path, List<Movimento> movimentos) {
 		super();
 		this.id = id;
 		this.arteMarcial = arteMarcial;
-		this.movimentos = movimentos;
 		this.gub = gub;
 		this.descricao = descricao;
+		this.voz_path = voz_path;
+		this.movimentos = movimentos;
 	}
 
 	public Integer getId() {
 		return id;
 	}
-	
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public ArteMarcial getArteMarcial() {
 		return arteMarcial;
 	}
 
 	public void setArteMarcial(ArteMarcial arteMarcial) {
 		this.arteMarcial = arteMarcial;
-	}
-
-	public List<Movimento> getMovimentos() {
-		return movimentos;
-	}
-
-	public void setMovimentos(List<Movimento> movimentos) {
-		this.movimentos = movimentos;
 	}
 
 	public Integer getGub() {
@@ -75,6 +73,22 @@ public class Faixa {
 		this.descricao = descricao;
 	}
 
+	public String getVoz_path() {
+		return voz_path;
+	}
+
+	public void setVoz_path(String voz_path) {
+		this.voz_path = voz_path;
+	}
+
+	public List<Movimento> getMovimentos() {
+		return movimentos;
+	}
+
+	public void setMovimentos(List<Movimento> movimentos) {
+		this.movimentos = movimentos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -87,6 +101,8 @@ public class Faixa {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((movimentos == null) ? 0 : movimentos.hashCode());
+		result = prime * result
+				+ ((voz_path == null) ? 0 : voz_path.hashCode());
 		return result;
 	}
 
@@ -124,7 +140,12 @@ public class Faixa {
 				return false;
 		} else if (!movimentos.equals(other.movimentos))
 			return false;
+		if (voz_path == null) {
+			if (other.voz_path != null)
+				return false;
+		} else if (!voz_path.equals(other.voz_path))
+			return false;
 		return true;
 	}
-
+	
 }
