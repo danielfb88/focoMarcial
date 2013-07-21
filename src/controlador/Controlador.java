@@ -1,12 +1,10 @@
 package controlador;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Random;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -25,20 +23,21 @@ import ddd.Movimento;
  * 
  * Preciso de:
  * 
- * 	
- *  1) Reproduzir som
- *  2) Pausar a tread para descanço a qualquer momento
+ * 	1) Gravar todas os Vozes.
+ *  2) Pausar a tread para descanço a qualquer momento.
  *  
  *  
  */
 public class Controlador extends Thread {
 	private ArteMarcial arteMarcial;
 	private List<Faixa> faixas;
+	private String[] exercicioPath;
 	
 	public Controlador(ArteMarcial arteMarcial, List<Faixa> faixas) {
 		super();
 		this.arteMarcial = arteMarcial;
 		this.faixas = faixas;
+		this.exercicioPath = new String[] {"sound/exercicio/flexao.wav", "sound/exercicio/abdominal.wav"};
 		
 		if(this.faixas == null)
 			throw new RuntimeException("Faixas Nulas.");
@@ -46,38 +45,52 @@ public class Controlador extends Thread {
 	
 	@Override
 	public void run() {
+		Random random = new Random();
 		
-//		this.reproduzirSom(this.arteMarcial.getVoz_path());
-		this.exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
+		reproduzirSom(this.arteMarcial.getVoz_path());
+		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
 		
 		// Início de cada faixa
 		for(int i=0; i<faixas.size(); i++) {
-			this.espere(5);
+			espere(5);
 			
-//			this.reproduzirSom(faixas.get(i).getVoz_path());
-			this.exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
+			// Abdominal
+			exercicio(1, 5, 0);
 			
-			this.espere(4);
+			reproduzirSom(faixas.get(i).getVoz_path());
+			exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
+			
+			espere(4);
 			
 			// Início da sequência de movimentos
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 			for(int j=0; j<movimentos.size(); j++) {
-				this.espere(5);
+				espere(2);
 				
-//				this.reproduzirSom(movimentos.get(j).getDescricao());
+				// Sorteio para fazer flexão antes deste movimento
+				int n = random.nextInt(movimentos.size() - 1);
+				if(j == n) {
+					exercicio(0, 10, 1);
+					espere(2);
+				}
+				
+				reproduzirSom(movimentos.get(j).getVoz_path());
 				System.out.println("\n NOME DO MOVIMENTO: " + movimentos.get(j).getDescricao());
 				
-				this.espere(5);
+				espere(3);
 
 				// Grito em cada movimento
 				int qtdRepeticaoMovimento = movimentos.get(j).getQtdRepeticao();
 				int intervaloSegundosMovimento = movimentos.get(j).getIntervaloSegundos();
 				
-				for(int repeticaoAtual=0; repeticaoAtual<qtdRepeticaoMovimento; repeticaoAtual++) {					
-					this.reproduzirSom("sound/movimentos/laser.wav");
+				for(int repeticaoAtual=0; repeticaoAtual<qtdRepeticaoMovimento; repeticaoAtual++) {		
+					// Quantidade de arquivos de audio nomeados como: grito1.wav, grito2.wav...
+					
+					int numeroAleatorio = random.nextInt(3) + 1;
+					reproduzirSom("sound/grito/grito" + numeroAleatorio + ".wav");
 					System.out.println("GRITO!");
 					
-					this.espere(intervaloSegundosMovimento);
+					espere(intervaloSegundosMovimento);
 				}
 			}
 			
@@ -111,6 +124,30 @@ public class Controlador extends Thread {
 	}
 	
 	/**
+	 * Exercícios
+	 * 
+	 * TODO: refatorar. Para String nome use um Enum
+	 * 
+	 * @param nome
+	 * @param quantidade
+	 */
+	private void exercicio(int exercicio, int quantidade, int intervaloSegundos) {
+		this.reproduzirSom(this.exercicioPath[exercicio]);
+		this.espere(2);
+		int x = 1;
+		
+		for(int i=1; i<=quantidade; i++) {
+			this.reproduzirSom("sound/exercicio/" + (x) + ".wav");
+			this.espere(intervaloSegundos);
+			
+			if(x == 10)
+				x = 0;
+			
+			x++;
+		}
+	}
+	
+	/**
 	 * TODO: Por que não funciona?
 	 */
 	private void beep() {
@@ -118,7 +155,8 @@ public class Controlador extends Thread {
 	}
 	
 	/**
-	 * TODO: Desenvolver
+	 * TODO: Refatorar. 
+	 * TODO: Pesquisar como fazer o mesmo para arquivos .spx
 	 * @param voz_path
 	 */
 	private void reproduzirSom(String voz_path) {
@@ -181,8 +219,8 @@ public class Controlador extends Thread {
 	public static void main(String[] args) {
 		ArteMarcial arteMarcial = new ArteMarcial().getById(1);
 		
-//		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(5, 5);
-		List<Faixa> faixasSelecionadas = arteMarcial.getTodasAsFaixas();
+		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(10, 9);
+//		List<Faixa> faixasSelecionadas = arteMarcial.getTodasAsFaixas();
 		Controlador c = new Controlador(arteMarcial, faixasSelecionadas);
 		c.start();		
 	}

@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Random;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -151,9 +152,16 @@ public class Lacaio {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void random() {
+		Random random = new Random();
+		for(int i = 0; i<10; i++) {
+			System.out.println(random.nextInt(3) + 1);
+		}
+	}
 
 	public static void main(String[] args) {
-		tentativa4();
+		random();
 	}
 
 }
