@@ -79,7 +79,7 @@ public class ArteMarcial {
 	 * @return List<Faixa>
 	 */
 	public List<Faixa> getTodasAsFaixas() {
-		List<Faixa> faixas = faixaDAO.getFaixas(this.getId());
+		List<Faixa> faixas = faixaDAO.getFaixas(this.id);
 		
 		for(int i=0; i<faixas.size(); i++) {
 			Faixa faixa = faixas.get(i);

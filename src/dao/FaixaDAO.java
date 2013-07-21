@@ -153,16 +153,7 @@ public class FaixaDAO extends DAO {
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
 
-		builder.append("SELECT ");
-
-		builder.append("id_faixa, ");
-		builder.append("id_artemarcial, ");
-		builder.append("gub, ");
-		builder.append("descricao ");
-
-		builder.append("FROM faixa ");
-
-		builder.append("WHERE ");
+		builder.append("SELECT * FROM faixa WHERE ");
 		builder.append("id_artemarcial = " + id_artemarcial + ";");
 
 		try {
