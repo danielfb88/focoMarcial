@@ -31,13 +31,15 @@ import ddd.Movimento;
 public class Controlador extends Thread {
 	private ArteMarcial arteMarcial;
 	private List<Faixa> faixas;
-	private String[] exercicioPath;
+	
+	// TODO: Colocar todos os paths aqui
+	private String[] exercicioPath = new String[] {"sound/exercicio/flexao.wav", "sound/exercicio/abdominal.wav"};
+	private String descansarPath = "sound/movimento/hapkido/descansar.wav";
 	
 	public Controlador(ArteMarcial arteMarcial, List<Faixa> faixas) {
 		super();
 		this.arteMarcial = arteMarcial;
 		this.faixas = faixas;
-		this.exercicioPath = new String[] {"sound/exercicio/flexao.wav", "sound/exercicio/abdominal.wav"};
 		
 		if(this.faixas == null)
 			throw new RuntimeException("Faixas Nulas.");
@@ -55,7 +57,7 @@ public class Controlador extends Thread {
 			espere(5);
 			
 			// Abdominal
-			exercicio(1, 5, 0);
+			exercicio(1, 50, 0);
 			
 			reproduzirSom(faixas.get(i).getVoz_path());
 			exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
@@ -94,6 +96,7 @@ public class Controlador extends Thread {
 				}
 			}
 			
+			descarsar(60);
 		}
 	}
 	
@@ -121,6 +124,17 @@ public class Controlador extends Thread {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Descansar
+	 * TODO: Descansar a cada 3 movimentos. Falta inserir no método run.
+	 * 
+	 * @param segundos
+	 */
+	private void descarsar(int segundos) {
+		reproduzirSom(this.descansarPath);
+		espere(segundos);
 	}
 	
 	/**
