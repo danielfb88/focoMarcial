@@ -23,8 +23,7 @@ import ddd.Movimento;
  * 
  * Preciso de:
  * 
- * 1) Gravar todas os Vozes. 
- * 2) Pausar a tread para descanso a qualquer momento.
+ * 1) Pausar a tread para descanso a qualquer momento.
  * 
  * 
  */
@@ -89,7 +88,8 @@ public class Aula extends Thread {
 				int intervaloSegundosMovimento = movimentos.get(j)
 						.getIntervaloSegundos();
 
-				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
+//				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
+				for (int repeticaoAtual = 0; repeticaoAtual < 1; repeticaoAtual++) {	// TODO: PARA TESTE
 					// Quantidade de arquivos de audio nomeados como:
 					// grito1.wav, grito2.wav...
 
@@ -109,7 +109,7 @@ public class Aula extends Thread {
 				}
 			}
 
-			descansar(Descanso.MUITO);
+			descansar(Descanso.ALONGAMENTO);
 		}
 	}
 
@@ -248,7 +248,7 @@ public class Aula extends Thread {
 	public static void main(String[] args) {
 		ArteMarcial arteMarcial = new ArteMarcial().getById(1);
 
-		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(10, 10);
+		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(3, 3);
 		// List<Faixa> faixasSelecionadas = arteMarcial.getTodasAsFaixas();
 		Aula c = new Aula(arteMarcial, faixasSelecionadas);
 		c.start();

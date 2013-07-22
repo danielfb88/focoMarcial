@@ -12,13 +12,14 @@ package control;
  *
  */
 public enum Descanso {
-	POUCO(60), 
-	MEDIO(60*2), 
-	MUITO(60*3);
+	POUCO(60, "core/sound/exercicios/descansar.wav"), 
+	MEDIO(60*2, "core/sound/exercicios/descansar.wav"), 
+	MUITO(60*3, "core/sound/exercicios/descansar.wav"),
+	ALONGAMENTO(60*3, "core/sound/exercicios/alongamento.wav");
 
-	Descanso(int segundos) {
+	Descanso(int segundos, String vozPath) {
 		this.segundos = segundos;
-		this.vozPath = "core/sound/exercicios/descansar.wav";
+		this.vozPath = vozPath;
 	}
 
 	private int segundos;
