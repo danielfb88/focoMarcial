@@ -20,7 +20,7 @@ INSERT INTO faixa (id_artemarcial, gub, descricao, voz_path) VALUES (1, 1, 'Verm
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Tchariô....Tchumbi', 'Atenção - Prepara', 0, 0, 0, 'sound/hapkido/comum/tchario_tchumbi.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Montong Terigui', 'Soco com base Montong', 10, 0, 1, 'sound/hapkido/branca/montongterigui.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Apakator', 'Soco no queixo', 10, 1, 1, 'sound/hapkido/branca/apakator.wav');
-INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Patchagui Tchumbi', 'Base de luta', 0, 0, 0, 'sound/hapkido/patchaguitchumbi.wav');
+INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Patchagui Tchumbi', 'Base de luta', 0, 0, 0, 'sound/hapkido/comum/patchaguitchumbi.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Aptchaoligui', 'Perna sobe reta e desce reta', 5, 3, 1, 'sound/hapkido/branca/aptchaoligui.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Burop Tchagui', 'Joelhada', 15, 3, 1, 'sound/hapkido/branca/buroptchagui.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (1, 'Aptchagui', 'Chute frontal', 15, 4, 1, 'sound/hapkido/branca/aptchagui.wav');

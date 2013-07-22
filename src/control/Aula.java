@@ -163,7 +163,7 @@ public class Aula extends Thread {
 		this.espere(2);
 		int x = 1;
 
-		for (int i = 1; i <= exercicio.getQuantidade(); i++) {
+		for (int i = 0; i < exercicio.getQuantidade(); i++) {
 			this.reproduzirSom(this.contagemDiretorioPath + (x) + ".wav");
 			this.espere(exercicio.getIntervaloSegundos());
 
@@ -248,10 +248,11 @@ public class Aula extends Thread {
 	public static void main(String[] args) {
 		ArteMarcial arteMarcial = new ArteMarcial().getById(1);
 
-		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(3, 3);
-		// List<Faixa> faixasSelecionadas = arteMarcial.getTodasAsFaixas();
-		Aula c = new Aula(arteMarcial, faixasSelecionadas);
-		c.start();
+		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(Integer.valueOf(args[0]), Integer.valueOf(args[1]));
+//		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(8, 8);
+		
+		Aula a = new Aula(arteMarcial, faixasSelecionadas);
+		a.start();
 	}
 
 }
