@@ -1,4 +1,4 @@
-package controlador;
+package control;
 
 import java.awt.Toolkit;
 import java.io.File;
@@ -19,158 +19,171 @@ import ddd.Faixa;
 import ddd.Movimento;
 
 /**
- * TODO: 
+ * TODO:
  * 
  * Preciso de:
  * 
- * 	1) Gravar todas os Vozes.
- *  2) Pausar a tread para descanço a qualquer momento.
- *  
- *  
+ * 1) Gravar todas os Vozes. 
+ * 2) Pausar a tread para descanso a qualquer momento.
+ * 
+ * 
  */
-public class Controlador extends Thread {
+public class Aula extends Thread {
 	private ArteMarcial arteMarcial;
 	private List<Faixa> faixas;
-	
-	// TODO: Colocar todos os paths aqui
-	private String[] exercicioPath = new String[] {"sound/exercicio/flexao.wav", "sound/exercicio/abdominal.wav"};
-	private String descansarPath = "sound/movimento/hapkido/descansar.wav";
-	
-	public Controlador(ArteMarcial arteMarcial, List<Faixa> faixas) {
+
+	private String comandoDiretorioPath = "core/sound/comando/";
+	private String contagemDiretorioPath = "core/sound/contagem/";
+
+	public Aula(ArteMarcial arteMarcial, List<Faixa> faixas) {
 		super();
 		this.arteMarcial = arteMarcial;
 		this.faixas = faixas;
-		
-		if(this.faixas == null)
+
+		if (this.faixas == null)
 			throw new RuntimeException("Faixas Nulas.");
 	}
-	
+
 	@Override
 	public void run() {
 		Random random = new Random();
-		
+
 		reproduzirSom(this.arteMarcial.getVoz_path());
 		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
-		
+
 		// Início de cada faixa
-		for(int i=0; i<faixas.size(); i++) {
+		for (int i = 0; i < faixas.size(); i++) {
 			espere(5);
+
+			fazerExercicio(Exercicio.ABDOMINAL);
 			
-			// Abdominal
-			exercicio(1, 50, 0);
-			
+			espere(2);
+
 			reproduzirSom(faixas.get(i).getVoz_path());
 			exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
-			
+
 			espere(4);
-			
+
 			// Início da sequência de movimentos
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
-			for(int j=0; j<movimentos.size(); j++) {
+			for (int j = 0; j < movimentos.size(); j++) {
 				espere(2);
-				
-				// Sorteio para fazer flexão antes deste movimento
-				int n = random.nextInt(movimentos.size() - 1);
-				if(j == n) {
-					exercicio(0, 10, 1);
-					espere(2);
+
+				if (movimentos.get(j).getEh_golpe() == 1) {
+					// Sorteio para fazer flexão antes deste movimento
+					int n = random.nextInt(movimentos.size() - 1);
+					if (n == j || n == movimentos.size() - 1) { // Probabilidade maior
+						fazerExercicio(Exercicio.FLEXAO);
+						espere(2);
+					}
 				}
-				
+
 				reproduzirSom(movimentos.get(j).getVoz_path());
-				System.out.println("\n NOME DO MOVIMENTO: " + movimentos.get(j).getDescricao());
-				
+				System.out.println("\n NOME DO MOVIMENTO: "
+						+ movimentos.get(j).getDescricao());
+
 				espere(3);
 
 				// Grito em cada movimento
 				int qtdRepeticaoMovimento = movimentos.get(j).getQtdRepeticao();
-				int intervaloSegundosMovimento = movimentos.get(j).getIntervaloSegundos();
-				
-				for(int repeticaoAtual=0; repeticaoAtual<qtdRepeticaoMovimento; repeticaoAtual++) {		
-					// Quantidade de arquivos de audio nomeados como: grito1.wav, grito2.wav...
-					
+				int intervaloSegundosMovimento = movimentos.get(j)
+						.getIntervaloSegundos();
+
+				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
+					// Quantidade de arquivos de audio nomeados como:
+					// grito1.wav, grito2.wav...
+
 					int numeroAleatorio = random.nextInt(3) + 1;
-					reproduzirSom("sound/grito/grito" + numeroAleatorio + ".wav");
+					reproduzirSom(this.comandoDiretorioPath + "grito"
+							+ (numeroAleatorio) + ".wav");
 					System.out.println("GRITO!");
-					
+
 					espere(intervaloSegundosMovimento);
 				}
+				
+				// Descansar no meio dos movimentos da faixa
+				if (movimentos.get(j).getEh_golpe() == 1) {
+					if(j == (int) movimentos.size() / 2) {
+						descansar(Descanso.POUCO);
+					}
+				}
 			}
-			
-			descarsar(60);
+
+			descansar(Descanso.MUITO);
 		}
 	}
-	
+
 	/**
 	 * Exibe a informação com destaque no console.
 	 * 
-	 * @param descricao Título
-	 * @param valor Conteúdo
+	 * @param descricao
+	 *            Título
+	 * @param valor
+	 *            Conteúdo
 	 */
 	private void exibirConsoleDestaque(String descricao, String valor) {
 		System.out.println("----------------------------------");
 		System.out.println(descricao + ": " + valor);
 		System.out.println("----------------------------------");
 	}
-	
+
 	/**
 	 * Espera a quantidade especificada de tempo em segundos.
+	 * 
 	 * @param segundos
 	 */
 	private void espere(int segundos) {
 		try {
 			System.out.println("*** Espere " + segundos + " segundo(s)... \n");
 			sleep(segundos * 1000);
-			
+
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Descansar
-	 * TODO: Descansar a cada 3 movimentos. Falta inserir no método run.
-	 * 
+	 *  
 	 * @param segundos
 	 */
-	private void descarsar(int segundos) {
-		reproduzirSom(this.descansarPath);
-		espere(segundos);
+	private void descansar(Descanso descanso) {
+		reproduzirSom(descanso.getVozPath());
+		espere(descanso.getSegundos());
 	}
-	
+
 	/**
 	 * Exercícios
-	 * 
-	 * TODO: refatorar. Para String nome use um Enum
 	 * 
 	 * @param nome
 	 * @param quantidade
 	 */
-	private void exercicio(int exercicio, int quantidade, int intervaloSegundos) {
-		this.reproduzirSom(this.exercicioPath[exercicio]);
+	private void fazerExercicio(Exercicio exercicio) {
+		this.reproduzirSom(exercicio.getVozPath());
 		this.espere(2);
 		int x = 1;
-		
-		for(int i=1; i<=quantidade; i++) {
-			this.reproduzirSom("sound/exercicio/" + (x) + ".wav");
-			this.espere(intervaloSegundos);
-			
-			if(x == 10)
+
+		for (int i = 1; i <= exercicio.getQuantidade(); i++) {
+			this.reproduzirSom(this.contagemDiretorioPath + (x) + ".wav");
+			this.espere(exercicio.getIntervaloSegundos());
+
+			if (x == 10)
 				x = 0;
-			
+
 			x++;
 		}
 	}
-	
+
 	/**
 	 * TODO: Por que não funciona?
 	 */
 	private void beep() {
 		Toolkit.getDefaultToolkit().beep();
 	}
-	
+
 	/**
-	 * TODO: Refatorar. 
-	 * TODO: Pesquisar como fazer o mesmo para arquivos .spx
+	 * TODO: Refatorar. TODO: Pesquisar como fazer o mesmo para arquivos .spx
+	 * 
 	 * @param voz_path
 	 */
 	private void reproduzirSom(String voz_path) {
@@ -178,65 +191,67 @@ public class Controlador extends Thread {
 		SourceDataLine line = null;
 		AudioInputStream din = null;
 		AudioFormat decodeFormat = null;
-		
+
 		try {
 			// Cria um stream de entrada do arquivo
 			AudioInputStream ais = AudioSystem.getAudioInputStream(track);
 			// Seleciona o formato do arquivo de audio
 			AudioFormat baseFormat = ais.getFormat();
 			// Configura a decodificação
-			decodeFormat = new AudioFormat(
-					AudioFormat.Encoding.PCM_SIGNED, // Encoding to use
-					baseFormat.getSampleRate(), // Sample rate (same as base format)
+			decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, // Encoding
+																			// to
+																			// use
+					baseFormat.getSampleRate(), // Sample rate (same as base
+												// format)
 					16, // sample size in bits);
 					baseFormat.getChannels(), // # of Chanels
-					baseFormat.getChannels()*2, // Frame size
+					baseFormat.getChannels() * 2, // Frame size
 					baseFormat.getSampleRate(), // Frame rate
 					false // Big endian
-				);
-			
+			);
+
 			din = AudioSystem.getAudioInputStream(decodeFormat, ais);
-			DataLine.Info info = new DataLine.Info(SourceDataLine.class, decodeFormat);
-			
+			DataLine.Info info = new DataLine.Info(SourceDataLine.class,
+					decodeFormat);
+
 			line = (SourceDataLine) AudioSystem.getLine(info);
 			line.open(decodeFormat);
-			
+
 			byte[] data = new byte[4096];
 			// Start
 			line.start();
-			
+
 			int nBytesRead;
-			
+
 			// Toca enquanto a música não acaba
-			while((nBytesRead = din.read(data, 0, data.length)) != -1) {
+			while ((nBytesRead = din.read(data, 0, data.length)) != -1) {
 				line.write(data, 0, nBytesRead);
 			}
-			
+
 			// Stop
 			line.drain();
 			line.stop();
 			line.close();
 			din.close();
-			
-			
+
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
-			
+
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		ArteMarcial arteMarcial = new ArteMarcial().getById(1);
-		
-		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(10, 9);
-//		List<Faixa> faixasSelecionadas = arteMarcial.getTodasAsFaixas();
-		Controlador c = new Controlador(arteMarcial, faixasSelecionadas);
-		c.start();		
+
+		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(10, 10);
+		// List<Faixa> faixasSelecionadas = arteMarcial.getTodasAsFaixas();
+		Aula c = new Aula(arteMarcial, faixasSelecionadas);
+		c.start();
 	}
 
 }

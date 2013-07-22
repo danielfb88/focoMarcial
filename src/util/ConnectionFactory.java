@@ -25,7 +25,7 @@ public class ConnectionFactory {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			
-			String url = "jdbc:sqlite:focoMarcial.db";			
+			String url = "jdbc:sqlite:core/db/focoMarcial.db";			
 
 			conn = DriverManager.getConnection(url);
 

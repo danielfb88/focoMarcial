@@ -23,16 +23,17 @@ public class MovimentoDAO extends DAO {
 	 * @return
 	 */
 	public int adicionar(int id_faixa, String descricao, String observacao,
-			int qtd_repeticao, int intervalo_segundos, String voz_path) {
+			int qtd_repeticao, int intervalo_segundos, int eh_golpe, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, voz_path) VALUES (");
+		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (");
 		builder.append(id_faixa + ", ");
 		builder.append("'" + descricao + "', ");
 		builder.append("'" + observacao + "', ");
 		builder.append(qtd_repeticao + ", ");
 		builder.append(intervalo_segundos + ", ");
+		builder.append(eh_golpe + ", ");
 		builder.append("'" + voz_path + "'");
 		builder.append(");");
 		
@@ -64,7 +65,7 @@ public class MovimentoDAO extends DAO {
 	 * @return
 	 */
 	public int editar(int id_movimento, int id_faixa, String descricao,
-			String observacao, int qtd_repeticao, int intervalo_segundos, String voz_path) {
+			String observacao, int qtd_repeticao, int intervalo_segundos, int eh_golpe, String voz_path) {
 		
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
@@ -76,6 +77,7 @@ public class MovimentoDAO extends DAO {
 		builder.append("observacao = '" + observacao + "', ");
 		builder.append("qtd_repeticao = " + qtd_repeticao + ", ");
 		builder.append("intervalo_segundos = " + intervalo_segundos + ", ");
+		builder.append("eh_golpe = '" + eh_golpe + "', ");
 		builder.append("voz_path = '" + voz_path + "' ");
 
 		builder.append("WHERE id_movimento = " + id_movimento + ";");
@@ -147,7 +149,8 @@ public class MovimentoDAO extends DAO {
 					rs.getString("descricao"), 
 					rs.getString("observacao"), 
 					rs.getInt("qtd_repeticao"), 
-					rs.getInt("intervalo_segundos"), 
+					rs.getInt("intervalo_segundos"),
+					rs.getInt("eh_golpe"), 
 					rs.getString("voz_path")
 				);
 
@@ -192,6 +195,7 @@ public class MovimentoDAO extends DAO {
 								rs.getString("observacao"), 
 								rs.getInt("qtd_repeticao"), 
 								rs.getInt("intervalo_segundos"),
+								rs.getInt("eh_golpe"),
 								rs.getString("voz_path")
 								)
 						);

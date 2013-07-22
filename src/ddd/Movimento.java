@@ -1,12 +1,13 @@
 package ddd;
 
 public class Movimento {
-	private Integer id;
+	private int id;
 	private Faixa faixa;
 	private String descricao;
 	private String observacao;
-	private Integer qtdRepeticao;
-	private Integer intervaloSegundos;
+	private int qtdRepeticao;
+	private int intervaloSegundos;
+	private int eh_golpe;
 	private String voz_path;
 
 	public Movimento() {
@@ -19,8 +20,8 @@ public class Movimento {
 	}
 
 	public Movimento(Integer id, Faixa faixa, String descricao,
-			String observacao, Integer qtdRepeticao, Integer intervaloSegundos,
-			String voz_path) {
+			String observacao, int qtdRepeticao, int intervaloSegundos,
+			int eh_golpe, String voz_path) {
 		super();
 		this.id = id;
 		this.faixa = faixa;
@@ -28,11 +29,16 @@ public class Movimento {
 		this.observacao = observacao;
 		this.qtdRepeticao = qtdRepeticao;
 		this.intervaloSegundos = intervaloSegundos;
+		this.eh_golpe = eh_golpe;
 		this.voz_path = voz_path;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Faixa getFaixa() {
@@ -59,20 +65,28 @@ public class Movimento {
 		this.observacao = observacao;
 	}
 
-	public Integer getQtdRepeticao() {
+	public int getQtdRepeticao() {
 		return qtdRepeticao;
 	}
 
-	public void setQtdRepeticao(Integer qtdRepeticao) {
+	public void setQtdRepeticao(int qtdRepeticao) {
 		this.qtdRepeticao = qtdRepeticao;
 	}
 
-	public Integer getIntervaloSegundos() {
+	public int getIntervaloSegundos() {
 		return intervaloSegundos;
 	}
 
-	public void setIntervaloSegundos(Integer intervaloSegundos) {
+	public void setIntervaloSegundos(int intervaloSegundos) {
 		this.intervaloSegundos = intervaloSegundos;
+	}
+
+	public int getEh_golpe() {
+		return eh_golpe;
+	}
+
+	public void setEh_golpe(int eh_golpe) {
+		this.eh_golpe = eh_golpe;
 	}
 
 	public String getVoz_path() {
@@ -89,16 +103,13 @@ public class Movimento {
 		int result = 1;
 		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + eh_golpe;
 		result = prime * result + ((faixa == null) ? 0 : faixa.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime
-				* result
-				+ ((intervaloSegundos == null) ? 0 : intervaloSegundos
-						.hashCode());
+		result = prime * result + id;
+		result = prime * result + intervaloSegundos;
 		result = prime * result
 				+ ((observacao == null) ? 0 : observacao.hashCode());
-		result = prime * result
-				+ ((qtdRepeticao == null) ? 0 : qtdRepeticao.hashCode());
+		result = prime * result + qtdRepeticao;
 		result = prime * result
 				+ ((voz_path == null) ? 0 : voz_path.hashCode());
 		return result;
@@ -118,30 +129,23 @@ public class Movimento {
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
+		if (eh_golpe != other.eh_golpe)
+			return false;
 		if (faixa == null) {
 			if (other.faixa != null)
 				return false;
 		} else if (!faixa.equals(other.faixa))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
-		if (intervaloSegundos == null) {
-			if (other.intervaloSegundos != null)
-				return false;
-		} else if (!intervaloSegundos.equals(other.intervaloSegundos))
+		if (intervaloSegundos != other.intervaloSegundos)
 			return false;
 		if (observacao == null) {
 			if (other.observacao != null)
 				return false;
 		} else if (!observacao.equals(other.observacao))
 			return false;
-		if (qtdRepeticao == null) {
-			if (other.qtdRepeticao != null)
-				return false;
-		} else if (!qtdRepeticao.equals(other.qtdRepeticao))
+		if (qtdRepeticao != other.qtdRepeticao)
 			return false;
 		if (voz_path == null) {
 			if (other.voz_path != null)

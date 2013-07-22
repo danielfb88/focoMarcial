@@ -11,7 +11,7 @@ public class ArteMarcial {
 	private ArteMarcialDAO arteMarcialDAO = new ArteMarcialDAO();
 	private MovimentoDAO movimentoDAO = new MovimentoDAO();
 	
-	private Integer id;
+	private int id;
 	private String descricao;
 	private String voz_path;
 	
@@ -41,11 +41,11 @@ public class ArteMarcial {
 		this.faixas = faixas;
 	}
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -122,7 +122,7 @@ public class ArteMarcial {
 		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((faixas == null) ? 0 : faixas.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + id;
 		result = prime * result
 				+ ((voz_path == null) ? 0 : voz_path.hashCode());
 		return result;
@@ -147,10 +147,7 @@ public class ArteMarcial {
 				return false;
 		} else if (!faixas.equals(other.faixas))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (voz_path == null) {
 			if (other.voz_path != null)

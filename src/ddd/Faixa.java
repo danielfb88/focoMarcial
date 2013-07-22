@@ -3,9 +3,9 @@ package ddd;
 import java.util.List;
 
 public class Faixa {
-	private Integer id;
+	private int id;
 	private ArteMarcial arteMarcial;
-	private Integer gub;
+	private int gub;
 	private String descricao;
 	private String voz_path;
 	
@@ -41,11 +41,11 @@ public class Faixa {
 		this.movimentos = movimentos;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -57,11 +57,11 @@ public class Faixa {
 		this.arteMarcial = arteMarcial;
 	}
 
-	public Integer getGub() {
+	public int getGub() {
 		return gub;
 	}
 
-	public void setGub(Integer gub) {
+	public void setGub(int gub) {
 		this.gub = gub;
 	}
 
@@ -97,8 +97,8 @@ public class Faixa {
 				+ ((arteMarcial == null) ? 0 : arteMarcial.hashCode());
 		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((gub == null) ? 0 : gub.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + gub;
+		result = prime * result + id;
 		result = prime * result
 				+ ((movimentos == null) ? 0 : movimentos.hashCode());
 		result = prime * result
@@ -125,15 +125,9 @@ public class Faixa {
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
-		if (gub == null) {
-			if (other.gub != null)
-				return false;
-		} else if (!gub.equals(other.gub))
+		if (gub != other.gub)
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (movimentos == null) {
 			if (other.movimentos != null)
@@ -147,5 +141,5 @@ public class Faixa {
 			return false;
 		return true;
 	}
-	
+
 }
