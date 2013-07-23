@@ -20,10 +20,10 @@ import ddd.Movimento;
 
 /**
  * TODO:
- * 
- * Preciso de:
- * 
+ *  
  * 1) Pausar a tread para descanso a qualquer momento.
+ * 2) Refatorar
+ * 3) GUI
  * 
  * 
  */
@@ -88,8 +88,8 @@ public class Aula extends Thread {
 				int intervaloSegundosMovimento = movimentos.get(j)
 						.getIntervaloSegundos();
 
-//				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
-				for (int repeticaoAtual = 0; repeticaoAtual < 1; repeticaoAtual++) {	// TODO: PARA TESTE
+				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
+//				for (int repeticaoAtual = 0; repeticaoAtual < 1; repeticaoAtual++) {	// TODO: PARA TESTE
 					// Quantidade de arquivos de audio nomeados como:
 					// grito1.wav, grito2.wav...
 
@@ -148,8 +148,11 @@ public class Aula extends Thread {
 	 * @param segundos
 	 */
 	private void descansar(Descanso descanso) {
-		reproduzirSom(descanso.getVozPath());
+		exibirConsoleDestaque("Descansar", null);
+		reproduzirSom(descanso.getVozPathDescansar());
 		espere(descanso.getSegundos());
+		exibirConsoleDestaque("Fim do descanso", null);
+		reproduzirSom(descanso.getVozPathAtencao());
 	}
 
 	/**
@@ -243,16 +246,6 @@ public class Aula extends Thread {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-		ArteMarcial arteMarcial = new ArteMarcial().getById(1);
-
-		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(Integer.valueOf(args[0]), Integer.valueOf(args[1]));
-//		List<Faixa> faixasSelecionadas = arteMarcial.getFaixasEntreGubs(8, 8);
-		
-		Aula a = new Aula(arteMarcial, faixasSelecionadas);
-		a.start();
 	}
 
 }
