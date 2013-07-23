@@ -21,7 +21,6 @@ import ddd.Movimento;
 /**
  * TODO:
  *  
- * 1) Pausar a tread para descanso a qualquer momento.
  * 2) Refatorar
  * 3) GUI
  * 
@@ -33,7 +32,9 @@ public class Aula extends Thread {
 
 	private String comandoDiretorioPath = "core/sound/comando/";
 	private String contagemDiretorioPath = "core/sound/contagem/";
-
+	
+	private boolean pausar;
+	
 	public Aula(ArteMarcial arteMarcial, List<Faixa> faixas) {
 		super();
 		this.arteMarcial = arteMarcial;
@@ -66,6 +67,8 @@ public class Aula extends Thread {
 			// Início da sequência de movimentos
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 			for (int j = 0; j < movimentos.size(); j++) {
+				// Verificar se a pausa da thread foi solicitada antes de cada movimento
+				verificarSePausaSolicitada();
 				espere(2);
 
 				if (movimentos.get(j).getEh_golpe() == 1) {
@@ -89,9 +92,8 @@ public class Aula extends Thread {
 						.getIntervaloSegundos();
 
 				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
-//				for (int repeticaoAtual = 0; repeticaoAtual < 1; repeticaoAtual++) {	// TODO: PARA TESTE
-					// Quantidade de arquivos de audio nomeados como:
-					// grito1.wav, grito2.wav...
+//				for (int repeticaoAtual = 0; repeticaoAtual < 1; repeticaoAtual++) {	// PARA TESTE
+					verificarSePausaSolicitada();
 
 					int numeroAleatorio = random.nextInt(3) + 1;
 					reproduzirSom(this.comandoDiretorioPath + "grito"
@@ -110,6 +112,39 @@ public class Aula extends Thread {
 			}
 
 			descansar(Descanso.ALONGAMENTO);
+		}
+	}
+	
+	public boolean isPausaSolicitada() {
+		return pausar;
+	}
+	
+	public synchronized void pausar() {
+		pausar = true;
+	}
+	
+	public void continuar() {
+		pausar = false;
+		synchronized (this) {
+			this.notify();
+		}
+	}
+	
+	private void verificarSePausaSolicitada() {
+		if(pausar)
+			System.out.println("*** PAUSADO ***");
+		
+		while (pausar) {
+			synchronized (this) {
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if(pausar == false)
+				System.out.println("*** CONTINUANDO ***");
 		}
 	}
 
@@ -167,6 +202,7 @@ public class Aula extends Thread {
 		int x = 1;
 
 		for (int i = 0; i < exercicio.getQuantidade(); i++) {
+			verificarSePausaSolicitada();
 			this.reproduzirSom(this.contagemDiretorioPath + (x) + ".wav");
 			this.espere(exercicio.getIntervaloSegundos());
 
