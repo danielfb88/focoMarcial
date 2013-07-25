@@ -23,6 +23,7 @@ import ddd.Movimento;
  *  
  * 2) Refatorar
  * 3) GUI
+ * 4) Implementar Thread para reproduzir músicas do Ensembre Nipponia
  * 
  * 
  */
@@ -51,7 +52,7 @@ public class Aula extends Thread {
 		reproduzirSom(this.arteMarcial.getVoz_path());
 		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
 
-		// Início de cada faixa
+		// Faixa
 		for (int i = 0; i < faixas.size(); i++) {
 			espere(5);
 
@@ -64,48 +65,43 @@ public class Aula extends Thread {
 
 			espere(4);
 
-			// Início da sequência de movimentos
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
+			
+			// Movimento
 			for (int j = 0; j < movimentos.size(); j++) {
-				// Verificar se a pausa da thread foi solicitada antes de cada movimento
 				verificarSePausaSolicitada();
 				espere(2);
 
-				if (movimentos.get(j).getEh_golpe() == 1) {
-					// Sorteio para fazer flexão antes deste movimento
-					int n = random.nextInt(movimentos.size() - 1);
-					if (n == j || n == movimentos.size() - 1) { // Probabilidade maior
-						fazerExercicio(Exercicio.FLEXAO);
-						espere(2);
-					}
-				}
-
 				reproduzirSom(movimentos.get(j).getVoz_path());
-				System.out.println("\n NOME DO MOVIMENTO: "
-						+ movimentos.get(j).getDescricao());
+				System.out.println("\n NOME DO MOVIMENTO: " + movimentos.get(j).getDescricao());
 
 				espere(3);
 
-				// Grito em cada movimento
 				int qtdRepeticaoMovimento = movimentos.get(j).getQtdRepeticao();
-				int intervaloSegundosMovimento = movimentos.get(j)
-						.getIntervaloSegundos();
+				int intervaloSegundosMovimento = movimentos.get(j).getIntervaloSegundos();
 
+				// Repetições
 				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
-//				for (int repeticaoAtual = 0; repeticaoAtual < 1; repeticaoAtual++) {	// PARA TESTE
 					verificarSePausaSolicitada();
 
-					int numeroAleatorio = random.nextInt(3) + 1;
-					reproduzirSom(this.comandoDiretorioPath + "grito"
-							+ (numeroAleatorio) + ".wav");
+					reproduzirSom(this.comandoDiretorioPath + "grito" + (random.nextInt(4) + 1) + ".wav");
 					System.out.println("GRITO!");
+					System.out.println(repeticaoAtual);
 
 					espere(intervaloSegundosMovimento);
 				}
 				
-				// Descansar no meio dos movimentos da faixa
 				if (movimentos.get(j).getEh_golpe() == 1) {
-					if(j == (int) movimentos.size() / 2) {
+					
+					// Exercicio
+					int n = random.nextInt(movimentos.size() - 1);
+					if ((n == j) || (n == ((int) ((movimentos.size() / 2) - 1)))) { // Probabilidade maior
+						fazerExercicio((random.nextBoolean() == true) ? Exercicio.AGACHAMENTO_APTCHAGUI : Exercicio.FLEXAO);
+						espere(2);
+					}
+					
+					// Descanso
+					if (j == (int) movimentos.size() / 2) {
 						descansar(Descanso.POUCO);
 					}
 				}
@@ -115,14 +111,25 @@ public class Aula extends Thread {
 		}
 	}
 	
+	/**
+	 * Retorna se foi solicitada à thread a entrar em estado de espera.
+	 * 
+	 * @return
+	 */
 	public boolean isPausaSolicitada() {
 		return pausar;
 	}
 	
+	/**
+	 * Pausa a Thread
+	 */
 	public synchronized void pausar() {
 		pausar = true;
 	}
 	
+	/**
+	 * Continua a execução da Thread
+	 */
 	public void continuar() {
 		pausar = false;
 		synchronized (this) {
@@ -130,6 +137,9 @@ public class Aula extends Thread {
 		}
 	}
 	
+	/**
+	 * Quando executado, fica escutando a variável pausar para verificar se deve pausar a thread.
+	 */
 	private void verificarSePausaSolicitada() {
 		if(pausar)
 			System.out.println("*** PAUSADO ***");
@@ -186,7 +196,8 @@ public class Aula extends Thread {
 		exibirConsoleDestaque("Descansar", null);
 		reproduzirSom(descanso.getVozPathDescansar());
 		espere(descanso.getSegundos());
-		exibirConsoleDestaque("Fim do descanso", null);
+		
+		System.out.println("*** Fim do Descanso ***");
 		reproduzirSom(descanso.getVozPathAtencao());
 	}
 
@@ -211,13 +222,6 @@ public class Aula extends Thread {
 
 			x++;
 		}
-	}
-
-	/**
-	 * TODO: Por que não funciona?
-	 */
-	private void beep() {
-		Toolkit.getDefaultToolkit().beep();
 	}
 
 	/**

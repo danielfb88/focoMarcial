@@ -2,6 +2,7 @@ package tests.dao;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.awt.Toolkit;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -161,7 +162,7 @@ public class Lacaio {
 	}
 
 	public static void main(String[] args) {
-		random();
+		Toolkit.getDefaultToolkit().beep();     
 	}
 
 }

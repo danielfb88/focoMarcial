@@ -21,8 +21,7 @@ public class Pause extends Thread {
 	@Override
 	public void run() {
 		while (true) {
-			Scanner s = new Scanner(System.in);
-			String entrada = s.nextLine();
+			new Scanner(System.in).nextLine();
 			botao();
 		}
 		

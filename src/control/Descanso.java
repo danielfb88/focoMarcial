@@ -1,10 +1,7 @@
 package control;
 
 /**
- * Descanso:
- * 	 POUCO = 60 segundos (1 minuto)
- * 	 MEDIO = 120 segundos (2 minutos)
- * 	 MUITO = 180 segundos (3 minutos)
+ * Descanso
  * 
  * @author Daniel Bonfim <daniel.fb88@gmail.com>
  * @version 1.0
