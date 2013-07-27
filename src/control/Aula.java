@@ -84,7 +84,7 @@ public class Aula extends Thread {
 				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
 					verificarSePausaSolicitada();
 
-					reproduzirSom(this.comandoDiretorioPath + "grito" + (random.nextInt(4) + 1) + ".wav");
+					reproduzirSom(this.comandoDiretorioPath + "grito" + (random.nextInt(3) + 1) + ".wav");
 					System.out.println("GRITO!");
 					System.out.println(repeticaoAtual);
 

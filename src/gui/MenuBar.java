@@ -14,23 +14,18 @@ public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 
 	private JMenu menu_arquivo = new JMenu("Arquivo");
-	private JMenu menu_editar = new JMenu("Editar");;
 	private JMenu menu_ajuda = new JMenu("Ajuda");
 
 	private JMenu menu_arquivo_novo = new JMenu("Novo");
-	private JMenu menu_editar_exercicio = new JMenu("Exercicio");
 
 	private JMenuItem menuItem_arquivo_novo_faixa = new JMenuItem("Faixa");
 	private JMenuItem menuItem_arquivo_novo_movimento = new JMenuItem("Movimento");
 
-	private JMenuItem menuItem_editar_exercicio_flexao = new JMenuItem("Flexão");
-	private JMenuItem menuItem_editar_exercicio_abdominal = new JMenuItem("Abdominal");
-	private JMenuItem menuItem_editar_exercicio_agachamento = new JMenuItem("Agachamento");
-
 	private JMenuItem menuItem_ajuda_focoMarcial = new JMenuItem("Foco Marcial");
 	
-	private JMenuItem menuItem_reiniciar = new JMenuItem("Reiniciar");
-	private JMenuItem menuItem_sair = new JMenuItem("Sair");
+	private JMenuItem menuItem_arquivo_configurar = new JMenuItem("Configurar");
+	private JMenuItem menuItem_arquivo_reiniciar = new JMenuItem("Reiniciar");
+	private JMenuItem menuItem_arquivo_sair = new JMenuItem("Sair");
 
 	public MenuBar() {
 		configurarElementos();
@@ -69,22 +64,20 @@ public class MenuBar extends JMenuBar {
 			}
 		});
 
-		// Evento Item Categoria Pesquisar
 		menuItem_arquivo_novo_movimento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				jMenuItem_categoriaPesquisarActionPerformed(evt);
 			}
 		});
 
-		// Evento Item Configurar
-		menuItem_reiniciar.addActionListener(new ActionListener() {
+		menuItem_arquivo_reiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				jMenuItem_configuracaoActionPerformed(evt);
 			}
 		});
 
 		// Evento Item Sair
-		menuItem_sair.addActionListener(new ActionListener() {
+		menuItem_arquivo_sair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				jMenuItem_sairActionPerformed(evt);
 			}
@@ -97,18 +90,12 @@ public class MenuBar extends JMenuBar {
 	private void adicionarMenus() {
 		// Menu Arquivo
 		menu_arquivo.add(menu_arquivo_novo);
-		menu_arquivo.addSeparator();
-		menu_arquivo.add(menuItem_reiniciar);
-		menu_arquivo.add(menuItem_sair);
+		menu_arquivo.add(menuItem_arquivo_configurar);
+		menu_arquivo.add(menuItem_arquivo_reiniciar);
+		menu_arquivo.add(menuItem_arquivo_sair);
 		
 		menu_arquivo_novo.add(menuItem_arquivo_novo_faixa);
 		menu_arquivo_novo.add(menuItem_arquivo_novo_movimento);
-		
-		// Menu Editar
-		menu_editar.add(menu_editar_exercicio);
-		menu_editar_exercicio.add(menuItem_editar_exercicio_flexao);
-		menu_editar_exercicio.add(menuItem_editar_exercicio_abdominal);
-		menu_editar_exercicio.add(menuItem_editar_exercicio_agachamento);
 		
 		// Menu Ajuda
 		menu_ajuda.add(menuItem_ajuda_focoMarcial);
@@ -116,7 +103,6 @@ public class MenuBar extends JMenuBar {
 
 		// Panel this
 		add(menu_arquivo);
-		add(menu_editar);
 		add(menu_ajuda);
 	}
 

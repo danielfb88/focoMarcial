@@ -1,7 +1,7 @@
 package control;
 
 public enum Exercicio {
-	ABDOMINAL(70, 0, "core/sound/exercicios/abdominal.wav"), 
+	ABDOMINAL(100, 0, "core/sound/exercicios/abdominal.wav"), 
 	FLEXAO(15, 1, "core/sound/exercicios/flexao.wav"), 
 	AGACHAMENTO_APTCHAGUI(20, 2, "core/sound/exercicios/agachamento_aptchagui.wav");
 
