@@ -1,4 +1,4 @@
-package gui;
+package gui.menu;
 
 import guiteste.categoria.Frm_AdicionarCategoria;
 import guiteste.categoria.Frm_PesquisarCategoria;
