@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-package tests.geral;
+package tests.layouts;
  
 /*
  * BorderLayoutDemo.java

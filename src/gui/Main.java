@@ -6,6 +6,7 @@ import gui.panels.PanelSul;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
@@ -42,6 +43,7 @@ public class Main extends JFrame {
 		setResizable(false);
 		setPreferredSize(dimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+//		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		faixas = new ArteMarcial(1).getTodasAsFaixas();
 		
