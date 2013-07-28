@@ -26,45 +26,54 @@ public class PanelCentral extends JPanel {
 		tabbedFaixas = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedFaixas.setPreferredSize(new Dimension(dimension.width - 10, dimension.height - 10));
 		
-		// Labels de Título da coluna
-		JLabel labelMovimento = new JLabel("Movimento:");
-		JLabel labelQuantidade = new JLabel("Quantidade:");
-		JLabel labelIntervalo = new JLabel("Intervalo (em segundos):");
 		
-//		labelMovimento.setSize(20, 10);
-//		labelQuantidade.setSize(20, 10);
-//		labelIntervalo.setSize(20, 10);
-		
-		
+		// TODO: Mudar layout. Grid Layout nao vai resolver
+		// TODO: utilizar gridbaglayout para celulas maiores do que outras
 		for (Faixa faixa : faixas) {
+			
+			// Labels de Título da coluna
+			JLabel labelMovimento = new JLabel("Movimento:");
+			JLabel labelQuantidade = new JLabel("Quantidade:");
+			JLabel labelIntervalo = new JLabel("Intervalo (em segundos):");
 
 			JPanel tabPanel = new JPanel();
-			
-			JScrollPane scrollPane = new JScrollPane(tabPanel);
-			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			
-			tabPanel.setAlignmentY(CENTER_ALIGNMENT);
-			tabPanel.setAlignmentX(CENTER_ALIGNMENT);
-			
 			tabPanel.setPreferredSize(new Dimension(dimension.width - 30, dimension.height));
 			
-			// TODO: PQ o objeto label não está entrando aqui???? Vou pro som...
-			tabPanel.add(labelMovimento);
-			tabPanel.add(labelQuantidade);
-			tabPanel.add(labelIntervalo);
+			JPanel conteudoPanel = new JPanel();
+//			conteudoPanel.setPreferredSize(new Dimension(dimension.width - 30, 0));
+			
+			conteudoPanel.setAlignmentY(CENTER_ALIGNMENT);
+			conteudoPanel.setAlignmentX(CENTER_ALIGNMENT);
+			
+			JScrollPane scrollPane = new JScrollPane(conteudoPanel);
+			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			
+			conteudoPanel.add(labelMovimento);
+			conteudoPanel.add(labelQuantidade);
+			conteudoPanel.add(labelIntervalo);
 			
 			List<Movimento> movimentos = faixa.getMovimentos();
 			for (Movimento movimento : movimentos) {
-				tabPanel.setLayout(new GridLayout(0, 3));
+				conteudoPanel.setLayout(new GridLayout(0, 3));
+				
+				JLabel labelDescricaoMovimento = new JLabel(movimento.getDescricao());
+				JTextField jtxQuantidade = new JTextField();
+				JTextField jtxIntervaloSegundos = new JTextField();
+				
+				jtxIntervaloSegundos.setText(String.valueOf(movimento.getIntervaloSegundos()));
+				jtxQuantidade.setText(String.valueOf(movimento.getQtdRepeticao()));
+				
+				jtxQuantidade.setPreferredSize(new Dimension(1, 1));
+				jtxIntervaloSegundos.setSize(10, 10);
 
-				tabPanel.add(new JLabel(movimento.getDescricao()));
-				tabPanel.add(new JTextField(1));
-				tabPanel.add(new JTextField(1));
+				conteudoPanel.add(labelDescricaoMovimento);
+				conteudoPanel.add(jtxQuantidade);
+				conteudoPanel.add(jtxIntervaloSegundos);
 
 			}
 
-//			tabbedFaixas.add(faixa.getDescricao(), tabPanel);
-			tabbedFaixas.add(faixa.getDescricao(), scrollPane);  
+			tabPanel.add(scrollPane);
+			tabbedFaixas.add(faixa.getDescricao(), tabPanel);  
 
 		}
 		
