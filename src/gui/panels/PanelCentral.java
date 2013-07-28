@@ -177,5 +177,13 @@ public class PanelCentral extends JPanel {
 	public List<Map<String, Map<String, JTextField>[]>> getListaDeElementos() {
 		return this.listElementos;
 	}
+	
+	/**
+	 * Obtém o JTabbedPane das faixas
+	 * @return
+	 */
+	public JTabbedPane getJTabbedPaneFaixas() {
+		return this.tabbedFaixas;
+	}
 
 }
