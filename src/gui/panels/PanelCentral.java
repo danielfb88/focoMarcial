@@ -39,14 +39,13 @@ public class PanelCentral extends JPanel {
 			JLabel labelIntervalo = new JLabel("T(s)");
 
 			JPanel tabPanel = new JPanel();
-			tabPanel.setPreferredSize(new Dimension(dimension.width - 30, dimension.height));
+			tabPanel.setPreferredSize(new Dimension(dimension.width - 40, dimension.height - 20));
 			
 			JPanel conteudoPanel = new JPanel();
 			conteudoPanel.setLayout(new GridBagLayout());
-//			conteudoPanel.setSize(new Dimension(dimension.width - 30, dimension.height - 100));
 			GridBagConstraints c = new GridBagConstraints();
 			
-			JScrollPane scrollPane = new JScrollPane(conteudoPanel);
+			JScrollPane scrollPane = new JScrollPane(tabPanel);
 			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			
 			// Layout do Conteudo Panel
@@ -92,9 +91,6 @@ public class PanelCentral extends JPanel {
 				jtxIntervaloSegundos.setText(String.valueOf(movimento.getIntervaloSegundos()));
 				jtxQuantidade.setText(String.valueOf(movimento.getQtdRepeticao()));
 				
-//				jtxQuantidade.setPreferredSize(new Dimension(1, 1));
-//				jtxIntervaloSegundos.setSize(10, 10);
-				
 				c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
 				c.weightx = 0.5;
 //				c.anchor = GridBagConstraints.PAGE_START; // bottom of space
@@ -128,8 +124,8 @@ public class PanelCentral extends JPanel {
 				i++;
 			}
 
-			tabPanel.add(scrollPane);
-			tabbedFaixas.add(faixa.getDescricao(), tabPanel);  
+			tabPanel.add(conteudoPanel);
+			tabbedFaixas.add(faixa.getDescricao(), scrollPane);  
 
 		}
 		
