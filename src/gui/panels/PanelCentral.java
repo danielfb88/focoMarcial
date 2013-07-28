@@ -1,15 +1,15 @@
 package gui.panels;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,13 +20,33 @@ import ddd.Faixa;
 import ddd.Movimento;
 
 public class PanelCentral extends JPanel {
+	private static final long serialVersionUID = 1L;
+
 	private List<Faixa> faixas;
+	
+	/**
+	 * List
+	 * 	 |---> Map 
+	 * 			|-----> String: Nome do Movimento
+	 * 			|-----> Array[2]: HashMap
+	 */
+	private List<Map<String, Map<String, JTextField>[]>> listElementos = new ArrayList<Map<String, Map<String, JTextField>[]>>();
+	
 	private JTabbedPane tabbedFaixas;
 
 	public PanelCentral(Dimension dimension, List<Faixa> faixas) {
 		setBackground(Color.DARK_GRAY);
 		setPreferredSize(new Dimension(dimension.width - 5, dimension.height - 5));
-
+		
+		this.faixas = faixas;
+		montarTabbedPanel(dimension);
+	}
+	
+	/**
+	 * Monta JTabbedPanel de acordo com informações vindas do banco
+	 * @param dimension
+	 */
+	private void montarTabbedPanel(Dimension dimension) {
 		tabbedFaixas = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedFaixas.setPreferredSize(new Dimension(dimension.width - 10, dimension.height - 10));
 		
@@ -84,12 +104,30 @@ public class PanelCentral extends JPanel {
 			List<Movimento> movimentos = faixa.getMovimentos();
 			for (Movimento movimento : movimentos) {
 				
+				// Criando Elementos
 				JLabel labelDescricaoMovimento = new JLabel(movimento.getDescricao());
 				JTextField jtxQuantidade = new JTextField();
 				JTextField jtxIntervaloSegundos = new JTextField();
 				
+				// Inserindo valores nos JText Field
 				jtxIntervaloSegundos.setText(String.valueOf(movimento.getIntervaloSegundos()));
 				jtxQuantidade.setText(String.valueOf(movimento.getQtdRepeticao()));
+
+				// Empacotando JtextFields: quantidade e tempo
+				Map<String, JTextField>[] arrJTextField_Quantidade_Tempo = new HashMap[2];
+				arrJTextField_Quantidade_Tempo[0] = new HashMap<String, JTextField>();
+				arrJTextField_Quantidade_Tempo[1] = new HashMap<String, JTextField>();
+				
+				arrJTextField_Quantidade_Tempo[0].put("jtxQuantidade", jtxQuantidade);
+				arrJTextField_Quantidade_Tempo[1].put("jtxIntervaloSegundos", jtxIntervaloSegundos);
+				
+				// Criando chave para o array de JTextField com o nome do movimento
+				Map<String, Map<String, JTextField>[]> mapMovimento = new HashMap<String, Map<String, JTextField>[]>();
+				mapMovimento.put(movimento.getDescricao(), arrJTextField_Quantidade_Tempo);
+				
+				// Adicionando elementos JTextField mapeados à lista
+				listElementos.add(mapMovimento);
+				
 				
 				c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
 				c.weightx = 0.5;
@@ -129,8 +167,15 @@ public class PanelCentral extends JPanel {
 
 		}
 		
-		
 		this.add(tabbedFaixas);
+	}
+	
+	/**
+	 * Obtém a lista de elementos JTextField
+	 * @return
+	 */
+	public List<Map<String, Map<String, JTextField>[]>> getListaDeElementos() {
+		return this.listElementos;
 	}
 
 }
