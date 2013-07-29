@@ -5,12 +5,17 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -57,16 +62,20 @@ public class PanelCentral extends JPanel {
 			JLabel labelMovimento = new JLabel("Movimento");
 			JLabel labelQuantidade = new JLabel("Nº");
 			JLabel labelIntervalo = new JLabel("T(s)");
+			JLabel labelGolpe = new JLabel("Golpe");
+			JLabel labelvozPath = new JLabel("Comando de voz");
 
 			JPanel tabPanel = new JPanel();
 			tabPanel.setPreferredSize(new Dimension(dimension.width - 40, dimension.height - 20));
 			
 			JPanel conteudoPanel = new JPanel();
 			conteudoPanel.setLayout(new GridBagLayout());
+//			conteudoPanel.setPreferredSize(new Dimension(dimension.width - 45, dimension.height - 25));
+			
 			GridBagConstraints c = new GridBagConstraints();
 			
 			JScrollPane scrollPane = new JScrollPane(tabPanel);
-			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//			scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			
 			// Layout do Conteudo Panel
 			c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
@@ -100,18 +109,42 @@ public class PanelCentral extends JPanel {
 			
 			conteudoPanel.add(labelIntervalo, c);
 			
+			c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
+			c.weightx = 0.5;
+			c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+			c.gridwidth = 1; // 1 columns wide
+			c.gridx = 5;
+			c.gridy = 0;
+			c.insets = new Insets(5, 5, 0, 5); // top padding
+			
+			conteudoPanel.add(labelGolpe, c);
+			
+			c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
+			c.weightx = 0.5;
+			c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+			c.gridwidth = 2; // 1 columns wide
+			c.gridx = 6;
+			c.gridy = 0;
+			c.insets = new Insets(5, 5, 0, 5); // top padding
+			
+			conteudoPanel.add(labelvozPath, c);
+			
 			int i = 1;
 			List<Movimento> movimentos = faixa.getMovimentos();
 			for (Movimento movimento : movimentos) {
 				
 				// Criando Elementos
 				JLabel labelDescricaoMovimento = new JLabel(movimento.getDescricao());
-				JTextField jtxQuantidade = new JTextField();
-				JTextField jtxIntervaloSegundos = new JTextField();
 				
-				// Inserindo valores nos JText Field
-				jtxIntervaloSegundos.setText(String.valueOf(movimento.getIntervaloSegundos()));
-				jtxQuantidade.setText(String.valueOf(movimento.getQtdRepeticao()));
+				JTextField jtxQuantidade = new JTextField(String.valueOf(movimento.getQtdRepeticao()));
+				
+				JTextField jtxIntervaloSegundos = new JTextField(String.valueOf(movimento.getIntervaloSegundos()));
+				
+				JCheckBox jcbGolpe = new JCheckBox("", (movimento.getEh_golpe() == 1 ? true : false));
+				
+				JTextField jtxVozPath = new JTextField(movimento.getVoz_path());
+				jtxVozPath.setPreferredSize(new Dimension(200, 20));
+				
 
 				// Empacotando JtextFields: quantidade e tempo
 				Map<String, JTextField>[] arrJTextField_Quantidade_Tempo = new HashMap[2];
@@ -159,6 +192,26 @@ public class PanelCentral extends JPanel {
 				
 				conteudoPanel.add(jtxIntervaloSegundos, c);
 				
+				c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
+				c.weightx = 0.5;
+//				c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+				c.gridwidth = 1; // 3 columns wide
+				c.gridx = 5;
+				c.gridy = i;
+				c.insets = new Insets(5, 5, 0, 5); // top padding
+				
+				conteudoPanel.add(jcbGolpe, c);
+				
+				c.fill = GridBagConstraints.HORIZONTAL; 	// natural height, maximum width
+				c.weightx = 0.5;
+//				c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+				c.gridwidth = 2; // 3 columns wide
+				c.gridx = 6;
+				c.gridy = i;
+				c.insets = new Insets(5, 5, 0, 5); // top padding
+				
+				conteudoPanel.add(jtxVozPath, c);
+				
 				i++;
 			}
 
@@ -185,5 +238,11 @@ public class PanelCentral extends JPanel {
 	public JTabbedPane getJTabbedPaneFaixas() {
 		return this.tabbedFaixas;
 	}
-
+	
+	// TODO: Retornar a lista de faixas com os valores já editados para serem persistidos 
+	public List<Faixa> getFaixas() {
+		
+		return null;
+	}
+	
 }

@@ -22,7 +22,7 @@ import ddd.Faixa;
 public class Main extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	private Dimension dimension = new Dimension(590, 480);
+	private Dimension dimension = new Dimension(790, 480);
 	private MenuBar menu;
 	private PanelCentral panelCentral;
 	private JPanel panelSul;
@@ -36,9 +36,6 @@ public class Main extends JFrame {
 	private JButton btnContinuar;
 	private JButton btnReiniciar;
 	
-	/**
-	 * TODO: Receber a lista do painel Central e comparar com a lista de faixas existente. Detectar as alteraçoes e salvar.
-	 */
 	public Main() {
 		super("Foco Marcial");
 		
@@ -115,6 +112,7 @@ public class Main extends JFrame {
 		return panelSul;
 	}
 	
+	// TODO: Obter lista de faixas editadas e persisti-las
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
 		JOptionPane.showMessageDialog(null,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
 	}
