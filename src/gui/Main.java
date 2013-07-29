@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 
 import ddd.ArteMarcial;
 import ddd.Faixa;
+import ddd.Movimento;
 
 public class Main extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -112,9 +113,19 @@ public class Main extends JFrame {
 		return panelSul;
 	}
 	
-	// TODO: Obter lista de faixas editadas e persisti-las
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
-		JOptionPane.showMessageDialog(null,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
+		List<Faixa> faixas = panelCentral.getFaixas();
+		
+		for(Faixa faixa : faixas) {
+			List<Movimento> movimentos = faixa.getMovimentos();
+			for(Movimento movimento : movimentos) {
+				JOptionPane.showMessageDialog(null, "Movimento: " + movimento.getDescricao() + "\n Quantidade:" + movimento.getQtdRepeticao());
+			}
+			
+		}
+		
+		// TODO: Salvar no banco
+		
 	}
 	
 	private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {
