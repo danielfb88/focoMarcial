@@ -77,7 +77,7 @@ public class MovimentoDAO extends DAO {
 		builder.append("observacao = '" + observacao + "', ");
 		builder.append("qtd_repeticao = " + qtd_repeticao + ", ");
 		builder.append("intervalo_segundos = " + intervalo_segundos + ", ");
-		builder.append("eh_golpe = '" + eh_golpe + "', ");
+		builder.append("eh_golpe = " + eh_golpe + ", ");
 		builder.append("voz_path = '" + voz_path + "' ");
 
 		builder.append("WHERE id_movimento = " + id_movimento + ";");

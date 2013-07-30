@@ -1,5 +1,7 @@
 package ddd;
 
+import dao.MovimentoDAO;
+
 public class Movimento {
 	private int id;
 	private Faixa faixa;
@@ -95,6 +97,20 @@ public class Movimento {
 
 	public void setVoz_path(String voz_path) {
 		this.voz_path = voz_path;
+	}
+	
+	public boolean salvar() {
+		MovimentoDAO movimentoDAO = new MovimentoDAO();
+		int retorno = 0;
+		
+		if (this.id == 0) {
+			retorno = movimentoDAO.adicionar(faixa.getId(), this.descricao, this.observacao, this.qtdRepeticao, this.intervaloSegundos, this.eh_golpe, this.voz_path);
+			
+		} else {
+			retorno = movimentoDAO.editar(this.id, faixa.getId(), this.descricao, this.observacao, this.qtdRepeticao, this.intervaloSegundos, this.eh_golpe, this.voz_path);
+		}
+		
+		return retorno > 0;
 	}
 
 	@Override

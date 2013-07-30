@@ -113,23 +113,21 @@ public class Main extends JFrame {
 		return panelSul;
 	}
 	
+	// TODO: Tchario..Tchumvi nao estao sendo editados
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
 		List<Faixa> faixas = panelCentral.getFaixas();
 		
 		for(Faixa faixa : faixas) {
 			List<Movimento> movimentos = faixa.getMovimentos();
 			for(Movimento movimento : movimentos) {
-				JOptionPane.showMessageDialog(null, "Movimento: " + movimento.getDescricao() + "\n Quantidade:" + movimento.getQtdRepeticao());
+				if (!movimento.salvar())
+					JOptionPane.showMessageDialog(null,"Não foi possível salvar as configurações do movimento " + movimento.getDescricao() + ".");
 			}
-			
 		}
-		
-		// TODO: Salvar no banco
-		
 	}
 	
 	private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {
-		JOptionPane.showMessageDialog(null,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
+		JOptionPane.showMessageDialog(this,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
 	}
 	
 	private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {

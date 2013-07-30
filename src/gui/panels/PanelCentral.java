@@ -267,8 +267,7 @@ public class PanelCentral extends JPanel {
 			for (Map<String, Object[][]> mapElemento : listElementos) {
 				if (mapElemento.containsKey(faixa.getDescricao())) {
 
-					Object[][] arrElementosMovimento = mapElemento.get(faixa
-							.getDescricao());
+					Object[][] arrElementosMovimento = mapElemento.get(faixa.getDescricao());
 
 					String nomeMovimento = (String) arrElementosMovimento[0][1];
 					JTextField jtxQtdRepeticao = (JTextField) arrElementosMovimento[1][1];
@@ -285,12 +284,9 @@ public class PanelCentral extends JPanel {
 						 * segundos + isGolpe + vozPath
 						 */
 						if (movimento.getDescricao().equals(nomeMovimento)) {
-							movimento.setQtdRepeticao(Integer
-									.parseInt(jtxQtdRepeticao.getText()));
-							movimento.setIntervaloSegundos(Integer
-									.parseInt(jtxIntervaloSegundos.getText()));
-							movimento
-									.setEh_golpe(jcbGolpe.isSelected() ? 1 : 0);
+							movimento.setQtdRepeticao(Integer.parseInt(jtxQtdRepeticao.getText()));
+							movimento.setIntervaloSegundos(Integer.parseInt(jtxIntervaloSegundos.getText()));
+							movimento.setEh_golpe(jcbGolpe.isSelected() ? 1 : 0);
 							movimento.setVoz_path(jtxVozPath.getText());
 
 							break;
