@@ -6,6 +6,7 @@ import gui.panels.PanelCentral;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -40,11 +41,11 @@ public class Main extends JFrame {
 	public Main() {
 		super("Foco Marcial");
 		
-		setLocationRelativeTo(null);
 		setResizable(false);
 		setPreferredSize(dimension);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-//		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		setLocation((Toolkit.getDefaultToolkit().getScreenSize().width  / 2) - (dimension.width / 2), 
+				(Toolkit.getDefaultToolkit().getScreenSize().height  / 2) - (dimension.height / 2));
 		
 		// Menu
 		menu = new MenuBar();
@@ -113,7 +114,6 @@ public class Main extends JFrame {
 		return panelSul;
 	}
 	
-	// TODO: Tchario..Tchumvi nao estao sendo editados
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
 		List<Faixa> faixas = panelCentral.getFaixas();
 		
@@ -124,8 +124,12 @@ public class Main extends JFrame {
 					JOptionPane.showMessageDialog(null,"Não foi possível salvar as configurações do movimento " + movimento.getDescricao() + ".");
 			}
 		}
+		JOptionPane.showMessageDialog(null,"Update concluído.");
 	}
 	
+	/**
+	 * TODO: Enviar a lista para o controlador e executar.
+	 */
 	private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {
 		JOptionPane.showMessageDialog(this,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
 	}

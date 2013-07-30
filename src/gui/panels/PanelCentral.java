@@ -34,8 +34,6 @@ public class PanelCentral extends JPanel {
 
 	public PanelCentral(Dimension dimension, List<Faixa> faixas) {
 		setBackground(Color.DARK_GRAY);
-		setPreferredSize(new Dimension(dimension.width - 5,
-				dimension.height - 5));
 
 		this.faixas = faixas;
 		montarTabbedPanel(dimension);
@@ -67,8 +65,6 @@ public class PanelCentral extends JPanel {
 
 			JPanel conteudoPanel = new JPanel();
 			conteudoPanel.setLayout(new GridBagLayout());
-			// conteudoPanel.setPreferredSize(new Dimension(dimension.width -
-			// 45, dimension.height - 25));
 
 			GridBagConstraints c = new GridBagConstraints();
 
@@ -139,7 +135,7 @@ public class PanelCentral extends JPanel {
 				// Criando Elementos
 				JLabel labelDescricaoMovimento = new JLabel(
 						movimento.getDescricao());
-
+				
 				JTextField jtxQuantidade = new JTextField(
 						String.valueOf(movimento.getQtdRepeticao()));
 
@@ -154,22 +150,26 @@ public class PanelCentral extends JPanel {
 
 				// Inserindo os elementos em uma lista
 				Map<String, Object[][]> mapFaixa = new HashMap<String, Object[][]>();
-				Object[][] arrElementos = new Object[5][2];
+				Object[][] arrElementos = new Object[6][2];
+				
+				arrElementos[0][0] = "intId";
+				arrElementos[0][1] = movimento.getId();
 
-				arrElementos[0][0] = "StrMovimento";
-				arrElementos[0][1] = movimento.getDescricao();
+				arrElementos[1][0] = "strMovimento";
+				arrElementos[1][1] = movimento.getDescricao();
 
-				arrElementos[1][0] = "jtxQuantidade";
-				arrElementos[1][1] = jtxQuantidade;
+				arrElementos[2][0] = "jtxQuantidade";
+				arrElementos[2][1] = jtxQuantidade;
 
-				arrElementos[2][0] = "jtxIntervaloSegundos";
-				arrElementos[2][1] = jtxIntervaloSegundos;
-
-				arrElementos[3][0] = "jcbGolpe";
-				arrElementos[3][1] = jcbGolpe;
+				arrElementos[3][0] = "jtxIntervaloSegundos";
+				arrElementos[3][1] = jtxIntervaloSegundos;
 
 				arrElementos[4][0] = "jtxVozPath";
 				arrElementos[4][1] = jtxVozPath;
+				
+				arrElementos[5][0] = "jcbGolpe";
+				arrElementos[5][1] = jcbGolpe;
+
 
 				mapFaixa.put(faixa.getDescricao(), arrElementos);
 
@@ -243,15 +243,6 @@ public class PanelCentral extends JPanel {
 	}
 
 	/**
-	 * Obtém o JTabbedPane das faixas
-	 * 
-	 * @return
-	 */
-	public JTabbedPane getJTabbedPaneFaixas() {
-		return this.tabbedFaixas;
-	}
-
-	/**
 	 * Retornar a lista de faixas com os valores já editados para serem
 	 * persistidos
 	 * 
@@ -269,11 +260,12 @@ public class PanelCentral extends JPanel {
 
 					Object[][] arrElementosMovimento = mapElemento.get(faixa.getDescricao());
 
-					String nomeMovimento = (String) arrElementosMovimento[0][1];
-					JTextField jtxQtdRepeticao = (JTextField) arrElementosMovimento[1][1];
-					JTextField jtxIntervaloSegundos = (JTextField) arrElementosMovimento[2][1];
-					JCheckBox jcbGolpe = (JCheckBox) arrElementosMovimento[3][1];
+					int idMovimento = (int) arrElementosMovimento[0][1];
+//					String nomeMovimento = (String) arrElementosMovimento[1][1];
+					JTextField jtxQtdRepeticao = (JTextField) arrElementosMovimento[2][1];
+					JTextField jtxIntervaloSegundos = (JTextField) arrElementosMovimento[3][1];
 					JTextField jtxVozPath = (JTextField) arrElementosMovimento[4][1];
+					JCheckBox jcbGolpe = (JCheckBox) arrElementosMovimento[5][1];
 
 					// Iterando a lista de movimentos
 					List<Movimento> movimentos = faixa.getMovimentos();
@@ -283,7 +275,7 @@ public class PanelCentral extends JPanel {
 						 * Alterando: + Numero de Repetições + Intervalo em
 						 * segundos + isGolpe + vozPath
 						 */
-						if (movimento.getDescricao().equals(nomeMovimento)) {
+						if (movimento.getId() == idMovimento) {
 							movimento.setQtdRepeticao(Integer.parseInt(jtxQtdRepeticao.getText()));
 							movimento.setIntervaloSegundos(Integer.parseInt(jtxIntervaloSegundos.getText()));
 							movimento.setEh_golpe(jcbGolpe.isSelected() ? 1 : 0);
