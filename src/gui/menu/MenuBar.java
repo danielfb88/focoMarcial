@@ -25,35 +25,14 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem menuItem_arquivo_sair = new JMenuItem("Sair");
 
 	public MenuBar() {
-		configurarElementos();
-		criarEventosDosElementos();
+		criarEventos();
 		adicionarMenus();
-	}
-
-	/**
-	 * Espaço para a configuração dos elementos
-	 */
-	private void configurarElementos() {
-		// Config JMenuItem Categoria
-		// menuItem_categoria_adicionar.setAccelerator(
-		// javax.swing.KeyStroke.getKeyStroke(
-		// java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
-
-		// Config JMenuItem Informacao
-		// menuItem_informacao.setAccelerator(
-		// javax.swing.KeyStroke.getKeyStroke(
-		// java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-
-		// Config JMenuItem Pergunta
-		// menuItem_pergunta.setAccelerator(
-		// javax.swing.KeyStroke.getKeyStroke(
-		// java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
 	}
 
 	/**
 	 * Espaço para a criação dos eventos para os Elementos de Menu criados
 	 */
-	private void criarEventosDosElementos() {
+	private void criarEventos() {
 
 		menuItem_arquivo_reiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {

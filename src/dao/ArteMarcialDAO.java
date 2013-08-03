@@ -9,24 +9,36 @@ import java.util.List;
 import util.DAO;
 import ddd.ArteMarcial;
 
+/**
+ * DAO da Arte Marcial
+ * 
+ * @author Daniel Bonfim <daniel.fb88@gmail.com>
+ * @since 03/08/2013
+ * @version 1.0
+ * 
+ */
 public class ArteMarcialDAO extends DAO {
 
 	/**
-	 * Adicionar Arte Marcial
+	 * Adicionar Arte Marcial oa banco de dados
 	 * 
 	 * @param descricao
 	 *            Nome da Arte Marcial
-	 * @return int
+	 * @param voz_path
+	 *            Endereço do arquivo de som de chamada
+	 * @return Número de linhas afetadas
 	 */
 	public int adicionar(String descricao, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO artemarcial (descricao, voz_path) VALUES ('" + descricao + "', '" + voz_path + "');");
+		builder.append("INSERT INTO artemarcial (descricao, voz_path) VALUES (");
+		builder.append("'" + descricao + "', ");
+		builder.append("'" + voz_path + "'");
+		builder.append(");");
 
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			linhasAfetadas = ps.executeUpdate();
 			ps.close();
@@ -44,26 +56,26 @@ public class ArteMarcialDAO extends DAO {
 	 * Editar Arte Marcial
 	 * 
 	 * @param id_artemarcial
-	 *            Id da arte marcial a ser editado
+	 *            Id da Arte Marcial a ser editada
 	 * @param descricao
 	 *            Novo nome
-	 * 
-	 * @return int
+	 * @param voz_path
+	 *            Novo endereço do arquivo de som
+	 * @return Número de linhas afetadas
 	 */
 	public int editar(int id_artemarcial, String descricao, String voz_path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("UPDATE artemarcial SET ");
-		
+
 		builder.append("descricao = '" + descricao + "', ");
 		builder.append("voz_path = '" + voz_path + "' ");
-		
+
 		builder.append("WHERE id_artemarcial = " + id_artemarcial + ";");
 
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			linhasAfetadas = ps.executeUpdate();
 			ps.close();
@@ -81,20 +93,17 @@ public class ArteMarcialDAO extends DAO {
 	 * Excluir Arte Marcial
 	 * 
 	 * @param id_artemarcial
-	 *            Id da arte marcial a ser excluído
-	 * 
-	 * @return int
+	 *            Id da Arte Marcial a ser excluída
+	 * @return Número de linha(s) afetadas
 	 */
 	public int excluir(int id_artemarcial) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("DELETE FROM artemarcial WHERE id_artemarcial = "
-				+ id_artemarcial + ";");
+		builder.append("DELETE FROM artemarcial WHERE id_artemarcial = " + id_artemarcial + ";");
 
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			linhasAfetadas = ps.executeUpdate();
 			ps.close();
@@ -105,14 +114,16 @@ public class ArteMarcialDAO extends DAO {
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		
+
 		return linhasAfetadas;
 	}
-	
+
 	/**
-	 * Obtém Arte Marcial por ID
+	 * Efetua uma consulta no banco e obtém a Arte Marcial por ID
 	 * 
-	 * @return
+	 * @param id_artemarcial
+	 *            Id da Arte Marcial
+	 * @return Objeto da Arte Marcial
 	 */
 	public ArteMarcial getById(int id_artemarcial) {
 		ArteMarcial arteMarcial = null;
@@ -121,11 +132,14 @@ public class ArteMarcialDAO extends DAO {
 
 		builder.append("SELECT * FROM artemarcial WHERE id_artemarcial = " + id_artemarcial + ";");
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			rs = ps.executeQuery();
-			arteMarcial = new ArteMarcial(rs.getInt("id_artemarcial"), rs.getString("descricao"), rs.getString("voz_path"));
+			arteMarcial = new ArteMarcial(
+					rs.getInt("id_artemarcial"),
+					rs.getString("descricao"),
+					rs.getString("voz_path")
+					);
 
 			rs.close();
 			ps.close();
@@ -139,11 +153,12 @@ public class ArteMarcialDAO extends DAO {
 
 		return arteMarcial;
 	}
-	
+
 	/**
-	 * Obtém todas as Artes Marciais cadastradas
+	 * Efetua uma consulta no banco e obtém todas as Artes Marciais
+	 * cadadastradas.
 	 * 
-	 * @return
+	 * @return Lista das Artes Marciais cadastradas
 	 */
 	public List<ArteMarcial> getArtesMarciais() {
 		ArrayList<ArteMarcial> artesMarciais = new ArrayList<ArteMarcial>();
@@ -152,19 +167,17 @@ public class ArteMarcialDAO extends DAO {
 
 		builder.append("SELECT * FROM artemarcial;");
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				artesMarciais.add(
 						new ArteMarcial(
-								rs.getInt("id_artemarcial"), 
-								rs.getString("descricao"), 
+								rs.getInt("id_artemarcial"),
+								rs.getString("descricao"),
 								rs.getString("voz_comando")
-								)
-						);
+						));
 			}
 
 			rs.close();

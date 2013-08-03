@@ -2,19 +2,53 @@ package ddd;
 
 import java.util.List;
 
+import dao.MovimentoDAO;
+
+/**
+ * DDD da Faixa
+ * 
+ * @author Daniel Bonfim <daniel.fb88@gmail.com>
+ * @since 03/08/2013
+ * @version 1.0
+ * 
+ */
 public class Faixa {
+	/**
+	 * Id
+	 */
 	private int id;
+
+	/**
+	 * Arte Marcial
+	 */
 	private ArteMarcial arteMarcial;
+
+	/**
+	 * Identiticação hierarquica na AM
+	 */
 	private int gub;
+
+	/**
+	 * Cor da faixa
+	 */
 	private String descricao;
+
+	/**
+	 * Endereço do arquivo de som da faixa
+	 */
 	private String voz_path;
-	
+
+	private MovimentoDAO movimentoDAO = new MovimentoDAO();
+
+	/**
+	 * Movimentos da faixa
+	 */
 	private List<Movimento> movimentos;
-	
+
 	public Faixa() {
 		super();
 	}
-	
+
 	public Faixa(Integer id) {
 		super();
 		this.id = id;
@@ -87,6 +121,22 @@ public class Faixa {
 
 	public void setMovimentos(List<Movimento> movimentos) {
 		this.movimentos = movimentos;
+	}
+
+	/**
+	 * Obtém uma lista com todos os movimentos desta faixa
+	 * 
+	 * @return
+	 */
+	public List<Movimento> getTodosOsMovimentos() {
+		List<Movimento> movimentos = movimentoDAO.getMovimentos(this.id);
+
+		for (Movimento movimento : movimentos) {
+			movimento.setFaixa(this);
+		}
+
+		this.movimentos = movimentos;
+		return movimentos;
 	}
 
 	@Override

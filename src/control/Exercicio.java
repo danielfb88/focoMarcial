@@ -1,5 +1,10 @@
 package control;
 
+/**
+ * TODO: TRANSFORMAR EM CONFIGURAÇÃO
+ * @author daniel
+ *
+ */
 public enum Exercicio {
 	ABDOMINAL(100, 0, "core/sound/exercicios/abdominal.wav"), 
 	FLEXAO(15, 1, "core/sound/exercicios/flexao.wav"), 

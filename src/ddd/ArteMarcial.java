@@ -4,28 +4,45 @@ import java.util.List;
 
 import dao.ArteMarcialDAO;
 import dao.FaixaDAO;
-import dao.MovimentoDAO;
 
+/**
+ * DDD Arte Marcial
+ * 
+ * @author Daniel Bonfim <daniel.fb88@gmail.com>
+ * @since 03/08/2013
+ * @version 1.0
+ * 
+ */
 public class ArteMarcial {
+	/**
+	 * Id
+	 */
+	private int id;
+
+	/**
+	 * Nome da Arte Marcial
+	 */
+	private String descricao;
+
+	/**
+	 * Endereço do arquivo de som do nome da Arte Marcial
+	 */
+	private String voz_path;
+
 	private FaixaDAO faixaDAO = new FaixaDAO();
 	private ArteMarcialDAO arteMarcialDAO = new ArteMarcialDAO();
-	private MovimentoDAO movimentoDAO = new MovimentoDAO();
-	
-	private int id;
-	private String descricao;
-	private String voz_path;
-	
+
 	private List<Faixa> faixas;
-	
+
 	public ArteMarcial() {
 		super();
 	}
-	
+
 	public ArteMarcial(int id) {
 		super();
 		this.id = id;
 	}
-		
+
 	public ArteMarcial(Integer id, String descricao, String voz_path) {
 		super();
 		this.id = id;
@@ -40,7 +57,7 @@ public class ArteMarcial {
 		this.voz_path = voz_path;
 		this.faixas = faixas;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -80,38 +97,40 @@ public class ArteMarcial {
 	 */
 	public List<Faixa> getTodasAsFaixas() {
 		List<Faixa> faixas = faixaDAO.getFaixas(this.id);
-		
-		for(int i=0; i<faixas.size(); i++) {
-			Faixa faixa = faixas.get(i);
-			Integer idFaixa = faixa.getId();
-			
+
+		for (Faixa faixa : faixas) {
 			faixa.setArteMarcial(this);
-			faixa.setMovimentos(movimentoDAO.getMovimentos(idFaixa));
 		}
-		
+
 		this.faixas = faixas;
 		return this.faixas;
 	}
-	
+
 	/**
 	 * Obtém todas as faixas entre os GUBs especificados.
 	 * 
+	 * @param gubInicial
+	 *            Identificação hierarquica na AM
+	 * @param gubFinal
+	 *            Identificação hierarquica na AM
 	 * @return
 	 */
 	public List<Faixa> getFaixasEntreGubs(int gubInicial, int gubFinal) {
 		List<Faixa> faixas = faixaDAO.getFaixas(this.id, gubInicial, gubFinal);
-		
-		for(int i=0; i<faixas.size(); i++) {
-			Faixa faixa = faixas.get(i);
-			Integer idFaixa = faixa.getId();
-			
+
+		for (Faixa faixa : faixas) {
 			faixa.setArteMarcial(this);
-			faixa.setMovimentos(movimentoDAO.getMovimentos(idFaixa));
 		}
-		
+
 		return faixas;
 	}
-	
+
+	/**
+	 * Obtém a Arte Marcial pelo Id
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public ArteMarcial getById(int id) {
 		return arteMarcialDAO.getById(id);
 	}

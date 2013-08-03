@@ -1,11 +1,8 @@
 package control;
 
 /**
- * Descanso
- * 
- * @author Daniel Bonfim <daniel.fb88@gmail.com>
- * @version 1.0
- * @since 22-07-2013
+ * TODO: TRANSFORMAR EM CONFIGURAÇÃO
+ * @author daniel
  *
  */
 public enum Descanso {

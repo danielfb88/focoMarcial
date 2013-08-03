@@ -32,16 +32,13 @@ public class Main extends JFrame {
 	
 	// Botões do Panel Sul
 	private JButton btnSalvar;
-	private JButton btnIniciar;
-	private JButton btnPausar;
-	private JButton btnContinuar;
+	private JButton btnPlayPause;
 	private JButton btnReiniciar;
 	
 	private Aula aula;
 	private List<Faixa> faixas;
 
 	/**
-	 * TODO: Enviar a lista para o controlador e executar.
 	 * TODO: Desenvolver um player para sons orientais interessantes em loop
 	 */
 	public Main() {
@@ -75,9 +72,7 @@ public class Main extends JFrame {
 		panelSul.setBackground(Color.BLACK);
 		
 		btnSalvar = new JButton("Salvar");
-		btnIniciar = new JButton("Iniciar");
-		btnPausar = new JButton("Pausar");
-		btnContinuar = new JButton("Continuar");
+		btnPlayPause = new JButton("Play");
 		btnReiniciar = new JButton("Reiniciar");
 		
 		// ** Eventos **
@@ -87,21 +82,9 @@ public class Main extends JFrame {
 			}
 		});
 		
-		btnIniciar.addActionListener(new ActionListener() {
+		btnPlayPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				btnIniciarActionPerformed(evt);
-			}
-		});
-		
-		btnPausar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnPausarActionPerformed(evt);
-			}
-		});
-		
-		btnContinuar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnContinuarActionPerformed(evt);
+				btnPlayPauseActionPerformed(evt);
 			}
 		});
 		
@@ -112,9 +95,7 @@ public class Main extends JFrame {
 		});
 		
 		panelSul.add(btnSalvar);
-		panelSul.add(btnIniciar);
-		panelSul.add(btnPausar);
-		panelSul.add(btnContinuar);
+		panelSul.add(btnPlayPause);
 		panelSul.add(btnReiniciar);
 		
 		return panelSul;
@@ -133,24 +114,22 @@ public class Main extends JFrame {
 		JOptionPane.showMessageDialog(null,"Update concluído.");
 	}
 	
-	private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {
 		if(aula == null) {
 			// Arte Marcial = Hapkido
 			aula = new Aula(new ArteMarcial().getById(1));
 			aula.start();
-		}
-	}
-	
-	private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {
-		if(aula.isPausaSolicitada() == false) {
-			aula.pausar();
+			btnPlayPause.setText("Pause");
+			
 		} else {
-			aula.continuar();
+			if(aula.isPausaSolicitada() == false) {
+				aula.pausar();
+				btnPlayPause.setText("Play");
+			} else {
+				aula.continuar();
+				btnPlayPause.setText("Pause");
+			}
 		}
-	}
-	
-	private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {
-		JOptionPane.showMessageDialog(null,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
 	}
 	
 	private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {
