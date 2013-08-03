@@ -21,11 +21,11 @@ public class ArteMarcial {
 		super();
 	}
 	
-	public ArteMarcial(Integer id) {
+	public ArteMarcial(int id) {
 		super();
 		this.id = id;
 	}
-	
+		
 	public ArteMarcial(Integer id, String descricao, String voz_path) {
 		super();
 		this.id = id;
@@ -89,7 +89,8 @@ public class ArteMarcial {
 			faixa.setMovimentos(movimentoDAO.getMovimentos(idFaixa));
 		}
 		
-		return faixas;
+		this.faixas = faixas;
+		return this.faixas;
 	}
 	
 	/**

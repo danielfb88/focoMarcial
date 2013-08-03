@@ -1,8 +1,5 @@
 package gui.menu;
 
-import guiteste.categoria.Frm_AdicionarCategoria;
-import guiteste.categoria.Frm_PesquisarCategoria;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -57,18 +54,6 @@ public class MenuBar extends JMenuBar {
 	 * Espaço para a criação dos eventos para os Elementos de Menu criados
 	 */
 	private void criarEventosDosElementos() {
-		// Evento Item Categoria Adicionar
-		menuItem_arquivo_novo_faixa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				jMenuItem_categoriaAdicionarActionPerformed(evt);
-			}
-		});
-
-		menuItem_arquivo_novo_movimento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				jMenuItem_categoriaPesquisarActionPerformed(evt);
-			}
-		});
 
 		menuItem_arquivo_reiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -104,16 +89,6 @@ public class MenuBar extends JMenuBar {
 		// Panel this
 		add(menu_arquivo);
 		add(menu_ajuda);
-	}
-
-	// Action Performed - Categoria Adicionar
-	private void jMenuItem_categoriaAdicionarActionPerformed(java.awt.event.ActionEvent evt) {
-		new Frm_AdicionarCategoria().setVisible(true);
-	}
-
-	// Action Performed - Categoria Pesquisar
-	private void jMenuItem_categoriaPesquisarActionPerformed(java.awt.event.ActionEvent evt) {
-		new Frm_PesquisarCategoria().setVisible(true);
 	}
 
 	private void jMenuItem_configuracaoActionPerformed(java.awt.event.ActionEvent evt) {

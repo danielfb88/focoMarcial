@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import control.Aula;
 import ddd.ArteMarcial;
 import ddd.Faixa;
 import ddd.Movimento;
@@ -29,8 +30,6 @@ public class Main extends JFrame {
 	private PanelCentral panelCentral;
 	private JPanel panelSul;
 	
-	private List<Faixa> faixas;
-	
 	// Botões do Panel Sul
 	private JButton btnSalvar;
 	private JButton btnIniciar;
@@ -38,6 +37,13 @@ public class Main extends JFrame {
 	private JButton btnContinuar;
 	private JButton btnReiniciar;
 	
+	private Aula aula;
+	private List<Faixa> faixas;
+
+	/**
+	 * TODO: Enviar a lista para o controlador e executar.
+	 * TODO: Desenvolver um player para sons orientais interessantes em loop
+	 */
 	public Main() {
 		super("Foco Marcial");
 		
@@ -115,7 +121,7 @@ public class Main extends JFrame {
 	}
 	
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
-		List<Faixa> faixas = panelCentral.getFaixas();
+		faixas = panelCentral.getFaixas();
 		
 		for(Faixa faixa : faixas) {
 			List<Movimento> movimentos = faixa.getMovimentos();
@@ -127,15 +133,20 @@ public class Main extends JFrame {
 		JOptionPane.showMessageDialog(null,"Update concluído.");
 	}
 	
-	/**
-	 * TODO: Enviar a lista para o controlador e executar.
-	 */
 	private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {
-		JOptionPane.showMessageDialog(this,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
+		if(aula == null) {
+			// Arte Marcial = Hapkido
+			aula = new Aula(new ArteMarcial().getById(1));
+			aula.start();
+		}
 	}
 	
 	private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {
-		JOptionPane.showMessageDialog(null,"Meu primeiro programa gráfico!\n Obrigado, Curso Java Progressivo!");
+		if(aula.isPausaSolicitada() == false) {
+			aula.pausar();
+		} else {
+			aula.continuar();
+		}
 	}
 	
 	private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {

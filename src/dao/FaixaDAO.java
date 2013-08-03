@@ -123,7 +123,7 @@ public class FaixaDAO extends DAO {
 			
 			faixa = new Faixa(
 					rs.getInt("id_faixa"), 
-					new ArteMarcial(rs.getInt("id_artemarcial")), 
+					null, 
 					rs.getInt("gub"), 
 					rs.getString("descricao"),
 					rs.getString("voz_path")

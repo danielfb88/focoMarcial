@@ -1,6 +1,5 @@
 package control;
 
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -35,6 +34,12 @@ public class Aula extends Thread {
 	private String contagemDiretorioPath = "core/sound/contagem/";
 	
 	private boolean pausar;
+	
+	public Aula(ArteMarcial arteMarcial) {
+		super();
+		this.arteMarcial = arteMarcial;
+		this.faixas = arteMarcial.getTodasAsFaixas();
+	}
 	
 	public Aula(ArteMarcial arteMarcial, List<Faixa> faixas) {
 		super();
