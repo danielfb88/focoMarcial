@@ -202,7 +202,7 @@ public class MovimentoDAO extends DAO {
 	 * Obtém Movimentos pelo Id da faixa
 	 * 
 	 * @param id_faixa
-	 * @return
+	 * @return Lista de Objetos Movimento
 	 */
 	public List<Movimento> getMovimentos(int id_faixa) {
 		ArrayList<Movimento> movimentos = new ArrayList<Movimento>();

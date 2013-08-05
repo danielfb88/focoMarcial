@@ -7,22 +7,40 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * MenuBar
+ * 
+ * @author Daniel Bonfim <daniel.fb88@gmail.com>
+ * @since 05/08/2013
+ * @version 1.0
+ *
+ */
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu menu_arquivo = new JMenu("Arquivo");
-	private JMenu menu_ajuda = new JMenu("Ajuda");
+	/************************
+	 * 
+	 * JMenus
+	 * 
+	 *************************
+	 */
+	private JMenu mArquivo = new JMenu("Arquivo");
+	private JMenu mAjuda = new JMenu("Ajuda");
+	private JMenu mConfigurar = new JMenu("Configurar");
 
-	private JMenu menu_arquivo_novo = new JMenu("Novo");
 
-	private JMenuItem menuItem_arquivo_novo_faixa = new JMenuItem("Faixa");
-	private JMenuItem menuItem_arquivo_novo_movimento = new JMenuItem("Movimento");
+	/************************
+	 * 
+	 * Menu Item
+	 * 
+	 *************************
+	 */
+	private JMenuItem iArteMarcial = new JMenuItem("ArteMarcial");
+	private JMenuItem iFaixa = new JMenuItem("Faixa");
+	private JMenuItem iSair = new JMenuItem("Sair");
+	private JMenuItem iFocoMarcial = new JMenuItem("Foco Marcial");
 
-	private JMenuItem menuItem_ajuda_focoMarcial = new JMenuItem("Foco Marcial");
 	
-	private JMenuItem menuItem_arquivo_configurar = new JMenuItem("Configurar");
-	private JMenuItem menuItem_arquivo_reiniciar = new JMenuItem("Reiniciar");
-	private JMenuItem menuItem_arquivo_sair = new JMenuItem("Sair");
 
 	public MenuBar() {
 		criarEventos();
@@ -34,16 +52,10 @@ public class MenuBar extends JMenuBar {
 	 */
 	private void criarEventos() {
 
-		menuItem_arquivo_reiniciar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				jMenuItem_configuracaoActionPerformed(evt);
-			}
-		});
-
 		// Evento Item Sair
-		menuItem_arquivo_sair.addActionListener(new ActionListener() {
+		iSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				jMenuItem_sairActionPerformed(evt);
+				iSairActionPerformed(evt);
 			}
 		});
 	}
@@ -53,28 +65,22 @@ public class MenuBar extends JMenuBar {
 	 */
 	private void adicionarMenus() {
 		// Menu Arquivo
-		menu_arquivo.add(menu_arquivo_novo);
-		menu_arquivo.add(menuItem_arquivo_configurar);
-		menu_arquivo.add(menuItem_arquivo_reiniciar);
-		menu_arquivo.add(menuItem_arquivo_sair);
+		mArquivo.add(mConfigurar);
+		mArquivo.add(iSair);
 		
-		menu_arquivo_novo.add(menuItem_arquivo_novo_faixa);
-		menu_arquivo_novo.add(menuItem_arquivo_novo_movimento);
+		// Menu Configurar
+		mConfigurar.add(iArteMarcial);
+		mConfigurar.add(iFaixa);
 		
 		// Menu Ajuda
-		menu_ajuda.add(menuItem_ajuda_focoMarcial);
-				
+		mAjuda.add(iFocoMarcial);
 
-		// Panel this
-		add(menu_arquivo);
-		add(menu_ajuda);
+		// Panel
+		add(mArquivo);
+		add(mAjuda);
 	}
 
-	private void jMenuItem_configuracaoActionPerformed(java.awt.event.ActionEvent evt) {
-
-	}
-
-	private void jMenuItem_sairActionPerformed(java.awt.event.ActionEvent evt) {
+	private void iSairActionPerformed(java.awt.event.ActionEvent evt) {
 		System.exit(0);
 	}
 

@@ -24,9 +24,20 @@ import javax.swing.JTextField;
 import ddd.Faixa;
 import ddd.Movimento;
 
+/**
+ * TODO: REFATORAR
+ * 
+ * @author Daniel Bonfim <daniel.fb88@gmail.com>
+ * @since 05/08/2013
+ * @version 1.0
+ *
+ */
 public class PanelCentral extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Lista das faixas
+	 */
 	private List<Faixa> faixas;
 	private List<Map<String, Object[][]>> listElementos = new ArrayList<Map<String, Object[][]>>();
 

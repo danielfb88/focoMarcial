@@ -38,10 +38,13 @@ public class Faixa {
 	 */
 	private String voz_path;
 
+	/**
+	 * DAO Movimento
+	 */
 	private MovimentoDAO movimentoDAO = new MovimentoDAO();
 
 	/**
-	 * Movimentos da faixa
+	 * Lista de Movimentos da faixa
 	 */
 	private List<Movimento> movimentos;
 
@@ -126,7 +129,7 @@ public class Faixa {
 	/**
 	 * Obtém uma lista com todos os movimentos desta faixa
 	 * 
-	 * @return
+	 * @return Lista de Movimentos
 	 */
 	public List<Movimento> getTodosOsMovimentos() {
 		List<Movimento> movimentos = movimentoDAO.getMovimentos(this.id);

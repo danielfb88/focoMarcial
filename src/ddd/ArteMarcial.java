@@ -29,8 +29,15 @@ public class ArteMarcial {
 	 */
 	private String voz_path;
 
-	private FaixaDAO faixaDAO = new FaixaDAO();
+	/**
+	 * DAO da Arte Marcial
+	 */
 	private ArteMarcialDAO arteMarcialDAO = new ArteMarcialDAO();
+
+	/**
+	 * DAO da Faixa
+	 */
+	private FaixaDAO faixaDAO = new FaixaDAO();
 
 	private List<Faixa> faixas;
 
@@ -91,6 +98,16 @@ public class ArteMarcial {
 	}
 
 	/**
+	 * Obtém a Arte Marcial pelo Id
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public ArteMarcial getById(int id) {
+		return arteMarcialDAO.getById(id);
+	}
+
+	/**
 	 * Obtém todas as faixas desta Arte Marcial
 	 * 
 	 * @return List<Faixa>
@@ -110,10 +127,10 @@ public class ArteMarcial {
 	 * Obtém todas as faixas entre os GUBs especificados.
 	 * 
 	 * @param gubInicial
-	 *            Identificação hierarquica na AM
+	 *            Identificação hierarquica na Arte Marcial
 	 * @param gubFinal
-	 *            Identificação hierarquica na AM
-	 * @return
+	 *            Identificação hierarquica na Arte Marcial
+	 * @return Lista de faixas
 	 */
 	public List<Faixa> getFaixasEntreGubs(int gubInicial, int gubFinal) {
 		List<Faixa> faixas = faixaDAO.getFaixas(this.id, gubInicial, gubFinal);
@@ -122,17 +139,8 @@ public class ArteMarcial {
 			faixa.setArteMarcial(this);
 		}
 
-		return faixas;
-	}
-
-	/**
-	 * Obtém a Arte Marcial pelo Id
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public ArteMarcial getById(int id) {
-		return arteMarcialDAO.getById(id);
+		this.faixas = faixas;
+		return this.faixas;
 	}
 
 	@Override

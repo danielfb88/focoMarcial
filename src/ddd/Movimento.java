@@ -141,17 +141,37 @@ public class Movimento {
 
 	/**
 	 * Salvar movimento no banco
-	 * @return
+	 * 
+	 * @return Status do sucesso da operação
 	 */
 	public boolean salvar() {
 		MovimentoDAO movimentoDAO = new MovimentoDAO();
 		int retorno = 0;
 
 		if (this.id == 0) {
-			retorno = movimentoDAO.adicionar(faixa.getId(), this.descricao, this.observacao, this.qtdRepeticao, this.intervaloSegundos, this.eh_golpe, this.voz_path);
+			retorno =
+					movimentoDAO.adicionar(
+							faixa.getId(),
+							this.descricao,
+							this.observacao,
+							this.qtdRepeticao,
+							this.intervaloSegundos,
+							this.eh_golpe,
+							this.voz_path
+							);
 
 		} else {
-			retorno = movimentoDAO.editar(this.id, faixa.getId(), this.descricao, this.observacao, this.qtdRepeticao, this.intervaloSegundos, this.eh_golpe, this.voz_path);
+			retorno =
+					movimentoDAO.editar(
+							this.id,
+							faixa.getId(),
+							this.descricao,
+							this.observacao,
+							this.qtdRepeticao,
+							this.intervaloSegundos,
+							this.eh_golpe,
+							this.voz_path
+							);
 		}
 
 		return retorno > 0;
