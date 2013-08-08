@@ -30,16 +30,20 @@ public class ArteMarcial {
 	private String voz_path;
 
 	/**
+	 * Lista das faixas
+	 */
+	private List<Faixa> faixas;
+	
+	/**
 	 * DAO da Arte Marcial
 	 */
 	private ArteMarcialDAO arteMarcialDAO = new ArteMarcialDAO();
-
+	
 	/**
 	 * DAO da Faixa
 	 */
 	private FaixaDAO faixaDAO = new FaixaDAO();
 
-	private List<Faixa> faixas;
 
 	public ArteMarcial() {
 		super();
@@ -104,7 +108,9 @@ public class ArteMarcial {
 	 * @return
 	 */
 	public ArteMarcial getById(int id) {
-		return arteMarcialDAO.getById(id);
+		ArteMarcial arteMarcial = arteMarcialDAO.getById(id);
+		arteMarcial.setFaixas(faixaDAO.getFaixas(arteMarcial.getId()));
+		return arteMarcial;
 	}
 
 	/**

@@ -5,17 +5,13 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -25,12 +21,16 @@ import ddd.Faixa;
 import ddd.Movimento;
 
 /**
- * TODO: REFATORAR
+ * Painel Central. Esta classe irá criar todos os JTextFields e JTabbedPanels
+ * dinamicamente, referindo-os aos movimentos e faixas respectivamente. Esta
+ * classe deverá receber uma lista de Faixas com dados providos do banco, e
+ * poderá retornar a lista com os dados modificados pelo usuário para serem
+ * persistidos.
  * 
  * @author Daniel Bonfim <daniel.fb88@gmail.com>
  * @since 05/08/2013
  * @version 1.0
- *
+ * 
  */
 public class PanelCentral extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -39,8 +39,15 @@ public class PanelCentral extends JPanel {
 	 * Lista das faixas
 	 */
 	private List<Faixa> faixas;
+	
+	/**
+	 * Lista contendo os objetos JTextField que o usuário irá utilizar.
+	 */
 	private List<Map<String, Object[][]>> listElementos = new ArrayList<Map<String, Object[][]>>();
 
+	/**
+	 * TabbedPane que abriga-rá as faixas com suas listas de movimentos
+	 */
 	private JTabbedPane tabbedFaixas;
 
 	public PanelCentral(Dimension dimension, List<Faixa> faixas) {
@@ -51,7 +58,7 @@ public class PanelCentral extends JPanel {
 	}
 
 	/**
-	 * Monta JTabbedPanel de acordo com informações vindas do banco
+	 * Monta JTabbedPanel utilizando uma faixa para cada aba
 	 * 
 	 * @param dimension
 	 */
@@ -146,7 +153,7 @@ public class PanelCentral extends JPanel {
 				// Criando Elementos
 				JLabel labelDescricaoMovimento = new JLabel(
 						movimento.getDescricao());
-				
+
 				JTextField jtxQuantidade = new JTextField(
 						String.valueOf(movimento.getQtdRepeticao()));
 
@@ -162,7 +169,7 @@ public class PanelCentral extends JPanel {
 				// Inserindo os elementos em uma lista
 				Map<String, Object[][]> mapFaixa = new HashMap<String, Object[][]>();
 				Object[][] arrElementos = new Object[6][2];
-				
+
 				arrElementos[0][0] = "intId";
 				arrElementos[0][1] = movimento.getId();
 
@@ -177,10 +184,9 @@ public class PanelCentral extends JPanel {
 
 				arrElementos[4][0] = "jtxVozPath";
 				arrElementos[4][1] = jtxVozPath;
-				
+
 				arrElementos[5][0] = "jcbGolpe";
 				arrElementos[5][1] = jcbGolpe;
-
 
 				mapFaixa.put(faixa.getDescricao(), arrElementos);
 
@@ -257,7 +263,7 @@ public class PanelCentral extends JPanel {
 	 * Retornar a lista de faixas com os valores já editados para serem
 	 * persistidos
 	 * 
-	 * @return
+	 * @return Lista de Faixas
 	 */
 	public List<Faixa> getFaixas() {
 		List<Faixa> faixasEditadas = this.faixas;
@@ -272,7 +278,8 @@ public class PanelCentral extends JPanel {
 					Object[][] arrElementosMovimento = mapElemento.get(faixa.getDescricao());
 
 					int idMovimento = (int) arrElementosMovimento[0][1];
-//					String nomeMovimento = (String) arrElementosMovimento[1][1];
+					// String nomeMovimento = (String)
+					// arrElementosMovimento[1][1];
 					JTextField jtxQtdRepeticao = (JTextField) arrElementosMovimento[2][1];
 					JTextField jtxIntervaloSegundos = (JTextField) arrElementosMovimento[3][1];
 					JTextField jtxVozPath = (JTextField) arrElementosMovimento[4][1];
@@ -283,8 +290,7 @@ public class PanelCentral extends JPanel {
 					for (Movimento movimento : movimentos) {
 
 						/**
-						 * Alterando: + Numero de Repetições + Intervalo em
-						 * segundos + isGolpe + vozPath
+						 * Carregando novos valores
 						 */
 						if (movimento.getId() == idMovimento) {
 							movimento.setQtdRepeticao(Integer.parseInt(jtxQtdRepeticao.getText()));

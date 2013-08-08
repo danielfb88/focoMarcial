@@ -19,35 +19,38 @@ import ddd.Movimento;
 
 /**
  * TODO:
- *  
- * 2) Refatorar
- * 3) GUI
- * 4) Implementar Thread para reproduzir músicas do Ensembre Nipponia
+ * 
+ * 2) Refatorar 3) GUI 4) Implementar Thread para reproduzir músicas do Ensembre
+ * Nipponia
  * 
  * 
  */
 public class Aula extends Thread {
+	/**
+	 * Arte Marcial
+	 */
 	private ArteMarcial arteMarcial;
+
+	/**
+	 * Lista das faixas da Arte MArcial
+	 */
 	private List<Faixa> faixas;
 
 	private String comandoDiretorioPath = "core/sound/comando/";
 	private String contagemDiretorioPath = "core/sound/contagem/";
-	
+
 	private boolean pausar;
-	
+
+	/**
+	 * Aula
+	 * 
+	 * @param arteMarcial
+	 *            Objeto ArteMarcial com as faixas e movimentos já definidos.
+	 */
 	public Aula(ArteMarcial arteMarcial) {
 		super();
 		this.arteMarcial = arteMarcial;
 		this.faixas = arteMarcial.getTodasAsFaixas();
-	}
-	
-	public Aula(ArteMarcial arteMarcial, List<Faixa> faixas) {
-		super();
-		this.arteMarcial = arteMarcial;
-		this.faixas = faixas;
-
-		if (this.faixas == null)
-			throw new RuntimeException("Faixas Nulas.");
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class Aula extends Thread {
 			espere(5);
 
 			fazerExercicio(Exercicio.ABDOMINAL);
-			
+
 			espere(2);
 
 			reproduzirSom(faixas.get(i).getVoz_path());
@@ -71,7 +74,7 @@ public class Aula extends Thread {
 			espere(4);
 
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
-			
+
 			// Movimento
 			for (int j = 0; j < movimentos.size(); j++) {
 				verificarSePausaSolicitada();
@@ -95,16 +98,17 @@ public class Aula extends Thread {
 
 					espere(intervaloSegundosMovimento);
 				}
-				
+
 				if (movimentos.get(j).getEh_golpe() == 1) {
-					
+
 					// Exercicio
 					int n = random.nextInt(movimentos.size() - 1);
-					if ((n == j) || (n == ((int) ((movimentos.size() / 2) - 1)))) { // Probabilidade maior
+					if ((n == j) || (n == ((int) ((movimentos.size() / 2) - 1)))) { // Probabilidade
+																					// maior
 						fazerExercicio((random.nextBoolean() == true) ? Exercicio.AGACHAMENTO_APTCHAGUI : Exercicio.FLEXAO);
 						espere(2);
 					}
-					
+
 					// Descanso
 					if (j == (int) movimentos.size() / 2) {
 						descansar(Descanso.POUCO);
@@ -115,7 +119,7 @@ public class Aula extends Thread {
 			descansar(Descanso.ALONGAMENTO);
 		}
 	}
-	
+
 	/**
 	 * Retorna se foi solicitada à thread a entrar em estado de espera.
 	 * 
@@ -124,14 +128,14 @@ public class Aula extends Thread {
 	public boolean isPausaSolicitada() {
 		return pausar;
 	}
-	
+
 	/**
 	 * Pausa a Thread
 	 */
 	public synchronized void pausar() {
 		pausar = true;
 	}
-	
+
 	/**
 	 * Continua a execução da Thread
 	 */
@@ -141,14 +145,15 @@ public class Aula extends Thread {
 			this.notify();
 		}
 	}
-	
+
 	/**
-	 * Quando executado, fica escutando a variável pausar para verificar se deve pausar a thread.
+	 * Quando executado, fica escutando a variável pausar para verificar se deve
+	 * pausar a thread.
 	 */
 	private void verificarSePausaSolicitada() {
-		if(pausar)
+		if (pausar)
 			System.out.println("*** PAUSADO ***");
-		
+
 		while (pausar) {
 			synchronized (this) {
 				try {
@@ -157,8 +162,8 @@ public class Aula extends Thread {
 					e.printStackTrace();
 				}
 			}
-			
-			if(pausar == false)
+
+			if (pausar == false)
 				System.out.println("*** CONTINUANDO ***");
 		}
 	}
@@ -194,14 +199,14 @@ public class Aula extends Thread {
 
 	/**
 	 * Descansar
-	 *  
+	 * 
 	 * @param segundos
 	 */
 	private void descansar(Descanso descanso) {
 		exibirConsoleDestaque("Descansar", null);
 		reproduzirSom(descanso.getVozPathDescansar());
 		espere(descanso.getSegundos());
-		
+
 		System.out.println("*** Fim do Descanso ***");
 		reproduzirSom(descanso.getVozPathAtencao());
 	}
@@ -249,13 +254,13 @@ public class Aula extends Thread {
 			decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, // Encoding
 																			// to
 																			// use
-					baseFormat.getSampleRate(), // Sample rate (same as base
-												// format)
-					16, // sample size in bits);
-					baseFormat.getChannels(), // # of Chanels
-					baseFormat.getChannels() * 2, // Frame size
-					baseFormat.getSampleRate(), // Frame rate
-					false // Big endian
+			baseFormat.getSampleRate(), // Sample rate (same as base
+										// format)
+			16, // sample size in bits);
+			baseFormat.getChannels(), // # of Chanels
+			baseFormat.getChannels() * 2, // Frame size
+			baseFormat.getSampleRate(), // Frame rate
+			false // Big endian
 			);
 
 			din = AudioSystem.getAudioInputStream(decodeFormat, ais);

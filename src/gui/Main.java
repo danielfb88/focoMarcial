@@ -33,17 +33,46 @@ import ddd.Movimento;
 public class Main extends JFrame {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Dimensão do JFrame
+	 */
 	private Dimension dimension = new Dimension(790, 480);
+
+	/**
+	 * Menu
+	 */
 	private MenuBar menu;
+
+	/**
+	 * Painel Central
+	 */
 	private PanelCentral panelCentral;
+
+	/**
+	 * Painel Inferior
+	 */
 	private JPanel panelSul;
 
-	// Botões do Panel Sul
+	/**
+	 * Botão Salvar - Painel Sul
+	 */
 	private JButton btnSalvar;
+
+	/**
+	 * Botão Paly/Pause - Painel Sul
+	 */
 	private JButton btnPlayPause;
 
+	/**
+	 * Thread responsável pela execução da aula
+	 */
 	private Aula aula;
-	private List<Faixa> faixas;
+
+//	/**
+//	 * Lista de faixas que será executada pela Thread Aula
+//	 */
+//	private List<Faixa> faixas;
+	private ArteMarcial arteMarcial;
 
 	public Main() {
 		super("Foco Marcial");
@@ -60,11 +89,11 @@ public class Main extends JFrame {
 		this.menu = new MenuBar();
 		setJMenuBar(this.menu);
 
-		// Faixas vindas do banco
-		faixas = new ArteMarcial(1).getTodasAsFaixas();
+		// Arte Marcial com faixas vindas do banco
+		arteMarcial = new ArteMarcial().getById(1);
 
 		// Enviando faixas para o Painel central
-		panelCentral = new PanelCentral(new Dimension(dimension.width - 15, dimension.height - 95), faixas);
+		panelCentral = new PanelCentral(new Dimension(dimension.width - 15, dimension.height - 95), arteMarcial.getTodasAsFaixas());
 
 		// Painel Sul responsável pelos botões
 		panelSul = criarPanelSul();
@@ -126,7 +155,8 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
-		faixas = panelCentral.getFaixas();
+		arteMarcial.setFaixas(panelCentral.getFaixas());
+		List<Faixa> faixas = arteMarcial.getFaixas();
 
 		for (Faixa faixa : faixas) {
 			List<Movimento> movimentos = faixa.getMovimentos();

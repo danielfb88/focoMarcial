@@ -13,7 +13,7 @@ import javax.swing.JMenuItem;
  * @author Daniel Bonfim <daniel.fb88@gmail.com>
  * @since 05/08/2013
  * @version 1.0
- *
+ * 
  */
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = 1L;
@@ -22,25 +22,22 @@ public class MenuBar extends JMenuBar {
 	 * 
 	 * JMenus
 	 * 
-	 *************************
+	 ************************* 
 	 */
 	private JMenu mArquivo = new JMenu("Arquivo");
 	private JMenu mAjuda = new JMenu("Ajuda");
 	private JMenu mConfigurar = new JMenu("Configurar");
 
-
 	/************************
 	 * 
 	 * Menu Item
 	 * 
-	 *************************
+	 ************************* 
 	 */
 	private JMenuItem iArteMarcial = new JMenuItem("ArteMarcial");
 	private JMenuItem iFaixa = new JMenuItem("Faixa");
 	private JMenuItem iSair = new JMenuItem("Sair");
 	private JMenuItem iFocoMarcial = new JMenuItem("Foco Marcial");
-
-	
 
 	public MenuBar() {
 		criarEventos();
@@ -67,11 +64,11 @@ public class MenuBar extends JMenuBar {
 		// Menu Arquivo
 		mArquivo.add(mConfigurar);
 		mArquivo.add(iSair);
-		
+
 		// Menu Configurar
 		mConfigurar.add(iArteMarcial);
 		mConfigurar.add(iFaixa);
-		
+
 		// Menu Ajuda
 		mAjuda.add(iFocoMarcial);
 
@@ -80,6 +77,11 @@ public class MenuBar extends JMenuBar {
 		add(mAjuda);
 	}
 
+	/**
+	 * Sair
+	 * 
+	 * @param evt
+	 */
 	private void iSairActionPerformed(java.awt.event.ActionEvent evt) {
 		System.exit(0);
 	}
