@@ -18,11 +18,14 @@ import ddd.Faixa;
 import ddd.Movimento;
 
 /**
- * TODO:
+ * TODO: CONTINUAR REFATORAR
  * 
- * 2) Refatorar 3) GUI 4) Implementar Thread para reproduzir músicas do Ensembre
- * Nipponia
+ * Aula com instruções sobre movimentos e exercícios da Arte Marcial
+ * selecionada.
  * 
+ * @author Daniel Bonfim <daniel.fb88@gmail.com>
+ * @since 08/08/2013
+ * @version 1.0
  * 
  */
 public class Aula extends Thread {
@@ -235,57 +238,83 @@ public class Aula extends Thread {
 	}
 
 	/**
-	 * TODO: Refatorar. TODO: Pesquisar como fazer o mesmo para arquivos .spx
+	 * Reproduz o som solicitado através do endereço do arquivo contido na
+	 * variável 'voz_path'.
 	 * 
 	 * @param voz_path
+	 *            Endereço do arquivo de som a ser executado.
 	 */
 	private void reproduzirSom(String voz_path) {
+		/**
+		 * Extraindo informações do arquivo
+		 */
 		File track = new File(voz_path);
-		SourceDataLine line = null;
-		AudioInputStream din = null;
-		AudioFormat decodeFormat = null;
+		SourceDataLine sourceDataLine = null;
+		AudioInputStream audioInputStream = null;
+		AudioFormat audioFormat = null;
 
 		try {
 			// Cria um stream de entrada do arquivo
-			AudioInputStream ais = AudioSystem.getAudioInputStream(track);
+			AudioInputStream audioInputStream_track = AudioSystem.getAudioInputStream(track);
+
 			// Seleciona o formato do arquivo de audio
-			AudioFormat baseFormat = ais.getFormat();
+			AudioFormat baseFormat_track = audioInputStream_track.getFormat();
+
 			// Configura a decodificação
-			decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, // Encoding
-																			// to
-																			// use
-			baseFormat.getSampleRate(), // Sample rate (same as base
-										// format)
-			16, // sample size in bits);
-			baseFormat.getChannels(), // # of Chanels
-			baseFormat.getChannels() * 2, // Frame size
-			baseFormat.getSampleRate(), // Frame rate
-			false // Big endian
-			);
+			audioFormat =
+					new AudioFormat(
+							AudioFormat.Encoding.PCM_SIGNED,
 
-			din = AudioSystem.getAudioInputStream(decodeFormat, ais);
-			DataLine.Info info = new DataLine.Info(SourceDataLine.class,
-					decodeFormat);
+							// Encoding to Sample rate (same as base format use
+							baseFormat_track.getSampleRate(),
 
-			line = (SourceDataLine) AudioSystem.getLine(info);
-			line.open(decodeFormat);
+							// sample size in bits);
+							16,
+
+							// # of Chanels
+							baseFormat_track.getChannels(),
+
+							// Frame size
+							baseFormat_track.getChannels() * 2,
+
+							// Frame rate
+							baseFormat_track.getSampleRate(),
+
+							// Big endian
+							false
+					);
+
+			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream_track);
+
+			DataLine.Info info_track =
+					new DataLine.Info(
+							SourceDataLine.class,
+							audioFormat
+					);
+
+			sourceDataLine = (SourceDataLine) AudioSystem.getLine(info_track);
+
+			/**
+			 * Executando
+			 */
+			sourceDataLine.open(audioFormat);
 
 			byte[] data = new byte[4096];
 			// Start
-			line.start();
+			sourceDataLine.start();
 
 			int nBytesRead;
 
 			// Toca enquanto a música não acaba
-			while ((nBytesRead = din.read(data, 0, data.length)) != -1) {
-				line.write(data, 0, nBytesRead);
+			while ((nBytesRead = audioInputStream.read(data, 0, data.length)) != -1) {
+				sourceDataLine.write(data, 0, nBytesRead);
 			}
 
 			// Stop
-			line.drain();
-			line.stop();
-			line.close();
-			din.close();
+			sourceDataLine.drain();
+			sourceDataLine.stop();
+			sourceDataLine.close();
+			audioInputStream.close();
 
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();

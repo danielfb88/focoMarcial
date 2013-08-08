@@ -135,10 +135,11 @@ public class ArteMarcialDAO extends DAO {
 			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
 
 			rs = ps.executeQuery();
-			arteMarcial = new ArteMarcial(
-					rs.getInt("id_artemarcial"),
-					rs.getString("descricao"),
-					rs.getString("voz_path")
+			arteMarcial =
+					new ArteMarcial(
+							rs.getInt("id_artemarcial"),
+							rs.getString("descricao"),
+							rs.getString("voz_path")
 					);
 
 			rs.close();
