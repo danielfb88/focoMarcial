@@ -54,7 +54,7 @@ public class Aula extends Thread {
 	public void run() {
 		Random random = new Random();
 
-		player.play(this.arteMarcial.getVoz_path());
+		player.play(this.arteMarcial.getPath());
 		
 		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
 
@@ -66,7 +66,7 @@ public class Aula extends Thread {
 
 			espere(2);
 
-			player.play(faixas.get(i).getVoz_path());
+			player.play(faixas.get(i).getPath());
 			exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
 
 			espere(4);
@@ -78,7 +78,7 @@ public class Aula extends Thread {
 				verificarSePausaSolicitada();
 				espere(2);
 
-				player.play(movimentos.get(j).getVoz_path());
+				player.play(movimentos.get(j).getPath());
 				System.out.println("\n NOME DO MOVIMENTO: " + movimentos.get(j).getDescricao());
 
 				espere(3);

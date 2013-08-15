@@ -35,23 +35,23 @@ public class MovimentoDAO extends DAO {
 	 * @param eh_golpe
 	 *            Informação que diz se o movimento é um golpe ou Movimento de
 	 *            respiração, atenção, etc.
-	 * @param voz_path
+	 * @param path
 	 *            Endereço do arquivo de som de comando para o movimento
 	 * @return Numero de linhas afetadas
 	 */
 	public int adicionar(int id_faixa, String descricao, String observacao,
-			int qtd_repeticao, int intervalo_segundos, int eh_golpe, String voz_path) {
+			int qtd_repeticao, int intervalo_segundos, int eh_golpe, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (");
+		builder.append("INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, path) VALUES (");
 		builder.append(id_faixa + ", ");
 		builder.append("'" + descricao + "', ");
 		builder.append("'" + observacao + "', ");
 		builder.append(qtd_repeticao + ", ");
 		builder.append(intervalo_segundos + ", ");
 		builder.append(eh_golpe + ", ");
-		builder.append("'" + voz_path + "'");
+		builder.append("'" + path + "'");
 		builder.append(");");
 
 		try {
@@ -87,12 +87,12 @@ public class MovimentoDAO extends DAO {
 	 * @param eh_golpe
 	 *            Informação que diz se o movimento é um golpe ou Movimento de
 	 *            respiração, atenção, etc.
-	 * @param voz_path
+	 * @param path
 	 *            Endereço do arquivo de som de comando para o movimento
 	 * @return Numero de linhas afetadas
 	 */
 	public int editar(int id_movimento, int id_faixa, String descricao,
-			String observacao, int qtd_repeticao, int intervalo_segundos, int eh_golpe, String voz_path) {
+			String observacao, int qtd_repeticao, int intervalo_segundos, int eh_golpe, String path) {
 
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
@@ -105,7 +105,7 @@ public class MovimentoDAO extends DAO {
 		builder.append("qtd_repeticao = " + qtd_repeticao + ", ");
 		builder.append("intervalo_segundos = " + intervalo_segundos + ", ");
 		builder.append("eh_golpe = " + eh_golpe + ", ");
-		builder.append("voz_path = '" + voz_path + "' ");
+		builder.append("path = '" + path + "' ");
 
 		builder.append("WHERE id_movimento = " + id_movimento + ";");
 
@@ -182,7 +182,7 @@ public class MovimentoDAO extends DAO {
 							rs.getInt("qtd_repeticao"),
 							rs.getInt("intervalo_segundos"),
 							rs.getInt("eh_golpe"),
-							rs.getString("voz_path")
+							rs.getString("path")
 					);
 
 			rs.close();
@@ -229,7 +229,7 @@ public class MovimentoDAO extends DAO {
 								rs.getInt("qtd_repeticao"),
 								rs.getInt("intervalo_segundos"),
 								rs.getInt("eh_golpe"),
-								rs.getString("voz_path")
+								rs.getString("path")
 						));
 			}
 

@@ -24,17 +24,17 @@ public class ArteMarcialDAO extends DAO {
 	 * 
 	 * @param descricao
 	 *            Nome da Arte Marcial
-	 * @param voz_path
+	 * @param path
 	 *            Endereço do arquivo de som de chamada
 	 * @return Número de linhas afetadas
 	 */
-	public int adicionar(String descricao, String voz_path) {
+	public int adicionar(String descricao, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO artemarcial (descricao, voz_path) VALUES (");
+		builder.append("INSERT INTO artemarcial (descricao, path) VALUES (");
 		builder.append("'" + descricao + "', ");
-		builder.append("'" + voz_path + "'");
+		builder.append("'" + path + "'");
 		builder.append(");");
 
 		try {
@@ -59,18 +59,18 @@ public class ArteMarcialDAO extends DAO {
 	 *            Id da Arte Marcial a ser editada
 	 * @param descricao
 	 *            Novo nome
-	 * @param voz_path
+	 * @param path
 	 *            Novo endereço do arquivo de som
 	 * @return Número de linhas afetadas
 	 */
-	public int editar(int id_artemarcial, String descricao, String voz_path) {
+	public int editar(int id_artemarcial, String descricao, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("UPDATE artemarcial SET ");
 
 		builder.append("descricao = '" + descricao + "', ");
-		builder.append("voz_path = '" + voz_path + "' ");
+		builder.append("path = '" + path + "' ");
 
 		builder.append("WHERE id_artemarcial = " + id_artemarcial + ";");
 
@@ -139,7 +139,7 @@ public class ArteMarcialDAO extends DAO {
 					new ArteMarcial(
 							rs.getInt("id_artemarcial"),
 							rs.getString("descricao"),
-							rs.getString("voz_path")
+							rs.getString("path")
 					);
 
 			rs.close();
@@ -177,7 +177,7 @@ public class ArteMarcialDAO extends DAO {
 						new ArteMarcial(
 								rs.getInt("id_artemarcial"),
 								rs.getString("descricao"),
-								rs.getString("voz_comando")
+								rs.getString("path")
 						));
 			}
 

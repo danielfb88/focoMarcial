@@ -28,20 +28,20 @@ public class FaixaDAO extends DAO {
 	 *            Número a qual a faixa pertence na hierarquia da arte marcial
 	 * @param descricao
 	 *            Cor da faixa
-	 * @param voz_path
+	 * @param path
 	 *            Endereço do arquivo de som
 	 * @return Número de linhas afetadas
 	 */
-	public int adicionar(int id_artemarcial, int gub, String descricao, String voz_path) {
+	public int adicionar(int id_artemarcial, int gub, String descricao, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO faixa (id_artemarcial, gub, descricao, voz_path) VALUES (");
+		builder.append("INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (");
 
 		builder.append(id_artemarcial + ", ");
 		builder.append(gub + ", ");
 		builder.append("'" + descricao + "', ");
-		builder.append("'" + voz_path + "' ");
+		builder.append("'" + path + "' ");
 
 		builder.append(");");
 
@@ -71,11 +71,11 @@ public class FaixaDAO extends DAO {
 	 *            Número a qual a faixa pertence na hierarquia da arte marcial
 	 * @param descricao
 	 *            Cor da faixa
-	 * @param voz_path
+	 * @param path
 	 *            Endereço do arquivo de som
 	 * @return Número de linhas afetadas
 	 */
-	public int editar(int id_faixa, int id_artemarcial, int gub, String descricao, String voz_path) {
+	public int editar(int id_faixa, int id_artemarcial, int gub, String descricao, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
@@ -84,7 +84,7 @@ public class FaixaDAO extends DAO {
 		builder.append("id_artemarcial = " + id_artemarcial + ", ");
 		builder.append("gub = " + gub + ", ");
 		builder.append("descricao = '" + descricao + "', ");
-		builder.append("voz_path = '" + voz_path + "' ");
+		builder.append("path = '" + path + "' ");
 
 		builder.append("WHERE id_faixa = " + id_faixa + ";");
 
@@ -157,7 +157,7 @@ public class FaixaDAO extends DAO {
 					null,
 					rs.getInt("gub"),
 					rs.getString("descricao"),
-					rs.getString("voz_path")
+					rs.getString("path")
 					);
 
 			rs.close();
@@ -203,7 +203,7 @@ public class FaixaDAO extends DAO {
 								null,
 								rs.getInt("gub"),
 								rs.getString("descricao"),
-								rs.getString("voz_path")
+								rs.getString("path")
 						);
 				
 				faixa.getTodosOsMovimentos();
@@ -265,7 +265,7 @@ public class FaixaDAO extends DAO {
 								null,
 								rs.getInt("gub"),
 								rs.getString("descricao"),
-								rs.getString("voz_path")
+								rs.getString("path")
 						));
 			}
 

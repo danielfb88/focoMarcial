@@ -163,7 +163,7 @@ public class PanelCentral extends JPanel {
 				JCheckBox jcbGolpe = new JCheckBox("",
 						(movimento.getEh_golpe() == 1 ? true : false));
 
-				JTextField jtxVozPath = new JTextField(movimento.getVoz_path());
+				JTextField jtxVozPath = new JTextField(movimento.getPath());
 				jtxVozPath.setPreferredSize(new Dimension(200, 20));
 
 				// Inserindo os elementos em uma lista
@@ -296,7 +296,7 @@ public class PanelCentral extends JPanel {
 							movimento.setQtdRepeticao(Integer.parseInt(jtxQtdRepeticao.getText()));
 							movimento.setIntervaloSegundos(Integer.parseInt(jtxIntervaloSegundos.getText()));
 							movimento.setEh_golpe(jcbGolpe.isSelected() ? 1 : 0);
-							movimento.setVoz_path(jtxVozPath.getText());
+							movimento.setPath(jtxVozPath.getText());
 
 							break;
 						}

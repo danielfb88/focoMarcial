@@ -50,7 +50,7 @@ public class Movimento {
 	/**
 	 * Endereço do arquivo de som do nome do movimento
 	 */
-	private String voz_path;
+	private String path;
 
 	public Movimento() {
 		super();
@@ -63,7 +63,7 @@ public class Movimento {
 
 	public Movimento(Integer id, Faixa faixa, String descricao,
 			String observacao, int qtdRepeticao, int intervaloSegundos,
-			int eh_golpe, String voz_path) {
+			int eh_golpe, String path) {
 		super();
 		this.id = id;
 		this.faixa = faixa;
@@ -72,7 +72,7 @@ public class Movimento {
 		this.qtdRepeticao = qtdRepeticao;
 		this.intervaloSegundos = intervaloSegundos;
 		this.eh_golpe = eh_golpe;
-		this.voz_path = voz_path;
+		this.path = path;
 	}
 
 	public int getId() {
@@ -131,12 +131,12 @@ public class Movimento {
 		this.eh_golpe = eh_golpe;
 	}
 
-	public String getVoz_path() {
-		return voz_path;
+	public String getPath() {
+		return path;
 	}
 
-	public void setVoz_path(String voz_path) {
-		this.voz_path = voz_path;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class Movimento {
 							this.qtdRepeticao,
 							this.intervaloSegundos,
 							this.eh_golpe,
-							this.voz_path
+							this.path
 							);
 
 		} else {
@@ -170,7 +170,7 @@ public class Movimento {
 							this.qtdRepeticao,
 							this.intervaloSegundos,
 							this.eh_golpe,
-							this.voz_path
+							this.path
 							);
 		}
 
@@ -191,7 +191,7 @@ public class Movimento {
 				+ ((observacao == null) ? 0 : observacao.hashCode());
 		result = prime * result + qtdRepeticao;
 		result = prime * result
-				+ ((voz_path == null) ? 0 : voz_path.hashCode());
+				+ ((path == null) ? 0 : path.hashCode());
 		return result;
 	}
 
@@ -227,10 +227,10 @@ public class Movimento {
 			return false;
 		if (qtdRepeticao != other.qtdRepeticao)
 			return false;
-		if (voz_path == null) {
-			if (other.voz_path != null)
+		if (path == null) {
+			if (other.path != null)
 				return false;
-		} else if (!voz_path.equals(other.voz_path))
+		} else if (!path.equals(other.path))
 			return false;
 		return true;
 	}

@@ -27,7 +27,7 @@ public class ArteMarcial {
 	/**
 	 * Endereço do arquivo de som do nome da Arte Marcial
 	 */
-	private String voz_path;
+	private String path;
 
 	/**
 	 * Lista das faixas
@@ -54,18 +54,18 @@ public class ArteMarcial {
 		this.id = id;
 	}
 
-	public ArteMarcial(Integer id, String descricao, String voz_path) {
+	public ArteMarcial(Integer id, String descricao, String path) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
-		this.voz_path = voz_path;
+		this.path = path;
 	}
 
-	public ArteMarcial(Integer id, String descricao, String voz_path, List<Faixa> faixas) {
+	public ArteMarcial(Integer id, String descricao, String path, List<Faixa> faixas) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
-		this.voz_path = voz_path;
+		this.path = path;
 		this.faixas = faixas;
 	}
 
@@ -85,12 +85,12 @@ public class ArteMarcial {
 		this.descricao = descricao;
 	}
 
-	public String getVoz_path() {
-		return voz_path;
+	public String getPath() {
+		return path;
 	}
 
-	public void setVoz_path(String voz_path) {
-		this.voz_path = voz_path;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public List<Faixa> getFaixas() {
@@ -158,7 +158,7 @@ public class ArteMarcial {
 		result = prime * result + ((faixas == null) ? 0 : faixas.hashCode());
 		result = prime * result + id;
 		result = prime * result
-				+ ((voz_path == null) ? 0 : voz_path.hashCode());
+				+ ((path == null) ? 0 : path.hashCode());
 		return result;
 	}
 
@@ -183,10 +183,10 @@ public class ArteMarcial {
 			return false;
 		if (id != other.id)
 			return false;
-		if (voz_path == null) {
-			if (other.voz_path != null)
+		if (path == null) {
+			if (other.path != null)
 				return false;
-		} else if (!voz_path.equals(other.voz_path))
+		} else if (!path.equals(other.path))
 			return false;
 		return true;
 	}

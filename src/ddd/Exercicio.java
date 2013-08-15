@@ -34,7 +34,7 @@ public class Exercicio {
 	/**
 	 * Endereço do arquivo de som do nome do exercicio
 	 */
-	private String voz_path;
+	private String path;
 	
 	/**
 	 * DAO do Exercicio
@@ -50,13 +50,13 @@ public class Exercicio {
 		this.id = id;
 	}
 
-	public Exercicio(Integer id, String descricao, int qtdRepeticao, int intervaloSegundos, String voz_path) {
+	public Exercicio(Integer id, String descricao, int qtdRepeticao, int intervaloSegundos, String path) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.qtdRepeticao = qtdRepeticao;
 		this.intervaloSegundos = intervaloSegundos;
-		this.voz_path = voz_path;
+		this.path = path;
 	}
 
 	public int getId() {
@@ -91,12 +91,12 @@ public class Exercicio {
 		this.intervaloSegundos = intervaloSegundos;
 	}
 	
-	public String getVoz_path() {
-		return voz_path;
+	public String getPath() {
+		return path;
 	}
 
-	public void setVoz_path(String voz_path) {
-		this.voz_path = voz_path;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class Exercicio {
 							this.descricao,
 							this.qtdRepeticao,
 							this.intervaloSegundos,
-							this.voz_path
+							this.path
 							);
 
 		} else {
@@ -124,7 +124,7 @@ public class Exercicio {
 							this.descricao,
 							this.qtdRepeticao,
 							this.intervaloSegundos,
-							this.voz_path
+							this.path
 							);
 		}
 
@@ -149,7 +149,7 @@ public class Exercicio {
 		result = prime * result + id;
 		result = prime * result + intervaloSegundos;
 		result = prime * result + qtdRepeticao;
-		result = prime * result + ((voz_path == null) ? 0 : voz_path.hashCode());
+		result = prime * result + ((path == null) ? 0 : path.hashCode());
 		return result;
 	}
 
@@ -173,10 +173,10 @@ public class Exercicio {
 			return false;
 		if (qtdRepeticao != other.qtdRepeticao)
 			return false;
-		if (voz_path == null) {
-			if (other.voz_path != null)
+		if (path == null) {
+			if (other.path != null)
 				return false;
-		} else if (!voz_path.equals(other.voz_path))
+		} else if (!path.equals(other.path))
 			return false;
 		return true;
 	}

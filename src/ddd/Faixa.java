@@ -36,7 +36,7 @@ public class Faixa {
 	/**
 	 * Endereço do arquivo de som da faixa
 	 */
-	private String voz_path;
+	private String path;
 
 	/**
 	 * DAO Movimento
@@ -58,23 +58,23 @@ public class Faixa {
 	}
 
 	public Faixa(Integer id, ArteMarcial arteMarcial, Integer gub,
-			String descricao, String voz_path) {
+			String descricao, String path) {
 		super();
 		this.id = id;
 		this.arteMarcial = arteMarcial;
 		this.gub = gub;
 		this.descricao = descricao;
-		this.voz_path = voz_path;
+		this.path = path;
 	}
 
 	public Faixa(Integer id, ArteMarcial arteMarcial, Integer gub,
-			String descricao, String voz_path, List<Movimento> movimentos) {
+			String descricao, String path, List<Movimento> movimentos) {
 		super();
 		this.id = id;
 		this.arteMarcial = arteMarcial;
 		this.gub = gub;
 		this.descricao = descricao;
-		this.voz_path = voz_path;
+		this.path = path;
 		this.movimentos = movimentos;
 	}
 
@@ -109,13 +109,13 @@ public class Faixa {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public String getVoz_path() {
-		return voz_path;
+	
+	public String getPath() {
+		return path;
 	}
 
-	public void setVoz_path(String voz_path) {
-		this.voz_path = voz_path;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public List<Movimento> getMovimentos() {
@@ -155,7 +155,7 @@ public class Faixa {
 		result = prime * result
 				+ ((movimentos == null) ? 0 : movimentos.hashCode());
 		result = prime * result
-				+ ((voz_path == null) ? 0 : voz_path.hashCode());
+				+ ((path == null) ? 0 : path.hashCode());
 		return result;
 	}
 
@@ -187,10 +187,10 @@ public class Faixa {
 				return false;
 		} else if (!movimentos.equals(other.movimentos))
 			return false;
-		if (voz_path == null) {
-			if (other.voz_path != null)
+		if (path == null) {
+			if (other.path != null)
 				return false;
-		} else if (!voz_path.equals(other.voz_path))
+		} else if (!path.equals(other.path))
 			return false;
 		return true;
 	}
