@@ -1,23 +1,14 @@
 package control;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import ddd.ArteMarcial;
 import ddd.Faixa;
 import ddd.Movimento;
 
 /**
+ * TODO: DIVIDA O PROGRAMA EM PEQUENAS PARTES. CRIE CLASSES REAPROVEITAVEIS. 
  * TODO: CONTINUAR REFATORAR
  * 
  * Aula com instruções sobre movimentos e exercícios da Arte Marcial
@@ -38,6 +29,8 @@ public class Aula extends Thread {
 	 * Lista das faixas da Arte MArcial
 	 */
 	private List<Faixa> faixas;
+	
+	private WavPlayer player;
 
 	private String comandoDiretorioPath = "core/sound/comando/";
 	private String contagemDiretorioPath = "core/sound/contagem/";
@@ -51,7 +44,8 @@ public class Aula extends Thread {
 	 *            Objeto ArteMarcial com as faixas e movimentos já definidos.
 	 */
 	public Aula(ArteMarcial arteMarcial) {
-		super();
+		 player = new WavPlayer();
+		
 		this.arteMarcial = arteMarcial;
 		this.faixas = arteMarcial.getTodasAsFaixas();
 	}
@@ -60,7 +54,8 @@ public class Aula extends Thread {
 	public void run() {
 		Random random = new Random();
 
-		reproduzirSom(this.arteMarcial.getVoz_path());
+		player.play(this.arteMarcial.getVoz_path());
+		
 		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
 
 		// Faixa
@@ -71,7 +66,7 @@ public class Aula extends Thread {
 
 			espere(2);
 
-			reproduzirSom(faixas.get(i).getVoz_path());
+			player.play(faixas.get(i).getVoz_path());
 			exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
 
 			espere(4);
@@ -83,7 +78,7 @@ public class Aula extends Thread {
 				verificarSePausaSolicitada();
 				espere(2);
 
-				reproduzirSom(movimentos.get(j).getVoz_path());
+				player.play(movimentos.get(j).getVoz_path());
 				System.out.println("\n NOME DO MOVIMENTO: " + movimentos.get(j).getDescricao());
 
 				espere(3);
@@ -95,7 +90,7 @@ public class Aula extends Thread {
 				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
 					verificarSePausaSolicitada();
 
-					reproduzirSom(this.comandoDiretorioPath + "grito" + (random.nextInt(3) + 1) + ".wav");
+					player.play(this.comandoDiretorioPath + "grito" + (random.nextInt(3) + 1) + ".wav");
 					System.out.println("GRITO!");
 					System.out.println(repeticaoAtual);
 
@@ -207,11 +202,11 @@ public class Aula extends Thread {
 	 */
 	private void descansar(Descanso descanso) {
 		exibirConsoleDestaque("Descansar", null);
-		reproduzirSom(descanso.getVozPathDescansar());
+		player.play(descanso.getVozPathDescansar());
 		espere(descanso.getSegundos());
 
 		System.out.println("*** Fim do Descanso ***");
-		reproduzirSom(descanso.getVozPathAtencao());
+		player.play(descanso.getVozPathAtencao());
 	}
 
 	/**
@@ -221,109 +216,19 @@ public class Aula extends Thread {
 	 * @param quantidade
 	 */
 	private void fazerExercicio(Exercicio exercicio) {
-		this.reproduzirSom(exercicio.getVozPath());
+		player.play(exercicio.getVozPath());
 		this.espere(2);
 		int x = 1;
 
 		for (int i = 0; i < exercicio.getQuantidade(); i++) {
 			verificarSePausaSolicitada();
-			this.reproduzirSom(this.contagemDiretorioPath + (x) + ".wav");
+			player.play(this.contagemDiretorioPath + (x) + ".wav");
 			this.espere(exercicio.getIntervaloSegundos());
 
 			if (x == 10)
 				x = 0;
 
 			x++;
-		}
-	}
-
-	/**
-	 * Reproduz o som solicitado através do endereço do arquivo contido na
-	 * variável 'voz_path'.
-	 * 
-	 * @param voz_path
-	 *            Endereço do arquivo de som a ser executado.
-	 */
-	private void reproduzirSom(String voz_path) {
-		/**
-		 * Extraindo informações do arquivo
-		 */
-		File track = new File(voz_path);
-		SourceDataLine sourceDataLine = null;
-		AudioInputStream audioInputStream = null;
-		AudioFormat audioFormat = null;
-
-		try {
-			// Cria um stream de entrada do arquivo
-			AudioInputStream audioInputStream_track = AudioSystem.getAudioInputStream(track);
-
-			// Seleciona o formato do arquivo de audio
-			AudioFormat baseFormat_track = audioInputStream_track.getFormat();
-
-			// Configura a decodificação
-			audioFormat =
-					new AudioFormat(
-							AudioFormat.Encoding.PCM_SIGNED,
-
-							// Encoding to Sample rate (same as base format use
-							baseFormat_track.getSampleRate(),
-
-							// sample size in bits);
-							16,
-
-							// # of Chanels
-							baseFormat_track.getChannels(),
-
-							// Frame size
-							baseFormat_track.getChannels() * 2,
-
-							// Frame rate
-							baseFormat_track.getSampleRate(),
-
-							// Big endian
-							false
-					);
-
-			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream_track);
-
-			DataLine.Info info_track =
-					new DataLine.Info(
-							SourceDataLine.class,
-							audioFormat
-					);
-
-			sourceDataLine = (SourceDataLine) AudioSystem.getLine(info_track);
-
-			/**
-			 * Executando
-			 */
-			sourceDataLine.open(audioFormat);
-
-			byte[] data = new byte[4096];
-			// Start
-			sourceDataLine.start();
-
-			int nBytesRead;
-
-			// Toca enquanto a música não acaba
-			while ((nBytesRead = audioInputStream.read(data, 0, data.length)) != -1) {
-				sourceDataLine.write(data, 0, nBytesRead);
-			}
-
-			// Stop
-			sourceDataLine.drain();
-			sourceDataLine.stop();
-			sourceDataLine.close();
-			audioInputStream.close();
-
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
 		}
 	}
 
