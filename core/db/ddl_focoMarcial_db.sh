@@ -24,7 +24,17 @@ intervalo_segundos INTEGER NOT NULL,
 eh_golpe SMALLINT NOT NULL,
 voz_path VARCHAR(200) NOT NULL,
 FOREIGN KEY (id_faixa) REFERENCES faixa (id_faixa) ON DELETE CASCADE
-);"
+);
+
+CREATE TABLE exercicio ( 
+id_exercicio INTEGER PRIMARY KEY, 
+descricao VARCHAR(50) NOT NULL, 
+qtd_repeticao INTEGER NOT NULL, 
+intervalo_segundos INTEGER NOT NULL, 
+voz_path VARCHAR(200) NOT NULL
+);
+"
+
 
 chmod +x focoMarcial.db;
 

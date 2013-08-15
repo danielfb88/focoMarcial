@@ -117,7 +117,30 @@ INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (10, 'Ydan Bolhô Tchagui', '', 1, 1, 1, 'sound/hapkido/vermelhaponteirapreta2/ydanbolhotchagui.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (10, 'Ydan Dubal Tchagui', '', 1, 1, 1, 'sound/hapkido/vermelhaponteirapreta2/ydandubaltchagui.wav');
 INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo_segundos, eh_golpe, voz_path) VALUES (10, 'Expartchagui', '', 1, 1, 1, 'sound/hapkido/vermelhaponteirapreta2/expartchagui.wav');
+
+
+
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos,
+voz_path VALUES ('ABDOMINAL', 100, 0,
+'core/sound/exercicios/abdominal.wav');
+
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos,
+voz_path VALUES ('FLEXÃO', 15, 1, 'core/sound/exercicios/flexao.wav');
+
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos,
+voz_path VALUES ('AGACHAMENTO', 20, 2,
+'core/sound/exercicios/agachamento_aptchagui.wav');
+
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos,
+voz_path VALUES ('ROSCA ALTERNADA (BÍCEPS)', 20, 1,
+'core/sound/exercicios/rosca_alternada.wav');
+
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos,
+voz_path VALUES ('DESENVOLVIMENTO ALTERNADO (OMBROS)', 20, 2,
+'core/sound/exercicios/desenvolvimento_alternado.wav');
+
 "
+
 
 
 
