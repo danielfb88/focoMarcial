@@ -177,6 +177,7 @@ public class Main extends JFrame {
 		if (aula == null) {
 			// Arte Marcial = Hapkido
 			aula = new Aula(new ArteMarcial().getById(1));
+			aula.manipularElementoTabbedPane(this.panelCentral.getTabbedPane());
 			aula.start();
 			btnPlayPause.setText("Pause");
 

@@ -39,7 +39,7 @@ public class PanelCentral extends JPanel {
 	 * Lista das faixas
 	 */
 	private List<Faixa> faixas;
-	
+
 	/**
 	 * Lista contendo os objetos JTextField que o usuário irá utilizar.
 	 */
@@ -257,6 +257,15 @@ public class PanelCentral extends JPanel {
 		}
 
 		this.add(tabbedFaixas);
+	}
+
+	/**
+	 * Retorna o JTabbedPane das faixas
+	 * 
+	 * @return JTabbedPane das faixas
+	 */
+	public JTabbedPane getTabbedPane() {
+		return tabbedFaixas;
 	}
 
 	/**

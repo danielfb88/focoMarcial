@@ -3,12 +3,14 @@ package control;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JTabbedPane;
+
 import ddd.ArteMarcial;
 import ddd.Faixa;
 import ddd.Movimento;
 
 /**
- * TODO: DIVIDA O PROGRAMA EM PEQUENAS PARTES. CRIE CLASSES REAPROVEITAVEIS. 
+ * TODO: DIVIDA O PROGRAMA EM PEQUENAS PARTES. CRIE CLASSES REAPROVEITAVEIS.
  * TODO: CONTINUAR REFATORAR
  * 
  * Aula com instruções sobre movimentos e exercícios da Arte Marcial
@@ -29,7 +31,12 @@ public class Aula extends Thread {
 	 * Lista das faixas da Arte MArcial
 	 */
 	private List<Faixa> faixas;
-	
+
+	/**
+	 * TabbedPane contendo as faixas
+	 */
+	private JTabbedPane tabbedPane;
+
 	private WavPlayer player;
 
 	private String comandoDiretorioPath = "core/sound/comando/";
@@ -44,8 +51,8 @@ public class Aula extends Thread {
 	 *            Objeto ArteMarcial com as faixas e movimentos já definidos.
 	 */
 	public Aula(ArteMarcial arteMarcial) {
-		 player = new WavPlayer();
-		
+		player = new WavPlayer();
+
 		this.arteMarcial = arteMarcial;
 		this.faixas = arteMarcial.getTodasAsFaixas();
 	}
@@ -55,11 +62,17 @@ public class Aula extends Thread {
 		Random random = new Random();
 
 		player.play(this.arteMarcial.getPath());
-		
+
 		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
 
 		// Faixa
 		for (int i = 0; i < faixas.size(); i++) {
+
+			// Mudar pane a cada nova faixa
+			if (faixas.get(i).getDescricao().equals(tabbedPane.getTitleAt(i))) {
+				tabbedPane.setSelectedIndex(i);
+			}
+
 			espere(5);
 
 			fazerExercicio(Exercicio.ABDOMINAL);
@@ -116,6 +129,10 @@ public class Aula extends Thread {
 
 			descansar(Descanso.ALONGAMENTO);
 		}
+	}
+
+	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
 	}
 
 	/**
