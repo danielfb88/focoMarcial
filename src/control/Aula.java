@@ -87,51 +87,39 @@ public class Aula extends Thread {
 	@Override
 	public void run() {
 		Random random = new Random();
+		reproduzirSom(this.arteMarcial.getPath());
 
-		player.play(this.arteMarcial.getPath());
-
-		exibirConsoleDestaque("ARTE MARCIAL", this.arteMarcial.getDescricao());
-
-		// Faixa
+		/*
+		 * Loop de Faixa
+		 */
 		for (int i = 0; i < faixas.size(); i++) {
 
 			// Mudar pane a cada nova faixa
 			tabbedPane.setSelectedIndex(i);
-
 			espere(5);
-
 			fazerExercicio(Exercicio.ABDOMINAL);
-
 			espere(2);
-
-			player.play(faixas.get(i).getPath());
-			exibirConsoleDestaque("FAIXA", faixas.get(i).getDescricao());
-
+			reproduzirSom(faixas.get(i).getPath());
 			espere(4);
 
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 
-			// Movimento
+			/*
+			 * Loop de Movimento
+			 */
 			for (int j = 0; j < movimentos.size(); j++) {
-				verificarSePausaSolicitada();
 				espere(2);
-
-				player.play(movimentos.get(j).getPath());
-				System.out.println("\n NOME DO MOVIMENTO: " + movimentos.get(j).getDescricao());
-
+				reproduzirSom(movimentos.get(j).getPath());
 				espere(3);
 
 				int qtdRepeticaoMovimento = movimentos.get(j).getQtdRepeticao();
 				int intervaloSegundosMovimento = movimentos.get(j).getIntervaloSegundos();
 
-				// Repetições
+				/*
+				 * Loop de Repetições do movimento
+				 */
 				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
-					verificarSePausaSolicitada();
-
-					player.play(this.comandoDiretorioPath + "grito" + (random.nextInt(3) + 1) + ".wav");
-					System.out.println("GRITO!");
-					System.out.println(repeticaoAtual);
-
+					reproduzirSom(this.comandoDiretorioPath + "grito" + (random.nextInt(3) + 1) + ".wav");
 					espere(intervaloSegundosMovimento);
 				}
 
@@ -208,18 +196,9 @@ public class Aula extends Thread {
 		}
 	}
 
-	/**
-	 * Exibe a informação com destaque no console.
-	 * 
-	 * @param descricao
-	 *            Título
-	 * @param valor
-	 *            Conteúdo
-	 */
-	private void exibirConsoleDestaque(String descricao, String valor) {
-		System.out.println("----------------------------------");
-		System.out.println(descricao + ": " + valor);
-		System.out.println("----------------------------------");
+	private void reproduzirSom(String path) {
+		verificarSePausaSolicitada();
+		player.play(path);
 	}
 
 	/**
@@ -243,7 +222,6 @@ public class Aula extends Thread {
 	 * @param segundos
 	 */
 	private void descansar(Descanso descanso) {
-		exibirConsoleDestaque("Descansar", null);
 		player.play(descanso.getVozPathDescansar());
 		espere(descanso.getSegundos());
 
@@ -258,12 +236,11 @@ public class Aula extends Thread {
 	 * @param quantidade
 	 */
 	private void fazerExercicio(Exercicio exercicio) {
-		player.play(exercicio.getVozPath());
-		this.espere(2);
+		reproduzirSom(exercicio.getVozPath());
+		espere(2);
 		int x = 1;
 
 		for (int i = 0; i < exercicio.getQuantidade(); i++) {
-			verificarSePausaSolicitada();
 
 			if (cancelarExercicio) {
 				cancelarExercicio = false;
@@ -271,7 +248,7 @@ public class Aula extends Thread {
 			}
 
 			player.play(this.contagemDiretorioPath + (x) + ".wav");
-			this.espere(exercicio.getIntervaloSegundos());
+			espere(exercicio.getIntervaloSegundos());
 
 			if (x == 10)
 				x = 0;
@@ -280,24 +257,44 @@ public class Aula extends Thread {
 		}
 	}
 
-	public void cancelarExercicio() {
-		this.cancelarExercicio = true;
+	public boolean isProximoMovimento() {
+		return proximoMovimento;
 	}
 
-	public void proximoMovimento() {
-		this.proximoMovimento = true;
+	public void setProximoMovimento(boolean proximoMovimento) {
+		this.proximoMovimento = proximoMovimento;
 	}
 
-	public void anteriorMovimento() {
-		this.anteriorMovimento = true;
+	public boolean isAnteriorMovimento() {
+		return anteriorMovimento;
 	}
 
-	public void proximaFaixa() {
-		this.proximaFaixa = true;
+	public void setAnteriorMovimento(boolean anteriorMovimento) {
+		this.anteriorMovimento = anteriorMovimento;
 	}
 
-	public void anteriorFaixa() {
-		this.anteriorFaixa = true;
+	public boolean isProximaFaixa() {
+		return proximaFaixa;
+	}
+
+	public void setProximaFaixa(boolean proximaFaixa) {
+		this.proximaFaixa = proximaFaixa;
+	}
+
+	public boolean isAnteriorFaixa() {
+		return anteriorFaixa;
+	}
+
+	public void setAnteriorFaixa(boolean anteriorFaixa) {
+		this.anteriorFaixa = anteriorFaixa;
+	}
+
+	public boolean isCancelarExercicio() {
+		return cancelarExercicio;
+	}
+
+	public void setCancelarExercicio(boolean cancelarExercicio) {
+		this.cancelarExercicio = cancelarExercicio;
 	}
 
 }

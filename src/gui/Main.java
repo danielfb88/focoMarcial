@@ -397,7 +397,7 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnCancelarExercicioActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.cancelarExercicio();
+		aula.setCancelarExercicio(true);
 	}
 
 	/**
@@ -406,7 +406,7 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnProximoMovimentoActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.proximoMovimento();
+		aula.setProximoMovimento(true);
 	}
 
 	/**
@@ -415,7 +415,7 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnAnteriorMovimentoActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.anteriorMovimento();
+		aula.setAnteriorMovimento(true);
 	}
 
 	/**
@@ -424,7 +424,7 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnProximaFaixaActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.proximaFaixa();
+		aula.setProximaFaixa(true);
 	}
 
 	/**
@@ -433,7 +433,7 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnAnteriorFaixaActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.anteriorFaixa();
+		aula.setAnteriorFaixa(true);
 	}
 
 	public static void main(String[] args) {
