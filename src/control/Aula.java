@@ -37,12 +37,36 @@ public class Aula extends Thread {
 	 */
 	private JTabbedPane tabbedPane;
 
+	/**
+	 * Tocador Wav
+	 */
 	private WavPlayer player;
 
-	private String comandoDiretorioPath = "core/sound/comando/";
-	private String contagemDiretorioPath = "core/sound/contagem/";
+	/**
+	 * Path do nome dos golpes
+	 */
+	private String comandoDiretorioPath;
 
+	/**
+	 * Path da contagem
+	 */
+	private String contagemDiretorioPath;
+
+	/**
+	 * Flag que pausa a Thread
+	 */
 	private boolean pausar;
+
+	/**
+	 * TODO: INSERIR LÓGICA PARA PROXIMO E ANTERIOR DE FAIXA E MOVIMENTO.
+	 */
+	private boolean proximoMovimento;
+	private boolean anteriorMovimento;
+
+	private boolean proximaFaixa;
+	private boolean anteriorFaixa;
+
+	private boolean cancelarExercicio;
 
 	/**
 	 * Aula
@@ -55,6 +79,9 @@ public class Aula extends Thread {
 
 		this.arteMarcial = arteMarcial;
 		this.faixas = arteMarcial.getTodasAsFaixas();
+
+		comandoDiretorioPath = "core/sound/comando/";
+		contagemDiretorioPath = "core/sound/contagem/";
 	}
 
 	@Override
@@ -69,9 +96,7 @@ public class Aula extends Thread {
 		for (int i = 0; i < faixas.size(); i++) {
 
 			// Mudar pane a cada nova faixa
-			if (faixas.get(i).getDescricao().equals(tabbedPane.getTitleAt(i))) {
-				tabbedPane.setSelectedIndex(i);
-			}
+			tabbedPane.setSelectedIndex(i);
 
 			espere(5);
 
@@ -239,6 +264,12 @@ public class Aula extends Thread {
 
 		for (int i = 0; i < exercicio.getQuantidade(); i++) {
 			verificarSePausaSolicitada();
+
+			if (cancelarExercicio) {
+				cancelarExercicio = false;
+				break;
+			}
+
 			player.play(this.contagemDiretorioPath + (x) + ".wav");
 			this.espere(exercicio.getIntervaloSegundos());
 
@@ -247,6 +278,26 @@ public class Aula extends Thread {
 
 			x++;
 		}
+	}
+
+	public void cancelarExercicio() {
+		this.cancelarExercicio = true;
+	}
+
+	public void proximoMovimento() {
+		this.proximoMovimento = true;
+	}
+
+	public void anteriorMovimento() {
+		this.anteriorMovimento = true;
+	}
+
+	public void proximaFaixa() {
+		this.proximaFaixa = true;
+	}
+
+	public void anteriorFaixa() {
+		this.anteriorFaixa = true;
 	}
 
 }
