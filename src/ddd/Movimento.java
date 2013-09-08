@@ -45,7 +45,7 @@ public class Movimento {
 	 * Informação que diz se o movimento é um golpe ou Movimento de respiração,
 	 * atenção, etc.
 	 */
-	private int eh_golpe;
+	private boolean golpe;
 
 	/**
 	 * Endereço do arquivo de som do nome do movimento
@@ -63,7 +63,7 @@ public class Movimento {
 
 	public Movimento(Integer id, Faixa faixa, String descricao,
 			String observacao, int qtdRepeticao, int intervaloSegundos,
-			int eh_golpe, String path) {
+			boolean golpe, String path) {
 		super();
 		this.id = id;
 		this.faixa = faixa;
@@ -71,7 +71,7 @@ public class Movimento {
 		this.observacao = observacao;
 		this.qtdRepeticao = qtdRepeticao;
 		this.intervaloSegundos = intervaloSegundos;
-		this.eh_golpe = eh_golpe;
+		this.golpe = golpe;
 		this.path = path;
 	}
 
@@ -123,12 +123,12 @@ public class Movimento {
 		this.intervaloSegundos = intervaloSegundos;
 	}
 
-	public int getEh_golpe() {
-		return eh_golpe;
+	public boolean isGolpe() {
+		return golpe;
 	}
 
-	public void setEh_golpe(int eh_golpe) {
-		this.eh_golpe = eh_golpe;
+	public void setGolpe(boolean golpe) {
+		this.golpe = golpe;
 	}
 
 	public String getPath() {
@@ -156,7 +156,7 @@ public class Movimento {
 							this.observacao,
 							this.qtdRepeticao,
 							this.intervaloSegundos,
-							this.eh_golpe,
+							(this.golpe) ? 1 : 0,
 							this.path
 							);
 
@@ -169,7 +169,7 @@ public class Movimento {
 							this.observacao,
 							this.qtdRepeticao,
 							this.intervaloSegundos,
-							this.eh_golpe,
+							(this.golpe) ? 1 : 0,
 							this.path
 							);
 		}
@@ -183,15 +183,14 @@ public class Movimento {
 		int result = 1;
 		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + eh_golpe;
 		result = prime * result + ((faixa == null) ? 0 : faixa.hashCode());
+		result = prime * result + (golpe ? 1231 : 1237);
 		result = prime * result + id;
 		result = prime * result + intervaloSegundos;
 		result = prime * result
 				+ ((observacao == null) ? 0 : observacao.hashCode());
+		result = prime * result + ((path == null) ? 0 : path.hashCode());
 		result = prime * result + qtdRepeticao;
-		result = prime * result
-				+ ((path == null) ? 0 : path.hashCode());
 		return result;
 	}
 
@@ -209,12 +208,12 @@ public class Movimento {
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
-		if (eh_golpe != other.eh_golpe)
-			return false;
 		if (faixa == null) {
 			if (other.faixa != null)
 				return false;
 		} else if (!faixa.equals(other.faixa))
+			return false;
+		if (golpe != other.golpe)
 			return false;
 		if (id != other.id)
 			return false;
@@ -225,12 +224,12 @@ public class Movimento {
 				return false;
 		} else if (!observacao.equals(other.observacao))
 			return false;
-		if (qtdRepeticao != other.qtdRepeticao)
-			return false;
 		if (path == null) {
 			if (other.path != null)
 				return false;
 		} else if (!path.equals(other.path))
+			return false;
+		if (qtdRepeticao != other.qtdRepeticao)
 			return false;
 		return true;
 	}

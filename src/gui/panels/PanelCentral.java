@@ -160,8 +160,7 @@ public class PanelCentral extends JPanel {
 				JTextField jtxIntervaloSegundos = new JTextField(
 						String.valueOf(movimento.getIntervaloSegundos()));
 
-				JCheckBox jcbGolpe = new JCheckBox("",
-						(movimento.getEh_golpe() == 1 ? true : false));
+				JCheckBox jcbGolpe = new JCheckBox("", movimento.isGolpe());
 
 				JTextField jtxVozPath = new JTextField(movimento.getPath());
 				jtxVozPath.setPreferredSize(new Dimension(200, 20));
@@ -304,7 +303,7 @@ public class PanelCentral extends JPanel {
 						if (movimento.getId() == idMovimento) {
 							movimento.setQtdRepeticao(Integer.parseInt(jtxQtdRepeticao.getText()));
 							movimento.setIntervaloSegundos(Integer.parseInt(jtxIntervaloSegundos.getText()));
-							movimento.setEh_golpe(jcbGolpe.isSelected() ? 1 : 0);
+							movimento.setGolpe(jcbGolpe.isSelected());
 							movimento.setPath(jtxVozPath.getText());
 
 							break;

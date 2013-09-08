@@ -181,7 +181,7 @@ public class MovimentoDAO extends DAO {
 							rs.getString("observacao"),
 							rs.getInt("qtd_repeticao"),
 							rs.getInt("intervalo_segundos"),
-							rs.getInt("eh_golpe"),
+							(rs.getInt("eh_golpe") == 1) ? true : false,
 							rs.getString("path")
 					);
 
@@ -228,7 +228,7 @@ public class MovimentoDAO extends DAO {
 								rs.getString("observacao"),
 								rs.getInt("qtd_repeticao"),
 								rs.getInt("intervalo_segundos"),
-								rs.getInt("eh_golpe"),
+								(rs.getInt("eh_golpe") == 1) ? true : false,
 								rs.getString("path")
 						));
 			}

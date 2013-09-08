@@ -67,6 +67,8 @@ public class Aula extends Thread {
 	private boolean anteriorFaixa;
 
 	private boolean cancelarExercicio;
+	
+	private Random random;
 
 	/**
 	 * Aula
@@ -76,6 +78,7 @@ public class Aula extends Thread {
 	 */
 	public Aula(ArteMarcial arteMarcial) {
 		player = new WavPlayer();
+		random = new Random();
 
 		this.arteMarcial = arteMarcial;
 		this.faixas = arteMarcial.getTodasAsFaixas();
@@ -85,8 +88,7 @@ public class Aula extends Thread {
 	}
 
 	@Override
-	public void run() {
-		Random random = new Random();
+	public void run() {		
 		reproduzirSom(this.arteMarcial.getPath());
 
 		/*
@@ -96,6 +98,7 @@ public class Aula extends Thread {
 
 			// Mudar pane a cada nova faixa
 			tabbedPane.setSelectedIndex(i);
+			
 			espere(5);
 			fazerExercicio(Exercicio.ABDOMINAL);
 			espere(2);
@@ -119,13 +122,14 @@ public class Aula extends Thread {
 				 * Loop de Repetições do movimento
 				 */
 				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
-					reproduzirSom(this.comandoDiretorioPath + "grito" + (random.nextInt(3) + 1) + ".wav");
+					grito();
 					espere(intervaloSegundosMovimento);
 				}
 
-				if (movimentos.get(j).getEh_golpe() == 1) {
+				// Exercicio após o golpe
+				// TODO: continuar...
+				if (movimentos.get(j).isGolpe()) {
 
-					// Exercicio
 					int n = random.nextInt(movimentos.size() - 1);
 					if ((n == j) || (n == ((int) ((movimentos.size() / 2) - 1)))) { // Probabilidade
 																					// maior
@@ -142,6 +146,10 @@ public class Aula extends Thread {
 
 			descansar(Descanso.ALONGAMENTO);
 		}
+	}
+	
+	private void grito() {
+		reproduzirSom(this.comandoDiretorioPath + "grito" + (this.random.nextInt(3) + 1) + ".wav");
 	}
 
 	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
