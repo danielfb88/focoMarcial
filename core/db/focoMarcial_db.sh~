@@ -1,19 +1,65 @@
 #!/bin/bash
 sqlite3 focoMarcial.db "
-INSERT INTO artemarcial (descricao, path) VALUES ('Hapkido', 'sound/hapkido/hapkido.wav');
+
+CREATE TABLE faixa ( 
+id_faixa INTEGER PRIMARY KEY, 
+gub INTEGER NOT NULL, 
+descricao VARCHAR(50) NOT NULL, 
+path VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE movimento ( 
+id_movimento INTEGER PRIMARY KEY, 
+id_faixa INTEGER NOT NULL, 
+descricao VARCHAR(50) NOT NULL, 
+observacao VARCHAR(200), 
+qtd_repeticao INTEGER NOT NULL, 
+intervalo_segundos INTEGER NOT NULL, 
+eh_golpe SMALLINT NOT NULL,
+path VARCHAR(200) NOT NULL,
+FOREIGN KEY (id_faixa) REFERENCES faixa (id_faixa) ON DELETE CASCADE
+);
+
+CREATE TABLE exercicio ( 
+id_exercicio INTEGER PRIMARY KEY, 
+descricao VARCHAR(50) NOT NULL, 
+qtd_repeticao INTEGER NOT NULL, 
+intervalo_segundos INTEGER NOT NULL, 
+path VARCHAR(200) NOT NULL
+);
 
 
+CREATE TABLE config ( 
+id_config INTEGER PRIMARY KEY, 
+tempo_descanso_curto INTEGER NOT NULL,
+tempo_descanso_longo INTEGET NOT NULL,
+tempo_alongamento INTEGER NOT NULL,
+path_descanso VARCHAR(200) NOT NULL,
+path_alongamento VARCHAR(200) NOT NULL,
+path_atencao VARCAHR(200) NOT NULL,
+path_comando VARCAHR(200) NOT NULL,
+path_contagem VARCAHR(200) NOT NULL
+);
+"
 
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 10, 'Branca', 'sound/hapkido/branca.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 9, 'Amarela', 'sound/hapkido/amarela.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 8, 'Amarela ponteira Verde', 'sound/hapkido/amarelaponteiraverde.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 7, 'Verde', 'sound/hapkido/verde.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 6, 'Verde ponteira Azul', 'sound/hapkido/verdeponteiraazul.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 5, 'Azul', 'sound/faixa/azul.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 4, 'Azul ponteira Vermelha', 'sound/hapkido/azulponteiravermelha.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 3, 'Vermelha', 'sound/hapkido/vermelha.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 2, 'Vermelha ponteira Preta 1', 'sound/hapkido/vermelhaponteirapreta1.wav');
-INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (1, 1, 'Vermelha ponteira Preta 2', 'sound/hapkido/vermelhaponteirapreta2.wav');
+
+chmod +x focoMarcial.db;
+
+## DML
+
+sqlite3 focoMarcial.db "
+
+
+INSERT INTO faixa (gub, descricao, path) VALUES (10, 'Branca', 'sound/hapkido/branca.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (9, 'Amarela', 'sound/hapkido/amarela.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (8, 'Amarela ponteira Verde', 'sound/hapkido/amarelaponteiraverde.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (7, 'Verde', 'sound/hapkido/verde.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (6, 'Verde ponteira Azul', 'sound/hapkido/verdeponteiraazul.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (5, 'Azul', 'sound/faixa/azul.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (4, 'Azul ponteira Vermelha', 'sound/hapkido/azulponteiravermelha.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (3, 'Vermelha', 'sound/hapkido/vermelha.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (2, 'Vermelha ponteira Preta 1', 'sound/hapkido/vermelhaponteirapreta1.wav');
+INSERT INTO faixa (gub, descricao, path) VALUES (1, 'Vermelha ponteira Preta 2', 'sound/hapkido/vermelhaponteirapreta2.wav');
 
 
 
@@ -139,7 +185,15 @@ INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos,
 path) VALUES ('DESENVOLVIMENTO ALTERNADO (OMBROS)', 20, 2,
 'core/sound/exercicios/desenvolvimento_alternado.wav');
 
+
+
+INSERT INTO config 
+(perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem) 
+VALUES
+('default', 30, 120, 180, 'core/sound/exercicios/descansar.wav', 'core/sound/exercicios/alongamento.wav', 'core/sound/exercicios/atencao.wav', 'core/sound/comando/', 'core/sound/contagem/');
+
 "
+
 
 
 
