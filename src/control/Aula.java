@@ -1,14 +1,16 @@
 package control;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.JTabbedPane;
 
 import ddd.Config;
+import ddd.Exercicio;
 import ddd.Faixa;
 import ddd.Movimento;
-import ddd.Exercicio;
 
 /**
  * 
@@ -17,7 +19,7 @@ import ddd.Exercicio;
  * 
  * @author Daniel Bonfim <daniel.fb88@gmail.com>
  * @since 08/08/2013
- * @version 1.0
+ * @version 1.1
  * 
  */
 public class Aula extends Thread {
@@ -46,6 +48,8 @@ public class Aula extends Thread {
 	 * Flag que pausa a Thread
 	 */
 	private boolean pausar;
+	
+	private File[] filesGritos;
 
 	/**
 	 * TODO: INSERIR LÓGICA PARA PROXIMO E ANTERIOR DE FAIXA E MOVIMENTO.
@@ -69,9 +73,9 @@ public class Aula extends Thread {
 	 *            Objeto ArteMarcial com as faixas e movimentos já definidos.
 	 */
 	public Aula() {
+		config = getConfig();
 		player = new WavPlayer();
 		random = new Random();
-		config = getConfig();
 		faixas = new Faixa().getTodasAsFaixas();
 
 	}
@@ -163,8 +167,24 @@ public class Aula extends Thread {
 	}
 
 	private void grito() {
-		reproduzirSom(config.getPathComando() + "grito"
-				+ (this.random.nextInt(3) + 1) + ".wav");
+		if(filesGritos == null)
+			filesGritos = listarArquivos(config.getPathComando(), ".wav");
+		
+		reproduzirSom(filesGritos[(this.random.nextInt(filesGritos.length) + 1)]);
+	}
+
+	// lista os arquivos a partide de determinada extensão
+	public File[] listarArquivos(String caminhoDiretorio, final String extensao) {
+		File F = new File(caminhoDiretorio);
+
+		File[] files = F.listFiles(new FileFilter() {
+
+			public boolean accept(File pathname) {
+				return pathname.getName().toLowerCase().endsWith(extensao);
+			}
+		});
+
+		return files;
 	}
 
 	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
@@ -217,6 +237,11 @@ public class Aula extends Thread {
 			if (pausar == false)
 				System.out.println("*** CONTINUANDO ***");
 		}
+	}
+	
+	private void reproduzirSom(File file) {
+		verificarSePausaSolicitada();
+		player.play(file);
 	}
 
 	private void reproduzirSom(String path) {

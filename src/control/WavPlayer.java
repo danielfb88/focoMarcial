@@ -35,14 +35,9 @@ public class WavPlayer {
 	public String getLastWavPath() {
 		return this.wavPath;
 	}
-
-	/**
-	 * Executar som.
-	 */
-	public void play(String wavPath) {
-		this.wavPath = wavPath;
-		file = new File(this.wavPath);
-
+	
+	public void play(File file) {
+		this.file = file;
 		sourceDataLine = null;
 		audioInputStream = null;
 		audioFormat = null;
@@ -120,6 +115,14 @@ public class WavPlayer {
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Executar som.
+	 */
+	public void play(String wavPath) {
+		this.file = new File(wavPath);
+		this.play(file);
 	}
 
 }
