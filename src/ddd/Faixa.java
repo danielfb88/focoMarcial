@@ -2,6 +2,7 @@ package ddd;
 
 import java.util.List;
 
+import dao.FaixaDAO;
 import dao.MovimentoDAO;
 
 /**
@@ -17,11 +18,6 @@ public class Faixa {
 	 * Id
 	 */
 	private int id;
-
-	/**
-	 * Arte Marcial
-	 */
-	private ArteMarcial arteMarcial;
 
 	/**
 	 * Identiticação hierarquica na AM
@@ -43,6 +39,8 @@ public class Faixa {
 	 */
 	private MovimentoDAO movimentoDAO = new MovimentoDAO();
 
+	private FaixaDAO faixaDAO = new FaixaDAO();
+
 	/**
 	 * Lista de Movimentos da faixa
 	 */
@@ -57,21 +55,18 @@ public class Faixa {
 		this.id = id;
 	}
 
-	public Faixa(Integer id, ArteMarcial arteMarcial, Integer gub,
-			String descricao, String path) {
+	public Faixa(Integer id, Integer gub, String descricao, String path) {
 		super();
 		this.id = id;
-		this.arteMarcial = arteMarcial;
 		this.gub = gub;
 		this.descricao = descricao;
 		this.path = path;
 	}
 
-	public Faixa(Integer id, ArteMarcial arteMarcial, Integer gub,
-			String descricao, String path, List<Movimento> movimentos) {
+	public Faixa(Integer id, Integer gub, String descricao, String path,
+			List<Movimento> movimentos) {
 		super();
 		this.id = id;
-		this.arteMarcial = arteMarcial;
 		this.gub = gub;
 		this.descricao = descricao;
 		this.path = path;
@@ -84,14 +79,6 @@ public class Faixa {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public ArteMarcial getArteMarcial() {
-		return arteMarcial;
-	}
-
-	public void setArteMarcial(ArteMarcial arteMarcial) {
-		this.arteMarcial = arteMarcial;
 	}
 
 	public int getGub() {
@@ -109,7 +96,7 @@ public class Faixa {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
 	public String getPath() {
 		return path;
 	}
@@ -142,57 +129,8 @@ public class Faixa {
 		return movimentos;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((arteMarcial == null) ? 0 : arteMarcial.hashCode());
-		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + gub;
-		result = prime * result + id;
-		result = prime * result
-				+ ((movimentos == null) ? 0 : movimentos.hashCode());
-		result = prime * result
-				+ ((path == null) ? 0 : path.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Faixa other = (Faixa) obj;
-		if (arteMarcial == null) {
-			if (other.arteMarcial != null)
-				return false;
-		} else if (!arteMarcial.equals(other.arteMarcial))
-			return false;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (gub != other.gub)
-			return false;
-		if (id != other.id)
-			return false;
-		if (movimentos == null) {
-			if (other.movimentos != null)
-				return false;
-		} else if (!movimentos.equals(other.movimentos))
-			return false;
-		if (path == null) {
-			if (other.path != null)
-				return false;
-		} else if (!path.equals(other.path))
-			return false;
-		return true;
+	public List<Faixa> getTodasAsFaixas() {
+		return faixaDAO.getFaixas();
 	}
 
 }

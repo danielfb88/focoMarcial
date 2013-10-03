@@ -22,8 +22,6 @@ public class FaixaDAO extends DAO {
 	/**
 	 * Adicionar Faixa ao banco de dados
 	 * 
-	 * @param id_artemarcial
-	 *            Id da Arte Marcial responsável pela faixa
 	 * @param gub
 	 *            Número a qual a faixa pertence na hierarquia da arte marcial
 	 * @param descricao
@@ -32,13 +30,12 @@ public class FaixaDAO extends DAO {
 	 *            Endereço do arquivo de som
 	 * @return Número de linhas afetadas
 	 */
-	public int adicionar(int id_artemarcial, int gub, String descricao, String path) {
+	public int adicionar(int gub, String descricao, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO faixa (id_artemarcial, gub, descricao, path) VALUES (");
+		builder.append("INSERT INTO faixa (gub, descricao, path) VALUES (");
 
-		builder.append(id_artemarcial + ", ");
 		builder.append(gub + ", ");
 		builder.append("'" + descricao + "', ");
 		builder.append("'" + path + "' ");
@@ -65,8 +62,6 @@ public class FaixaDAO extends DAO {
 	 * 
 	 * @param id_faixa
 	 *            Id da faixa a ser editada
-	 * @param id_artemarcial
-	 *            Id da Arte Marcial responsável pela faixa
 	 * @param gub
 	 *            Número a qual a faixa pertence na hierarquia da arte marcial
 	 * @param descricao
@@ -75,13 +70,12 @@ public class FaixaDAO extends DAO {
 	 *            Endereço do arquivo de som
 	 * @return Número de linhas afetadas
 	 */
-	public int editar(int id_faixa, int id_artemarcial, int gub, String descricao, String path) {
+	public int editar(int id_faixa, int gub, String descricao, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("UPDATE faixa SET ");
 
-		builder.append("id_artemarcial = " + id_artemarcial + ", ");
 		builder.append("gub = " + gub + ", ");
 		builder.append("descricao = '" + descricao + "', ");
 		builder.append("path = '" + path + "' ");
@@ -149,12 +143,8 @@ public class FaixaDAO extends DAO {
 
 			rs = ps.executeQuery();
 
-			/*
-			 * O segundo parâmetro será preenchido pela Arte Marcial.
-			 */
 			faixa = new Faixa(
 					rs.getInt("id_faixa"),
-					null,
 					rs.getInt("gub"),
 					rs.getString("descricao"),
 					rs.getString("path")
@@ -180,13 +170,12 @@ public class FaixaDAO extends DAO {
 	 *            Id da arte Marcial detentora das faixas a serem retornadas
 	 * @return Lista das Faixas da arte marcial especificada pelo Id.
 	 */
-	public List<Faixa> getFaixas(int id_artemarcial) {
+	public List<Faixa> getFaixas() {
 		ArrayList<Faixa> faixas = new ArrayList<Faixa>();
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
 
-		builder.append("SELECT * FROM faixa WHERE ");
-		builder.append("id_artemarcial = " + id_artemarcial + ";");
+		builder.append("SELECT * FROM faixa ");
 
 		try {
 			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
@@ -200,7 +189,6 @@ public class FaixaDAO extends DAO {
 				Faixa faixa =
 						new Faixa(
 								rs.getInt("id_faixa"),
-								null,
 								rs.getInt("gub"),
 								rs.getString("descricao"),
 								rs.getString("path")
@@ -227,8 +215,7 @@ public class FaixaDAO extends DAO {
 	/**
 	 * Obtém todas as Faixas entre os Gubs especificados
 	 * 
-	 * @param id_artemarcial
-	 *            Id da Arte Marcial detentora das faixas
+	 
 	 * @param gub_inicial
 	 *            Identificação hierarquica da Faixa dentro da Arte Marcial
 	 *            (Valor inicial)
@@ -237,7 +224,7 @@ public class FaixaDAO extends DAO {
 	 *            (Valor final)
 	 * @return Lista de Faixas entre os Gubs especificados
 	 */
-	public List<Faixa> getFaixas(int id_artemarcial, int gub_inicial, int gub_final) {
+	public List<Faixa> getFaixas(int gub_inicial, int gub_final) {
 		ArrayList<Faixa> faixas = new ArrayList<Faixa>();
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
@@ -245,7 +232,6 @@ public class FaixaDAO extends DAO {
 		builder.append("SELECT * FROM faixa ");
 
 		builder.append("WHERE ");
-		builder.append("id_artemarcial = " + id_artemarcial + " ");
 		builder.append("AND gub <= " + gub_inicial + " ");
 		builder.append("AND gub >= " + gub_final + " ");
 
@@ -262,7 +248,6 @@ public class FaixaDAO extends DAO {
 						 */
 						new Faixa(
 								rs.getInt("id_faixa"),
-								null,
 								rs.getInt("gub"),
 								rs.getString("descricao"),
 								rs.getString("path")

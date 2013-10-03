@@ -49,6 +49,14 @@ public class Exercicio {
 		super();
 		this.id = id;
 	}
+	
+	public Exercicio(String descricao, int qtdRepeticao, int intervaloSegundos, String path) {
+		super();
+		this.descricao = descricao;
+		this.qtdRepeticao = qtdRepeticao;
+		this.intervaloSegundos = intervaloSegundos;
+		this.path = path;
+	}
 
 	public Exercicio(Integer id, String descricao, int qtdRepeticao, int intervaloSegundos, String path) {
 		super();

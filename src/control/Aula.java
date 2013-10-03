@@ -5,13 +5,12 @@ import java.util.Random;
 
 import javax.swing.JTabbedPane;
 
-import ddd.ArteMarcial;
+import ddd.Config;
 import ddd.Faixa;
 import ddd.Movimento;
+import ddd.Exercicio;
 
 /**
- * TODO: DIVIDA O PROGRAMA EM PEQUENAS PARTES. CRIE CLASSES REAPROVEITAVEIS.
- * TODO: CONTINUAR REFATORAR
  * 
  * Aula com instruções sobre movimentos e exercícios da Arte Marcial
  * selecionada.
@@ -22,15 +21,16 @@ import ddd.Movimento;
  * 
  */
 public class Aula extends Thread {
-	/**
-	 * Arte Marcial
-	 */
-	private ArteMarcial arteMarcial;
 
 	/**
 	 * Lista das faixas da Arte MArcial
 	 */
 	private List<Faixa> faixas;
+
+	/*
+	 * Lista de exercicios
+	 */
+	private List<Exercicio> exercicios;
 
 	/**
 	 * TabbedPane contendo as faixas
@@ -41,16 +41,6 @@ public class Aula extends Thread {
 	 * Tocador Wav
 	 */
 	private WavPlayer player;
-
-	/**
-	 * Path do nome dos golpes
-	 */
-	private String comandoDiretorioPath;
-
-	/**
-	 * Path da contagem
-	 */
-	private String contagemDiretorioPath;
 
 	/**
 	 * Flag que pausa a Thread
@@ -67,8 +57,10 @@ public class Aula extends Thread {
 	private boolean anteriorFaixa;
 
 	private boolean cancelarExercicio;
-	
+
 	private Random random;
+
+	private Config config;
 
 	/**
 	 * Aula
@@ -76,20 +68,23 @@ public class Aula extends Thread {
 	 * @param arteMarcial
 	 *            Objeto ArteMarcial com as faixas e movimentos já definidos.
 	 */
-	public Aula(ArteMarcial arteMarcial) {
+	public Aula() {
 		player = new WavPlayer();
 		random = new Random();
+		config = getConfig();
+		faixas = new Faixa().getTodasAsFaixas();
 
-		this.arteMarcial = arteMarcial;
-		this.faixas = arteMarcial.getTodasAsFaixas();
-
-		comandoDiretorioPath = "core/sound/comando/";
-		contagemDiretorioPath = "core/sound/contagem/";
 	}
 
 	@Override
-	public void run() {		
-		reproduzirSom(this.arteMarcial.getPath());
+	public void run() {
+		/*
+		 * Loop do Exercicio
+		 */
+		for (int i = 0; i < exercicios.size(); i++) {
+			fazerExercicio(exercicios.get(i));
+			espere(config.getTempoDescansoCurto());
+		}
 
 		/*
 		 * Loop de Faixa
@@ -98,10 +93,8 @@ public class Aula extends Thread {
 
 			// Mudar pane a cada nova faixa
 			tabbedPane.setSelectedIndex(i);
-			
+
 			espere(5);
-			fazerExercicio(Exercicio.ABDOMINAL);
-			espere(2);
 			reproduzirSom(faixas.get(i).getPath());
 			espere(4);
 
@@ -116,7 +109,8 @@ public class Aula extends Thread {
 				espere(3);
 
 				int qtdRepeticaoMovimento = movimentos.get(j).getQtdRepeticao();
-				int intervaloSegundosMovimento = movimentos.get(j).getIntervaloSegundos();
+				int intervaloSegundosMovimento = movimentos.get(j)
+						.getIntervaloSegundos();
 
 				/*
 				 * Loop de Repetições do movimento
@@ -126,30 +120,51 @@ public class Aula extends Thread {
 					espere(intervaloSegundosMovimento);
 				}
 
-				// Exercicio após o golpe
-				// TODO: continuar...
-				if (movimentos.get(j).isGolpe()) {
-
-					int n = random.nextInt(movimentos.size() - 1);
-					if ((n == j) || (n == ((int) ((movimentos.size() / 2) - 1)))) { // Probabilidade
-																					// maior
-						fazerExercicio((random.nextBoolean() == true) ? Exercicio.AGACHAMENTO_APTCHAGUI : Exercicio.FLEXAO);
-						espere(2);
-					}
-
-					// Descanso
-					if (j == (int) movimentos.size() / 2) {
-						descansar(Descanso.POUCO);
-					}
-				}
 			}
 
-			descansar(Descanso.ALONGAMENTO);
+			// Descansar
+			reproduzirSom(config.getPathDescanso());
+			espere(config.getTempoDescansoLongo());
+			System.out.println("*** Fim do Descanso ***");
+			reproduzirSom(config.getPathAtencao());
 		}
 	}
-	
+
+	/**
+	 * Exercícios
+	 * 
+	 * @param nome
+	 * @param quantidade
+	 */
+	private void fazerExercicio(Exercicio exercicio) {
+		reproduzirSom(exercicio.getPath());
+		espere(2);
+		int x = 1;
+
+		for (int i = 0; i < exercicio.getQtdRepeticao(); i++) {
+
+			if (cancelarExercicio) {
+				cancelarExercicio = false;
+				break;
+			}
+
+			reproduzirSom(config.getPathContagem() + (x) + ".wav");
+			espere(exercicio.getIntervaloSegundos());
+
+			if (x == 10)
+				x = 0;
+
+			x++;
+		}
+	}
+
+	private Config getConfig() {
+		return new Config().getByPerfil("default");
+	}
+
 	private void grito() {
-		reproduzirSom(this.comandoDiretorioPath + "grito" + (this.random.nextInt(3) + 1) + ".wav");
+		reproduzirSom(config.getPathComando() + "grito"
+				+ (this.random.nextInt(3) + 1) + ".wav");
 	}
 
 	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
@@ -221,47 +236,6 @@ public class Aula extends Thread {
 
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
-		}
-	}
-
-	/**
-	 * Descansar
-	 * 
-	 * @param segundos
-	 */
-	private void descansar(Descanso descanso) {
-		player.play(descanso.getVozPathDescansar());
-		espere(descanso.getSegundos());
-
-		System.out.println("*** Fim do Descanso ***");
-		player.play(descanso.getVozPathAtencao());
-	}
-
-	/**
-	 * Exercícios
-	 * 
-	 * @param nome
-	 * @param quantidade
-	 */
-	private void fazerExercicio(Exercicio exercicio) {
-		reproduzirSom(exercicio.getVozPath());
-		espere(2);
-		int x = 1;
-
-		for (int i = 0; i < exercicio.getQuantidade(); i++) {
-
-			if (cancelarExercicio) {
-				cancelarExercicio = false;
-				break;
-			}
-
-			player.play(this.contagemDiretorioPath + (x) + ".wav");
-			espere(exercicio.getIntervaloSegundos());
-
-			if (x == 10)
-				x = 0;
-
-			x++;
 		}
 	}
 
