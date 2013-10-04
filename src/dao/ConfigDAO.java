@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,16 +117,14 @@ public class ConfigDAO extends DAO {
 
 	public Config getByPerfil(String perfil) {
 		Config config = null;
-		perfil = '%' + perfil + '%';
 		StringBuilder builder = new StringBuilder();
 		ResultSet rs = null;
 
-		builder.append("SELECT * FROM config WHERE perfil = " + perfil + ";");
+		builder.append("SELECT * FROM config WHERE perfil = '" + perfil + "'");
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(
-					builder.toString());
+			Statement s = getConnection().createStatement();
 
-			rs = ps.executeQuery();
+			rs = s.executeQuery(builder.toString());
 
 			config = new Config(rs.getString("perfil"),
 					rs.getInt("tempo_descanso_curto"),
@@ -133,11 +132,12 @@ public class ConfigDAO extends DAO {
 					rs.getInt("tempo_alongamento"),
 					rs.getString("path_descanso"),
 					rs.getString("path_alongamento"),
-					rs.getString("path_atencao"), rs.getString("path_comando"),
+					rs.getString("path_atencao"), 
+					rs.getString("path_comando"),
 					rs.getString("path_contagem"));
 
 			rs.close();
-			ps.close();
+			s.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

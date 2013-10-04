@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,9 +182,9 @@ public class ExercicioDAO extends DAO {
 		builder.append("SELECT * FROM exercicio ");
 
 		try {
-			PreparedStatement ps = getConnection().prepareStatement(builder.toString());
+			Statement s = getConnection().createStatement();
 
-			rs = ps.executeQuery();
+			rs = s.executeQuery(builder.toString());
 
 			while (rs.next()) {
 				Exercicio exercicio =
@@ -199,7 +200,7 @@ public class ExercicioDAO extends DAO {
 			}
 
 			rs.close();
-			ps.close();
+			s.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

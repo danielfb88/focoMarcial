@@ -117,11 +117,8 @@ public class Main extends JFrame {
 		this.menu = new MenuBar();
 		setJMenuBar(this.menu);
 
-		// Arte Marcial com faixas vindas do banco
-		arteMarcial = new ArteMarcial().getById(1);
-
 		// Enviando faixas para o Painel central
-		panelCentral = new PanelCentral(new Dimension(dimension.width - 15, dimension.height - 170), arteMarcial.getTodasAsFaixas());
+		panelCentral = new PanelCentral(new Dimension(dimension.width - 15, dimension.height - 170), new Faixa().getTodasAsFaixas());
 
 		// Painel Sul responsável pelos botões
 		panelSul = criarPanelSul();

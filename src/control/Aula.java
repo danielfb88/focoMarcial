@@ -48,7 +48,7 @@ public class Aula extends Thread {
 	 * Flag que pausa a Thread
 	 */
 	private boolean pausar;
-	
+
 	private File[] filesGritos;
 
 	/**
@@ -66,32 +66,44 @@ public class Aula extends Thread {
 
 	private Config config;
 
-	/**
-	 * Aula
-	 * 
-	 * @param arteMarcial
-	 *            Objeto ArteMarcial com as faixas e movimentos já definidos.
-	 */
 	public Aula() {
 		config = getConfig();
 		player = new WavPlayer();
 		random = new Random();
 		faixas = new Faixa().getTodasAsFaixas();
-
+		exercicios = new Exercicio().getTodosOsExercicios();
 	}
 
 	@Override
 	public void run() {
 		/*
-		 * Loop do Exercicio
+		 * Loop do Exercicio 2 séries de cada exercicio
 		 */
-		for (int i = 0; i < exercicios.size(); i++) {
-			fazerExercicio(exercicios.get(i));
+		int serie = 0;
+		for (int i = 0; i < exercicios.size(); serie++) {
+			System.out
+					.println("Exercicio: " + exercicios.get(i).getDescricao());
+			System.out.println("Serie: " + serie + 1);
+
+			try {
+				exercicios.get(i).setConfig(config);
+				exercicios.get(i).iniciar();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			espere(config.getTempoDescansoCurto());
+
+			if (serie == 1) {
+				i++;
+				serie = 0;
+			}
 		}
+		System.exit(0);
 
 		/*
-		 * Loop de Faixa
+		 * TODO: Continuar... Loop de Faixa
 		 */
 		for (int i = 0; i < faixas.size(); i++) {
 
@@ -129,36 +141,8 @@ public class Aula extends Thread {
 			// Descansar
 			reproduzirSom(config.getPathDescanso());
 			espere(config.getTempoDescansoLongo());
-			System.out.println("*** Fim do Descanso ***");
 			reproduzirSom(config.getPathAtencao());
-		}
-	}
-
-	/**
-	 * Exercícios
-	 * 
-	 * @param nome
-	 * @param quantidade
-	 */
-	private void fazerExercicio(Exercicio exercicio) {
-		reproduzirSom(exercicio.getPath());
-		espere(2);
-		int x = 1;
-
-		for (int i = 0; i < exercicio.getQtdRepeticao(); i++) {
-
-			if (cancelarExercicio) {
-				cancelarExercicio = false;
-				break;
-			}
-
-			reproduzirSom(config.getPathContagem() + (x) + ".wav");
-			espere(exercicio.getIntervaloSegundos());
-
-			if (x == 10)
-				x = 0;
-
-			x++;
+			System.out.println("*** Fim do Descanso ***");
 		}
 	}
 
@@ -167,9 +151,9 @@ public class Aula extends Thread {
 	}
 
 	private void grito() {
-		if(filesGritos == null)
+		if (filesGritos == null)
 			filesGritos = listarArquivos(config.getPathComando(), ".wav");
-		
+
 		reproduzirSom(filesGritos[(this.random.nextInt(filesGritos.length) + 1)]);
 	}
 
@@ -238,7 +222,7 @@ public class Aula extends Thread {
 				System.out.println("*** CONTINUANDO ***");
 		}
 	}
-	
+
 	private void reproduzirSom(File file) {
 		verificarSePausaSolicitada();
 		player.play(file);
