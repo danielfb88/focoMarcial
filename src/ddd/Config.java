@@ -1,7 +1,9 @@
 package ddd;
 
+import java.io.File;
 import java.util.List;
 
+import util.Util;
 import dao.ConfigDAO;
 
 public class Config {
@@ -15,11 +17,13 @@ public class Config {
 	private String pathAtencao;
 	private String pathComando;
 	private String pathContagem;
-	
-	ConfigDAO configDAO;
+
+	private File[] comandosVoz;
+
+	private ConfigDAO configDAO = new ConfigDAO();
 
 	public Config() {
-		configDAO = new ConfigDAO();
+		
 	}
 
 	public Config(String perfil, int tempoDescansoCurto,
@@ -147,85 +151,23 @@ public class Config {
 
 		return retorno > 0;
 	}
-	
+
 	public List<String> getPerfis() {
 		return configDAO.getPerfis();
 	}
-	
+
 	public Config getByPerfil(String perfil) {
-		return configDAO.getByPerfil(perfil);
+		Config config = configDAO.getByPerfil(perfil);
+		config.setComandosVoz(Util.listarArquivos(config.getPathComando(), ".wav"));
+		return config;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result
-				+ ((pathAlongamento == null) ? 0 : pathAlongamento.hashCode());
-		result = prime * result
-				+ ((pathAtencao == null) ? 0 : pathAtencao.hashCode());
-		result = prime * result
-				+ ((pathComando == null) ? 0 : pathComando.hashCode());
-		result = prime * result
-				+ ((pathContagem == null) ? 0 : pathContagem.hashCode());
-		result = prime * result
-				+ ((pathDescanso == null) ? 0 : pathDescanso.hashCode());
-		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
-		result = prime * result + tempoAlongamento;
-		result = prime * result + tempoDescansoCurto;
-		result = prime * result + tempoDescansoLongo;
-		return result;
+	public void setComandosVoz(File[] files) {
+		this.comandosVoz = files;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Config other = (Config) obj;
-		if (id != other.id)
-			return false;
-		if (pathAlongamento == null) {
-			if (other.pathAlongamento != null)
-				return false;
-		} else if (!pathAlongamento.equals(other.pathAlongamento))
-			return false;
-		if (pathAtencao == null) {
-			if (other.pathAtencao != null)
-				return false;
-		} else if (!pathAtencao.equals(other.pathAtencao))
-			return false;
-		if (pathComando == null) {
-			if (other.pathComando != null)
-				return false;
-		} else if (!pathComando.equals(other.pathComando))
-			return false;
-		if (pathContagem == null) {
-			if (other.pathContagem != null)
-				return false;
-		} else if (!pathContagem.equals(other.pathContagem))
-			return false;
-		if (pathDescanso == null) {
-			if (other.pathDescanso != null)
-				return false;
-		} else if (!pathDescanso.equals(other.pathDescanso))
-			return false;
-		if (perfil == null) {
-			if (other.perfil != null)
-				return false;
-		} else if (!perfil.equals(other.perfil))
-			return false;
-		if (tempoAlongamento != other.tempoAlongamento)
-			return false;
-		if (tempoDescansoCurto != other.tempoDescansoCurto)
-			return false;
-		if (tempoDescansoLongo != other.tempoDescansoLongo)
-			return false;
-		return true;
+	public File[] getComandosVoz() {
+		return this.comandosVoz;
 	}
 
 }

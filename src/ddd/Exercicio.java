@@ -193,45 +193,4 @@ public class Exercicio {
 		return exercicioDAO.getById(id);
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + id;
-		result = prime * result + intervaloSegundos;
-		result = prime * result + qtdRepeticao;
-		result = prime * result + ((path == null) ? 0 : path.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Exercicio other = (Exercicio) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (id != other.id)
-			return false;
-		if (intervaloSegundos != other.intervaloSegundos)
-			return false;
-		if (qtdRepeticao != other.qtdRepeticao)
-			return false;
-		if (path == null) {
-			if (other.path != null)
-				return false;
-		} else if (!path.equals(other.path))
-			return false;
-		return true;
-	}
-
 }

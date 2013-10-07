@@ -1,5 +1,10 @@
 package ddd;
 
+import java.io.File;
+import java.util.Random;
+
+import util.Util;
+import control.WavPlayer;
 import dao.MovimentoDAO;
 
 /**
@@ -51,6 +56,14 @@ public class Movimento {
 	 * Endereço do arquivo de som do nome do movimento
 	 */
 	private String path;
+
+	private Config config = new Config();
+
+	private WavPlayer player = new WavPlayer();
+
+	private boolean cancelar;
+
+	private Random random = new Random();
 
 	public Movimento() {
 		super();
@@ -139,6 +152,10 @@ public class Movimento {
 		this.path = path;
 	}
 
+	public void setConfig(Config config) {
+		this.config = config;
+	}
+
 	/**
 	 * Salvar movimento no banco
 	 * 
@@ -177,61 +194,36 @@ public class Movimento {
 		return retorno > 0;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((faixa == null) ? 0 : faixa.hashCode());
-		result = prime * result + (golpe ? 1231 : 1237);
-		result = prime * result + id;
-		result = prime * result + intervaloSegundos;
-		result = prime * result
-				+ ((observacao == null) ? 0 : observacao.hashCode());
-		result = prime * result + ((path == null) ? 0 : path.hashCode());
-		result = prime * result + qtdRepeticao;
-		return result;
+	public void cancelar() {
+		cancelar = true;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Movimento other = (Movimento) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (faixa == null) {
-			if (other.faixa != null)
-				return false;
-		} else if (!faixa.equals(other.faixa))
-			return false;
-		if (golpe != other.golpe)
-			return false;
-		if (id != other.id)
-			return false;
-		if (intervaloSegundos != other.intervaloSegundos)
-			return false;
-		if (observacao == null) {
-			if (other.observacao != null)
-				return false;
-		} else if (!observacao.equals(other.observacao))
-			return false;
-		if (path == null) {
-			if (other.path != null)
-				return false;
-		} else if (!path.equals(other.path))
-			return false;
-		if (qtdRepeticao != other.qtdRepeticao)
-			return false;
-		return true;
+	/**
+	 * Iniciar Movimento
+	 * 
+	 * @throws Exception
+	 */
+	public void iniciar() throws Exception {
+		if (config == null)
+			throw new Exception("Configurações não definidas");
+
+		File[] comandosVoz = config.getComandosVoz();
+
+		Util.tempo(2);
+		player.play(this.path);
+		Util.tempo(3);
+
+		for (int i = 0; i < this.qtdRepeticao; i++) {
+			// Som aleatório
+			player.play(comandosVoz[(this.random.nextInt(comandosVoz.length) + 1)]);
+
+			Util.tempo(intervaloSegundos);
+
+			if (cancelar) {
+				cancelar = false;
+				break;
+			}
+		}
 	}
 
 }

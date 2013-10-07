@@ -1,9 +1,6 @@
 package control;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.JTabbedPane;
 
@@ -13,6 +10,9 @@ import ddd.Faixa;
 import ddd.Movimento;
 
 /**
+ * TODO: DAR UM JEITO NO TIMER: 
+ * UTILIZE ACTIONPERFORMED PARA PAUSAR A THREAD COM A CLASSE:
+ * javax.swing.Timer
  * 
  * Aula com instruções sobre movimentos e exercícios da Arte Marcial
  * selecionada.
@@ -49,8 +49,6 @@ public class Aula extends Thread {
 	 */
 	private boolean pausar;
 
-	private File[] filesGritos;
-
 	/**
 	 * TODO: INSERIR LÓGICA PARA PROXIMO E ANTERIOR DE FAIXA E MOVIMENTO.
 	 */
@@ -62,14 +60,11 @@ public class Aula extends Thread {
 
 	private boolean cancelarExercicio;
 
-	private Random random;
-
 	private Config config;
 
 	public Aula() {
 		config = getConfig();
 		player = new WavPlayer();
-		random = new Random();
 		faixas = new Faixa().getTodasAsFaixas();
 		exercicios = new Exercicio().getTodosOsExercicios();
 	}
@@ -77,33 +72,31 @@ public class Aula extends Thread {
 	@Override
 	public void run() {
 		/*
-		 * Loop do Exercicio 2 séries de cada exercicio
+		 * Loop do Exercicio. 2 séries para cada
 		 */
-		int serie = 0;
-		for (int i = 0; i < exercicios.size(); serie++) {
-			System.out
-					.println("Exercicio: " + exercicios.get(i).getDescricao());
-			System.out.println("Serie: " + serie + 1);
 
-			try {
-				exercicios.get(i).setConfig(config);
-				exercicios.get(i).iniciar();
+		for (int i = 0; i < exercicios.size(); i++) {
+			exercicios.get(i).setConfig(config);
 
-			} catch (Exception e) {
-				e.printStackTrace();
+			for (int serie = 1; serie <= 2; serie++) {
+				System.out.println("Exercicio: " + exercicios.get(i).getDescricao());
+				System.out.println("Serie: " + serie);
+
+				try {
+					exercicios.get(i).iniciar();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				espere(config.getTempoDescansoCurto());
 			}
-
 			espere(config.getTempoDescansoCurto());
 
-			if (serie == 1) {
-				i++;
-				serie = 0;
-			}
 		}
-		System.exit(0);
 
 		/*
-		 * TODO: Continuar... Loop de Faixa
+		 * Loop da faixa
 		 */
 		for (int i = 0; i < faixas.size(); i++) {
 
@@ -111,8 +104,8 @@ public class Aula extends Thread {
 			tabbedPane.setSelectedIndex(i);
 
 			espere(5);
-			reproduzirSom(faixas.get(i).getPath());
-			espere(4);
+			player.play(faixas.get(i).getPath());
+			espere(5);
 
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 
@@ -120,55 +113,27 @@ public class Aula extends Thread {
 			 * Loop de Movimento
 			 */
 			for (int j = 0; j < movimentos.size(); j++) {
-				espere(2);
-				reproduzirSom(movimentos.get(j).getPath());
-				espere(3);
+				movimentos.get(j).setConfig(config);
 
-				int qtdRepeticaoMovimento = movimentos.get(j).getQtdRepeticao();
-				int intervaloSegundosMovimento = movimentos.get(j)
-						.getIntervaloSegundos();
+				try {
+					movimentos.get(j).iniciar();
 
-				/*
-				 * Loop de Repetições do movimento
-				 */
-				for (int repeticaoAtual = 0; repeticaoAtual < qtdRepeticaoMovimento; repeticaoAtual++) {
-					grito();
-					espere(intervaloSegundosMovimento);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-
 			}
 
 			// Descansar
-			reproduzirSom(config.getPathDescanso());
+			player.play(config.getPathDescanso());
 			espere(config.getTempoDescansoLongo());
-			reproduzirSom(config.getPathAtencao());
+			
+			player.play(config.getPathAtencao());
 			System.out.println("*** Fim do Descanso ***");
 		}
 	}
 
 	private Config getConfig() {
 		return new Config().getByPerfil("default");
-	}
-
-	private void grito() {
-		if (filesGritos == null)
-			filesGritos = listarArquivos(config.getPathComando(), ".wav");
-
-		reproduzirSom(filesGritos[(this.random.nextInt(filesGritos.length) + 1)]);
-	}
-
-	// lista os arquivos a partide de determinada extensão
-	public File[] listarArquivos(String caminhoDiretorio, final String extensao) {
-		File F = new File(caminhoDiretorio);
-
-		File[] files = F.listFiles(new FileFilter() {
-
-			public boolean accept(File pathname) {
-				return pathname.getName().toLowerCase().endsWith(extensao);
-			}
-		});
-
-		return files;
 	}
 
 	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
@@ -199,38 +164,6 @@ public class Aula extends Thread {
 		synchronized (this) {
 			this.notify();
 		}
-	}
-
-	/**
-	 * Quando executado, fica escutando a variável pausar para verificar se deve
-	 * pausar a thread.
-	 */
-	private void verificarSePausaSolicitada() {
-		if (pausar)
-			System.out.println("*** PAUSADO ***");
-
-		while (pausar) {
-			synchronized (this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
-			if (pausar == false)
-				System.out.println("*** CONTINUANDO ***");
-		}
-	}
-
-	private void reproduzirSom(File file) {
-		verificarSePausaSolicitada();
-		player.play(file);
-	}
-
-	private void reproduzirSom(String path) {
-		verificarSePausaSolicitada();
-		player.play(path);
 	}
 
 	/**
