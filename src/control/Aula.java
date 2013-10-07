@@ -10,10 +10,6 @@ import ddd.Faixa;
 import ddd.Movimento;
 
 /**
- * TODO: DAR UM JEITO NO TIMER: 
- * UTILIZE ACTIONPERFORMED PARA PAUSAR A THREAD COM A CLASSE:
- * javax.swing.Timer
- * 
  * Aula com instruções sobre movimentos e exercícios da Arte Marcial
  * selecionada.
  * 
@@ -123,9 +119,9 @@ public class Aula extends Thread {
 				}
 			}
 
-			// Descansar
+			// Fim da faixa
 			player.play(config.getPathDescanso());
-			espere(config.getTempoDescansoLongo());
+			espere(config.getTempoAlongamento());
 			
 			player.play(config.getPathAtencao());
 			System.out.println("*** Fim do Descanso ***");

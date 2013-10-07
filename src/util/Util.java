@@ -12,8 +12,17 @@ import java.io.FileFilter;
  * 
  */
 public class Util {
-
+	
 	public static void tempo(int segundos) {
+		try {
+			Thread.sleep(segundos * 1000);
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}  
+	}
+
+	public static void tempoNoThread(int segundos) {
 		long t0 = System.currentTimeMillis();
 
 		while (true) {

@@ -167,9 +167,9 @@ INSERT INTO movimento (id_faixa, descricao, observacao, qtd_repeticao, intervalo
 
 
 
-INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('ABDOMINAL', 50, 2, 'core/sound/exercicios/abdominal.wav');
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('ABDOMINAL', 30, 1, 'core/sound/exercicios/abdominal.wav');
 
-INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('ABDOMINAL INFERIOR', 30, 4, 'core/sound/exercicios/abdominal.wav');
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('ABDOMINAL INFERIOR', 30, 3, 'core/sound/exercicios/abdominal.wav');
 
 INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('FLEXÃO', 15, 1, 'core/sound/exercicios/flexao.wav');
 
@@ -178,6 +178,8 @@ INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUE
 INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('ROSCA ALTERNADA (BÍCEPS)', 20, 1, 'core/sound/exercicios/rosca_alternada.wav');
 
 INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('DESENVOLVIMENTO ALTERNADO (OMBROS)', 20, 2, 'core/sound/exercicios/desenvolvimento_alternado.wav');
+
+INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES ('YOPTCHAGUI SENTADO', 20, 1, 'core/sound/exercicios/yoptchagui_sentado.wav');
 
 
 
