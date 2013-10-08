@@ -29,6 +29,11 @@ public class Exercicio {
 	 * Número de repetições para o exercicio
 	 */
 	private int qtdRepeticao;
+	
+	/**
+	 * Número de séries
+	 */
+	private int qtdSerie;
 
 	/**
 	 * Tempo do intervalo em segundo entre os exercicios
@@ -59,21 +64,23 @@ public class Exercicio {
 
 	}
 
-	public Exercicio(String descricao, int qtdRepeticao, int intervaloSegundos,
+	public Exercicio(String descricao, int qtdRepeticao, int qtdSerie, int intervaloSegundos,
 			String path) {
 		super();
 		this.descricao = descricao;
 		this.qtdRepeticao = qtdRepeticao;
+		this.qtdSerie = qtdSerie;
 		this.intervaloSegundos = intervaloSegundos;
 		this.path = path;
 	}
 
-	public Exercicio(int id, String descricao, int qtdRepeticao,
+	public Exercicio(int id, String descricao, int qtdRepeticao, int qtdSerie,
 			int intervaloSegundos, String path) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.qtdRepeticao = qtdRepeticao;
+		this.qtdSerie = qtdSerie;
 		this.intervaloSegundos = intervaloSegundos;
 		this.path = path;
 	}
@@ -105,6 +112,14 @@ public class Exercicio {
 	public void setQtdRepeticao(int qtdRepeticao) {
 		this.qtdRepeticao = qtdRepeticao;
 	}
+	
+	public int getQtdSerie() {
+		return qtdSerie;
+	}
+
+	public void setQtdSerie(int qtdSerie) {
+		this.qtdSerie = qtdSerie;
+	}
 
 	public int getIntervaloSegundos() {
 		return intervaloSegundos;
@@ -132,12 +147,12 @@ public class Exercicio {
 		int retorno = 0;
 
 		if (this.id == 0) {
-			retorno = exercicioDAO.adicionar(this.descricao, this.qtdRepeticao,
+			retorno = exercicioDAO.adicionar(this.descricao, this.qtdRepeticao, this.qtdSerie,
 					this.intervaloSegundos, this.path);
 
 		} else {
 			retorno = exercicioDAO.editar(this.id, this.descricao,
-					this.qtdRepeticao, this.intervaloSegundos, this.path);
+					this.qtdRepeticao, this.qtdSerie, this.intervaloSegundos, this.path);
 		}
 
 		return retorno > 0;

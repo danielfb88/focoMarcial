@@ -74,7 +74,7 @@ public class Aula extends Thread {
 		for (int i = 0; i < exercicios.size(); i++) {
 			exercicios.get(i).setConfig(config);
 
-			for (int serie = 1; serie <= 2; serie++) {
+			for (int serie = 1; serie <= exercicios.get(i).getQtdSerie(); serie++) {
 				System.out.println("Exercicio: " + exercicios.get(i).getDescricao());
 				System.out.println("Serie: " + serie);
 
@@ -87,7 +87,7 @@ public class Aula extends Thread {
 
 				espere(config.getTempoDescansoCurto());
 			}
-			espere(config.getTempoDescansoCurto());
+			espere(config.getTempoDescansoLongo());
 
 		}
 

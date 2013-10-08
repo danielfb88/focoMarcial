@@ -33,13 +33,14 @@ public class ExercicioDAO extends DAO {
 	 *            Endereço do arquivo de som de comando para o exercicio
 	 * @return Numero de linhas afetadas
 	 */
-	public int adicionar(String descricao, int qtd_repeticao, int intervalo_segundos, String path) {
+	public int adicionar(String descricao, int qtd_repeticao, int qtd_serie, int intervalo_segundos, String path) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("INSERT INTO exercicio (descricao, qtd_repeticao, intervalo_segundos, path) VALUES (");
+		builder.append("INSERT INTO exercicio (descricao, qtd_repeticao, qtd_serie, intervalo_segundos, path) VALUES (");
 		builder.append("'" + descricao + "', ");
 		builder.append(qtd_repeticao + ", ");
+		builder.append(qtd_serie + ", ");
 		builder.append(intervalo_segundos + ", ");
 		builder.append("'" + path + "'");
 		builder.append(");");
@@ -74,7 +75,7 @@ public class ExercicioDAO extends DAO {
 	 *            Endereço do arquivo de som de comando para o exercicio
 	 * @return Numero de linhas afetadas
 	 */
-	public int editar(int id_exercicio, String descricao, int qtd_repeticao, int intervalo_segundos, String path) {
+	public int editar(int id_exercicio, String descricao, int qtd_repeticao, int qtd_serie, int intervalo_segundos, String path) {
 
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
@@ -83,6 +84,7 @@ public class ExercicioDAO extends DAO {
 
 		builder.append("descricao = '" + descricao + "', ");
 		builder.append("qtd_repeticao = " + qtd_repeticao + ", ");
+		builder.append("qtd_serie = " + qtd_serie + ", ");
 		builder.append("intervalo_segundos = " + intervalo_segundos + ", ");
 		builder.append("path = '" + path + "' ");
 
@@ -157,6 +159,7 @@ public class ExercicioDAO extends DAO {
 							rs.getInt("id_exercicio"),
 							rs.getString("descricao"),
 							rs.getInt("qtd_repeticao"),
+							rs.getInt("qtd_serie"),
 							rs.getInt("intervalo_segundos"),
 							rs.getString("path")
 					);
@@ -192,6 +195,7 @@ public class ExercicioDAO extends DAO {
 								rs.getInt("id_exercicio"),
 								rs.getString("descricao"),
 								rs.getInt("qtd_repeticao"),
+								rs.getInt("qtd_serie"),
 								rs.getInt("intervalo_segundos"),
 								rs.getString("path")
 						);
