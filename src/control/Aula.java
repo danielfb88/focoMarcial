@@ -67,29 +67,16 @@ public class Aula extends Thread {
 
 	@Override
 	public void run() {
-		/*
-		 * Loop do Exercicio. 2 séries para cada
-		 */
-
-		for (int i = 0; i < exercicios.size(); i++) {
-			exercicios.get(i).setConfig(config);
-
-			for (int serie = 1; serie <= exercicios.get(i).getQtdSerie(); serie++) {
-				System.out.println("Exercicio: " + exercicios.get(i).getDescricao());
-				System.out.println("Serie: " + serie);
-
-				try {
-					exercicios.get(i).iniciar();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				espere(config.getTempoDescansoCurto());
-			}
-			espere(config.getTempoDescansoLongo());
-
-		}
+		this.iniciarAula();
+	}
+	
+	/*
+	 * TODO: Gravar voz dos exerciícios
+	 * TODO: Implementar pausa com uma variável estática no player
+	 * Loop do Exercicio. 2 séries para cada
+	 */
+	public void iniciarAula() {
+		this.executarExercicios();
 
 		/*
 		 * Loop da faixa
@@ -126,6 +113,29 @@ public class Aula extends Thread {
 			player.play(config.getPathAtencao());
 			System.out.println("*** Fim do Descanso ***");
 		}
+		
+	}
+	
+	public void executarExercicios() {
+		for (int i = 0; i < exercicios.size(); i++) {
+			exercicios.get(i).setConfig(config);
+
+			for (int serie = 1; serie <= exercicios.get(i).getQtdSerie(); serie++) {
+				System.out.println("Exercicio: " + exercicios.get(i).getDescricao());
+				System.out.println("Serie: " + serie);
+
+				try {
+					exercicios.get(i).iniciar();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				espere(config.getTempoDescansoCurto());
+			}
+			espere(config.getTempoDescansoLongo());
+
+		}
 	}
 
 	private Config getConfig() {
@@ -135,7 +145,7 @@ public class Aula extends Thread {
 	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
 	}
-
+	
 	/**
 	 * Retorna se foi solicitada à thread a entrar em estado de espera.
 	 * 
