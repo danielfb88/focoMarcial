@@ -26,6 +26,24 @@ public class Config {
 	public Config() {
 		
 	}
+	
+	public Config(int id, String perfil, int tempoDescansoCurto,
+			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
+			String pathAlongamento, String pathAtencao, String pathComando,
+			String pathContagem, boolean aulaComExercicio) {
+		super();
+		this.id = id;
+		this.perfil = perfil;
+		this.tempoDescansoCurto = tempoDescansoCurto;
+		this.tempoDescansoLongo = tempoDescansoLongo;
+		this.tempoAlongamento = tempoAlongamento;
+		this.pathDescanso = pathDescanso;
+		this.pathAlongamento = pathAlongamento;
+		this.pathAtencao = pathAtencao;
+		this.pathComando = pathComando;
+		this.pathContagem = pathContagem;
+		this.aulaComExercicio = aulaComExercicio;
+	}
 
 	public Config(String perfil, int tempoDescansoCurto,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,

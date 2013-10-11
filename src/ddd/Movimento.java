@@ -216,7 +216,7 @@ public class Movimento {
 
 		for (int i = 0; i < this.qtdRepeticao; i++) {
 			Aula.getInstance().verificarPausa();
-			
+
 			// Som aleatório
 			player.play(comandosVoz[(this.random.nextInt(comandosVoz.length) + 1)]);
 

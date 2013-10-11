@@ -80,10 +80,9 @@ public class Aula extends Thread {
 	}
 
 	/*
-	 * TODO: A pausa é na aula. não no arquivo de som. Portanto deve ficar aqui.
 	 * 
-	 * TODO: Gravar voz dos exerciícios TODO: Implementar pausa com uma variável
-	 * estática no player Loop do Exercicio. 2 séries para cada
+	 * TODO: Gravar voz dos exerciícios.
+	 * 
 	 */
 	public void iniciarAula() {
 		if (config.isAulaComExercicio())
@@ -157,7 +156,6 @@ public class Aula extends Thread {
 		this.tabbedPane = tabbedPane;
 	}
 
-	// TODO:
 	public void continuar() {
 		pause = false;
 
@@ -166,17 +164,14 @@ public class Aula extends Thread {
 		}
 	}
 
-	// TODO:
 	public boolean isPaused() {
 		return pause;
 	}
 
-	// TODO:
 	public synchronized void pausar() {
 		pause = true;
 	}
 
-	// TODO:
 	public void verificarPausa() {
 		if (pause)
 			System.out.println("*** PAUSADO ***");

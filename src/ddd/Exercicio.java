@@ -46,8 +46,6 @@ public class Exercicio {
 	 */
 	private String path;
 
-	private boolean cancelar;
-
 	private Config config;
 
 	/**
@@ -175,13 +173,8 @@ public class Exercicio {
 
 		for (int i = 0; i < this.qtdRepeticao; i++) {
 			Aula.getInstance().verificarPausa();
+
 			System.out.println(i + 1);
-
-			if (cancelar) {
-				cancelar = false;
-				break;
-			}
-
 			player.play(config.getPathContagem() + (x) + ".wav");
 			Util.tempo(intervaloSegundos);
 
@@ -190,10 +183,6 @@ public class Exercicio {
 
 			x++;
 		}
-	}
-
-	public void cancelar() {
-		cancelar = true;
 	}
 
 	public List<Exercicio> getTodosOsExercicios() {

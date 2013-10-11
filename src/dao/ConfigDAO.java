@@ -72,7 +72,7 @@ public class ConfigDAO extends DAO {
 		builder.append("path_atencao = '" + pathAtencao + "', ");
 		builder.append("path_comando = '" + pathComando + "', ");
 		builder.append("path_contagem = '" + pathContagem + "', ");
-		builder.append("aulacomexercicio = '" + aulaComExercicio + "' ");
+		builder.append("aulacomexercicio = " + aulaComExercicio + " ");
 
 		builder.append("WHERE id_config = " + id + ";");
 
@@ -128,7 +128,9 @@ public class ConfigDAO extends DAO {
 
 			rs = s.executeQuery(builder.toString());
 
-			config = new Config(rs.getString("perfil"),
+			config = new Config(
+					rs.getInt("id_config"),
+					rs.getString("perfil"),
 					rs.getInt("tempo_descanso_curto"),
 					rs.getInt("tempo_descanso_longo"),
 					rs.getInt("tempo_alongamento"),

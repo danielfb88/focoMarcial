@@ -1,17 +1,21 @@
 package tests.geral;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.Timer;
+
+import ddd.Config;
 
 public class Lacaio {
 	public Timer timer;
 	private int i;
 	
 	public Lacaio()  {
+		
+	}
+	
+	private void teste() {
 		javax.swing.Timer t = new javax.swing.Timer(1000,new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	System.out.println("ok");
@@ -27,6 +31,12 @@ public class Lacaio {
 	}
 	
 	public static void main(String[] args) {
-		Lacaio lucas = new Lacaio();
+		Config config = new Config().getByPerfil("default");
+		config.setAulaComExercicio(false);
+		System.out.println(config.salvar());
+		
+		
 	}
+	
+	
 }
