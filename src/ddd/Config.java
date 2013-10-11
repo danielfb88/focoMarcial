@@ -17,6 +17,7 @@ public class Config {
 	private String pathAtencao;
 	private String pathComando;
 	private String pathContagem;
+	private boolean aulaComExercicio;
 
 	private File[] comandosVoz;
 
@@ -29,7 +30,7 @@ public class Config {
 	public Config(String perfil, int tempoDescansoCurto,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
-			String pathContagem) {
+			String pathContagem, boolean aulaComExercicio) {
 		super();
 		this.perfil = perfil;
 		this.tempoDescansoCurto = tempoDescansoCurto;
@@ -40,6 +41,7 @@ public class Config {
 		this.pathAtencao = pathAtencao;
 		this.pathComando = pathComando;
 		this.pathContagem = pathContagem;
+		this.aulaComExercicio = aulaComExercicio;
 	}
 
 	public int getId() {
@@ -121,6 +123,14 @@ public class Config {
 	public void setPathContagem(String pathContagem) {
 		this.pathContagem = pathContagem;
 	}
+	
+	public void setAulaComExercicio(boolean flag) {
+		this.aulaComExercicio = flag;
+	}
+	
+	public boolean isAulaComExercicio() {
+		return this.aulaComExercicio;
+	}
 
 	public boolean salvar() {
 		int retorno = 0;
@@ -129,14 +139,14 @@ public class Config {
 			retorno = configDAO.adicionar(this.perfil, this.tempoDescansoCurto,
 					this.tempoDescansoLongo, this.tempoAlongamento,
 					this.pathDescanso, this.pathAlongamento, this.pathAtencao,
-					this.pathComando, this.pathContagem);
+					this.pathComando, this.pathContagem, (this.aulaComExercicio) ? 1 : 0);
 
 		} else {
 			retorno = configDAO.editar(this.id, this.perfil,
 					this.tempoDescansoCurto, this.tempoDescansoLongo,
 					this.tempoAlongamento, this.pathDescanso,
 					this.pathAlongamento, this.pathAtencao, this.pathComando,
-					this.pathContagem);
+					this.pathContagem, (this.aulaComExercicio) ? 1 : 0);
 		}
 
 		return retorno > 0;

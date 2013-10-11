@@ -15,22 +15,23 @@ public class ConfigDAO extends DAO {
 	public int adicionar(String perfil, int tempoDescansoCurto,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
-			String pathContagem) {
+			String pathContagem, int aulaComExercicio) {
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("INSERT INTO config (");
-		builder.append("perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem");
+		builder.append("perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem, aulacomexercicio");
 		builder.append(") VALUES (");
 		builder.append("'" + perfil + "', ");
 		builder.append(tempoDescansoCurto + ", ");
 		builder.append(tempoDescansoLongo + ", ");
 		builder.append(tempoAlongamento + ", ");
-		builder.append("'" + pathDescanso + "'");
-		builder.append("'" + pathAlongamento + "'");
-		builder.append("'" + pathAtencao + "'");
-		builder.append("'" + pathComando + "'");
-		builder.append("'" + pathContagem + "'");
+		builder.append("'" + pathDescanso + "', ");
+		builder.append("'" + pathAlongamento + "', ");
+		builder.append("'" + pathAtencao + "', ");
+		builder.append("'" + pathComando + "', ");
+		builder.append("'" + pathContagem + "', ");
+		builder.append(aulaComExercicio);
 		builder.append(");");
 
 		try {
@@ -55,7 +56,7 @@ public class ConfigDAO extends DAO {
 	public int editar(int id, String perfil, int tempoDescansoCurto,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
-			String pathContagem) {
+			String pathContagem, int aulaComExercicio) {
 
 		int linhasAfetadas = 0;
 		StringBuilder builder = new StringBuilder();
@@ -70,7 +71,8 @@ public class ConfigDAO extends DAO {
 		builder.append("path_alongamento = '" + pathAlongamento + "', ");
 		builder.append("path_atencao = '" + pathAtencao + "', ");
 		builder.append("path_comando = '" + pathComando + "', ");
-		builder.append("path_contagem = '" + pathContagem + "' ");
+		builder.append("path_contagem = '" + pathContagem + "', ");
+		builder.append("aulacomexercicio = '" + aulaComExercicio + "' ");
 
 		builder.append("WHERE id_config = " + id + ";");
 
@@ -134,7 +136,8 @@ public class ConfigDAO extends DAO {
 					rs.getString("path_alongamento"),
 					rs.getString("path_atencao"), 
 					rs.getString("path_comando"),
-					rs.getString("path_contagem"));
+					rs.getString("path_contagem"),
+					rs.getInt("aulacomexercicio") == 1 ? true : false);
 
 			rs.close();
 			s.close();

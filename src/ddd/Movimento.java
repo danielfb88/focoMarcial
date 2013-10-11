@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Random;
 
 import util.Util;
+import control.Aula;
 import control.WavPlayer;
 import dao.MovimentoDAO;
 
@@ -214,6 +215,8 @@ public class Movimento {
 		Util.tempo(3);
 
 		for (int i = 0; i < this.qtdRepeticao; i++) {
+			Aula.getInstance().verificarPausa();
+			
 			// Som aleatório
 			player.play(comandosVoz[(this.random.nextInt(comandosVoz.length) + 1)]);
 

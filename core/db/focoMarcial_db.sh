@@ -40,7 +40,8 @@ path_descanso VARCHAR(200) NOT NULL,
 path_alongamento VARCHAR(200) NOT NULL,
 path_atencao VARCAHR(200) NOT NULL,
 path_comando VARCAHR(200) NOT NULL,
-path_contagem VARCAHR(200) NOT NULL
+path_contagem VARCAHR(200) NOT NULL,
+aulacomexercicio INT NOT NULL
 );
 "
 
@@ -197,9 +198,9 @@ INSERT INTO exercicio (descricao, qtd_repeticao, qtd_serie, intervalo_segundos, 
 
 
 INSERT INTO config 
-(perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem) 
+(perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem, aulacomexercicio) 
 VALUES
-('default', 30, 120, 180, 'core/sound/exercicios/descansar.wav', 'core/sound/exercicios/alongamento.wav', 'core/sound/exercicios/atencao.wav', 'core/sound/comando/', 'core/sound/contagem/');
+('default', 30, 120, 180, 'core/sound/exercicios/descansar.wav', 'core/sound/exercicios/alongamento.wav', 'core/sound/exercicios/atencao.wav', 'core/sound/comando/', 'core/sound/contagem/', 1);
 
 "
 

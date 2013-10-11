@@ -3,6 +3,7 @@ package ddd;
 import java.util.List;
 
 import util.Util;
+import control.Aula;
 import control.WavPlayer;
 import dao.ExercicioDAO;
 
@@ -173,6 +174,7 @@ public class Exercicio {
 		int x = 1;
 
 		for (int i = 0; i < this.qtdRepeticao; i++) {
+			Aula.getInstance().verificarPausa();
 			System.out.println(i + 1);
 
 			if (cancelar) {

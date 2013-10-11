@@ -12,7 +12,7 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * Classe que executa um arquivo wav especificado pelo seu path.
+ * Classe que executa um arquivo wav.
  * 
  * @author Daniel Bonfim <daniel.fb88@gmail.com>
  * @since 14/08/2013
@@ -35,7 +35,7 @@ public class WavPlayer {
 	public String getLastWavPath() {
 		return this.wavPath;
 	}
-	
+
 	public void play(File file) {
 		this.file = file;
 		sourceDataLine = null;
@@ -124,5 +124,6 @@ public class WavPlayer {
 		this.file = new File(wavPath);
 		this.play(file);
 	}
+
 
 }

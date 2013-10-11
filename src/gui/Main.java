@@ -372,13 +372,13 @@ public class Main extends JFrame {
 	private void btnPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {
 		if (aula == null) {
 			// Arte Marcial = Hapkido
-			aula = new Aula();
+			aula = Aula.getInstance();
 			aula.manipularElementoTabbedPane(this.panelCentral.getTabbedPane());
 			aula.start();
 			btnPlayPause.setText("Pause");
 
 		} else {
-			if (aula.isPausaSolicitada() == false) {
+			if (aula.isPaused() == false) {
 				aula.pausar();
 				btnPlayPause.setText("Play");
 			} else {

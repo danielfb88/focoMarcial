@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.JTabbedPane;
 
+import util.Util;
 import ddd.Config;
 import ddd.Exercicio;
 import ddd.Faixa;
@@ -15,10 +16,14 @@ import ddd.Movimento;
  * 
  * @author Daniel Bonfim <daniel.fb88@gmail.com>
  * @since 08/08/2013
- * @version 1.1
+ * @version 1.2
+ * 
+ * 11/10/2013 - Transformado em um singleton
  * 
  */
 public class Aula extends Thread {
+	
+	private static Aula instance;
 
 	/**
 	 * Lista das faixas da Arte MArcial
@@ -41,11 +46,6 @@ public class Aula extends Thread {
 	private WavPlayer player;
 
 	/**
-	 * Flag que pausa a Thread
-	 */
-	private boolean pausar;
-
-	/**
 	 * TODO: INSERIR LÓGICA PARA PROXIMO E ANTERIOR DE FAIXA E MOVIMENTO.
 	 */
 	private boolean proximoMovimento;
@@ -58,25 +58,36 @@ public class Aula extends Thread {
 
 	private Config config;
 
-	public Aula() {
+	private boolean pause;
+
+	private Aula() {
 		config = getConfig();
 		player = new WavPlayer();
 		faixas = new Faixa().getTodasAsFaixas();
 		exercicios = new Exercicio().getTodosOsExercicios();
+	}
+	
+	public static Aula getInstance() {
+		if(instance == null)
+			instance = new Aula();
+		
+		return instance;
 	}
 
 	@Override
 	public void run() {
 		this.iniciarAula();
 	}
-	
+
 	/*
-	 * TODO: Gravar voz dos exerciícios
-	 * TODO: Implementar pausa com uma variável estática no player
-	 * Loop do Exercicio. 2 séries para cada
+	 * TODO: A pausa é na aula. não no arquivo de som. Portanto deve ficar aqui.
+	 * 
+	 * TODO: Gravar voz dos exerciícios TODO: Implementar pausa com uma variável
+	 * estática no player Loop do Exercicio. 2 séries para cada
 	 */
 	public void iniciarAula() {
-		this.executarExercicios();
+		if (config.isAulaComExercicio())
+			this.executarExercicios();
 
 		/*
 		 * Loop da faixa
@@ -86,9 +97,9 @@ public class Aula extends Thread {
 			// Mudar pane a cada nova faixa
 			tabbedPane.setSelectedIndex(i);
 
-			espere(5);
+			Util.tempo(5);
 			player.play(faixas.get(i).getPath());
-			espere(5);
+			Util.tempo(5);
 
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 
@@ -108,14 +119,14 @@ public class Aula extends Thread {
 
 			// Fim da faixa
 			player.play(config.getPathDescanso());
-			espere(config.getTempoAlongamento());
-			
+			Util.tempo(config.getTempoAlongamento());
+
 			player.play(config.getPathAtencao());
 			System.out.println("*** Fim do Descanso ***");
 		}
-		
+
 	}
-	
+
 	public void executarExercicios() {
 		for (int i = 0; i < exercicios.size(); i++) {
 			exercicios.get(i).setConfig(config);
@@ -131,9 +142,9 @@ public class Aula extends Thread {
 					e.printStackTrace();
 				}
 
-				espere(config.getTempoDescansoCurto());
+				Util.tempo(config.getTempoDescansoCurto());
 			}
-			espere(config.getTempoDescansoLongo());
+			Util.tempo(config.getTempoDescansoLongo());
 
 		}
 	}
@@ -145,46 +156,44 @@ public class Aula extends Thread {
 	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
 	}
-	
-	/**
-	 * Retorna se foi solicitada à thread a entrar em estado de espera.
-	 * 
-	 * @return
-	 */
-	public boolean isPausaSolicitada() {
-		return pausar;
-	}
 
-	/**
-	 * Pausa a Thread
-	 */
-	public synchronized void pausar() {
-		pausar = true;
-	}
-
-	/**
-	 * Continua a execução da Thread
-	 */
+	// TODO:
 	public void continuar() {
-		pausar = false;
+		pause = false;
+
 		synchronized (this) {
 			this.notify();
 		}
 	}
 
-	/**
-	 * Espera a quantidade especificada de tempo em segundos.
-	 * 
-	 * @param segundos
-	 */
-	private void espere(int segundos) {
-		try {
-			System.out.println("*** Espere " + segundos + " segundo(s)... \n");
-			sleep(segundos * 1000);
+	// TODO:
+	public boolean isPaused() {
+		return pause;
+	}
 
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
+	// TODO:
+	public synchronized void pausar() {
+		pause = true;
+	}
+
+	// TODO:
+	public void verificarPausa() {
+		if (pause)
+			System.out.println("*** PAUSADO ***");
+
+		synchronized (this) {
+			while (pause) {
+				try {
+					this.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				if (!pause)
+					System.out.println("*** CONTINUANDO ***");
+			}
 		}
+
 	}
 
 	public boolean isProximoMovimento() {
