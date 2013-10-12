@@ -72,9 +72,6 @@ public class Aula extends Thread {
 		this.iniciarAula();
 	}
 
-	/*
-	 * TODO: Gravar voz dos exerciícios.
-	 */
 	public void iniciarAula() {
 
 		/*

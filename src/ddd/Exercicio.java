@@ -173,18 +173,20 @@ public class Exercicio {
 		Util.tempo(2);
 
 		int x = 1;
+		int k = 1;
 
 		/*
 		 * Séries
 		 */
 		for (int serie = 1; serie <= this.qtdSerie; serie++) {
-			Aula.getInstance().getJFrame().escreverStatus("Serie: " + serie + "\n");
 
 			// Próximo exercício foi solicitado?
 			if (Aula.getInstance().isProximo2()) {
 				Aula.getInstance().setProximo2(false);
 				break;
 			}
+			
+			Aula.getInstance().getJFrame().escreverStatus("Serie: " + serie + "\n");
 
 			if(serie > 1) {
 				player.play(config.getPathAtencao());
@@ -205,11 +207,13 @@ public class Exercicio {
 
 
 				Aula.getInstance().getJFrame().escreverStatus(i + 1 + "\n");
-				player.play(config.getPathContagem() + (x) + ".mp3");
+				player.play(config.getPathContagem() + ((x == 10) ? x*k : x) + ".mp3");
 				Util.tempo(intervaloSegundos);
 
-				if (x == 10)
+				if (x == 10) {
+					k++;
 					x = 0;
+				}
 
 				x++;
 			}
