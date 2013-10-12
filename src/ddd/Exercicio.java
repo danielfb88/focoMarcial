@@ -2,9 +2,10 @@ package ddd;
 
 import java.util.List;
 
+import sound.IPlayer;
+import sound.Mp3Player;
 import util.Util;
 import control.Aula;
-import control.WavPlayer;
 import dao.ExercicioDAO;
 
 /**
@@ -51,9 +52,9 @@ public class Exercicio {
 	/**
 	 * DAO do Exercicio
 	 */
-	private ExercicioDAO exercicioDAO = new ExercicioDAO();;
+	private ExercicioDAO exercicioDAO = new ExercicioDAO();
 
-	private WavPlayer player = new WavPlayer();
+	private IPlayer player = new Mp3Player();
 
 	public Exercicio(Config config) {
 		this.config = config;
@@ -166,7 +167,7 @@ public class Exercicio {
 		if (config == null)
 			throw new Exception("Configurações não definidas");
 
-		Aula.getInstance().getTextAreaStatus().append("Exercicio: " + this.descricao + "\n");
+		Aula.getInstance().getJFrame().escreverStatus("Exercicio: " + this.descricao + "\n");
 		
 		player.play(this.path);
 		Util.tempo(2);
@@ -177,7 +178,7 @@ public class Exercicio {
 		 * Séries
 		 */
 		for (int serie = 1; serie <= this.qtdSerie; serie++) {
-			Aula.getInstance().getTextAreaStatus().append("Serie: " + serie + "\n");
+			Aula.getInstance().getJFrame().escreverStatus("Serie: " + serie + "\n");
 
 			// Próximo exercício foi solicitado?
 			if (Aula.getInstance().isProximo2()) {
@@ -185,6 +186,10 @@ public class Exercicio {
 				break;
 			}
 
+			if(serie > 1) {
+				player.play(config.getPathAtencao());
+				Util.tempo(3);
+			}
 			/*
 			 * Repetições
 			 */
@@ -199,8 +204,8 @@ public class Exercicio {
 				}
 
 
-				Aula.getInstance().getTextAreaStatus().append(i + 1 + "\n");
-				player.play(config.getPathContagem() + (x) + ".wav");
+				Aula.getInstance().getJFrame().escreverStatus(i + 1 + "\n");
+				player.play(config.getPathContagem() + (x) + ".mp3");
 				Util.tempo(intervaloSegundos);
 
 				if (x == 10)
@@ -208,10 +213,9 @@ public class Exercicio {
 
 				x++;
 			}
-			Aula.getInstance().getTextAreaStatus().append("\n *** Espere " + config.getTempoDescansoCurto() + " segundo(s)... \n");
 			Util.tempo(config.getTempoDescansoCurto());
+			
 		}
-		Aula.getInstance().getTextAreaStatus().append("\n *** Espere " + config.getTempoDescansoMedio() + " segundo(s)... \n");
 		Util.tempo(config.getTempoDescansoMedio());
 	}
 

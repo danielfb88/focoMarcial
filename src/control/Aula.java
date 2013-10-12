@@ -4,9 +4,7 @@ import gui.Main;
 
 import java.util.List;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-
+import sound.WavPlayer;
 import util.Util;
 import ddd.Config;
 import ddd.Exercicio;
@@ -38,11 +36,6 @@ public class Aula extends Thread {
 	 */
 	private List<Exercicio> exercicios;
 
-	/**
-	 * TabbedPane contendo as faixas
-	 */
-	private JTabbedPane tabbedPane;
-	
 	private Main jFrame;
 
 	/**
@@ -80,11 +73,9 @@ public class Aula extends Thread {
 	}
 
 	/*
-	 * 
 	 * TODO: Gravar voz dos exerciícios.
 	 */
 	public void iniciarAula() {
-		this.tabbedPane = this.jFrame.getPanelCentral().getTabbedPane();
 
 		/*
 		 * Exercícios
@@ -108,17 +99,17 @@ public class Aula extends Thread {
 		 * 
 		 * Inicia a partir do tabbedePane selecionado.
 		 */
-		for (int i = tabbedPane.getSelectedIndex(); i < faixas.size(); i++) {
+		for (int i = this.jFrame.getPanelCentral().getTabbedPane().getSelectedIndex(); i < faixas.size(); i++) {
 
 			// Mudar pane a cada nova faixa
-			tabbedPane.setSelectedIndex(i);
+			this.jFrame.getPanelCentral().getTabbedPane().setSelectedIndex(i);
 
 			int segundosIniciais = 5;
-			this.jFrame.getTextAreaStatus().append("*** Espere " + segundosIniciais + " segundo(s)... \n");
+			this.jFrame.escreverStatus("*** Espere " + segundosIniciais + " segundo(s)... \n");
 			
 			Util.tempo(segundosIniciais);
 			
-			this.jFrame.getTextAreaStatus().append("\n FAIXA: " + faixas.get(i).getDescricao() + "\n\n");
+			this.jFrame.escreverStatus("\n FAIXA: " + faixas.get(i).getDescricao() + "\n\n");
 			player.play(faixas.get(i).getPath());
 			
 			Util.tempo(segundosIniciais);
@@ -169,7 +160,7 @@ public class Aula extends Thread {
 			Util.tempo(config.getTempoAlongamento());
 
 			player.play(config.getPathAtencao());
-			this.jFrame.getTextAreaStatus().append("*** Fim do Descanso *** \n");
+			this.jFrame.escreverStatus("*** Fim do Descanso *** \n");
 		}
 
 	}
@@ -200,7 +191,7 @@ public class Aula extends Thread {
 	
 	public void verificarPausa() {
 		if (pause)
-			this.jFrame.getTextAreaStatus().append("*** PAUSADO *** \n");
+			this.jFrame.escreverStatus("*** PAUSADO *** \n");
 
 		synchronized (this) {
 			while (pause) {
@@ -211,14 +202,14 @@ public class Aula extends Thread {
 				}
 
 				if (!pause)
-					this.jFrame.getTextAreaStatus().append("*** CONTINUANDO *** \n");
+					this.jFrame.escreverStatus("*** CONTINUANDO *** \n");
 			}
 		}
 
 	}
 	
-	public JTextArea getTextAreaStatus() {
-		return this.jFrame.getTextAreaStatus();
+	public Main getJFrame() {
+		return this.jFrame;
 	}
 
 	public void setProximo1(boolean flag) {

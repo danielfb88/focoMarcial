@@ -16,18 +16,18 @@ import javax.sound.sampled.SourceDataLine;
  * @version 1.0
  * 
  */
-public class Player implements Runnable {
+public class Player_Test implements Runnable {
 
 	private boolean waiting = false;
 	private SourceDataLine line;
 	private AudioInputStream din;
 	private AudioFormat decodeFormat;
 
-	public Player() {
+	public Player_Test() {
 		super();
 	}
 
-	public Player(Track track) {
+	public Player_Test(Track track) {
 		setTrack(track);
 
 	}

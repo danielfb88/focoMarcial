@@ -1,4 +1,4 @@
-package control;
+package sound;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +19,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @version 1.0
  * 
  */
-public class WavPlayer {
+public class WavPlayer implements IPlayer {
 
 	private String wavPath;
-	private File file;
 	private SourceDataLine sourceDataLine;
 	private AudioInputStream audioInputStream;
 	private AudioFormat audioFormat;
@@ -37,7 +36,6 @@ public class WavPlayer {
 	}
 
 	public void play(File file) {
-		this.file = file;
 		sourceDataLine = null;
 		audioInputStream = null;
 		audioFormat = null;
@@ -116,14 +114,9 @@ public class WavPlayer {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Executar som.
-	 */
-	public void play(String wavPath) {
-		this.file = new File(wavPath);
-		this.play(file);
+	
+	public void play(String path) {
+		this.play(new File(path));
 	}
-
 
 }

@@ -3,9 +3,10 @@ package ddd;
 import java.io.File;
 import java.util.Random;
 
+import sound.IPlayer;
+import sound.Mp3Player;
 import util.Util;
 import control.Aula;
-import control.WavPlayer;
 import dao.MovimentoDAO;
 
 /**
@@ -60,7 +61,7 @@ public class Movimento {
 
 	private Config config = new Config();
 
-	private WavPlayer player = new WavPlayer();
+	private IPlayer player = new Mp3Player();
 
 	private Random random = new Random();
 
@@ -205,7 +206,7 @@ public class Movimento {
 		File[] comandosVoz = config.getComandosVoz();
 
 		Util.tempo(2);
-		Aula.getInstance().getTextAreaStatus().append(this.descricao + "\n");
+		Aula.getInstance().getJFrame().escreverStatus(this.descricao + "\n");
 		player.play(this.path);
 		Util.tempo(3);
 

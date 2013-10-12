@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.text.BadLocationException;
 
 import control.Aula;
 import ddd.Faixa;
@@ -88,6 +89,7 @@ public class Main extends JFrame {
 	private JButton btnAnterior2;
 	
 	private JTextArea txaStatus;
+	private JScrollPane scrollStatus;
 
 	/**
 	 * Thread responsável pela execução da aula
@@ -150,14 +152,30 @@ public class Main extends JFrame {
 		JPanel pnlStatus = new JPanel();
 		
 		txaStatus = new JTextArea();
-		JScrollPane areaScrollPane = new JScrollPane(txaStatus); 
-		areaScrollPane.setPreferredSize(new Dimension(565, 125));
-		areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollStatus = new JScrollPane(txaStatus); 
+		scrollStatus.setPreferredSize(new Dimension(565, 125));
+		scrollStatus.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		txaStatus.setEditable(false);
 		
-		pnlStatus.add(areaScrollPane);
+		pnlStatus.add(scrollStatus);
 		
 		return pnlStatus;
+	}
+	
+	public void escreverStatus(String msg) {
+		txaStatus.append(msg);
+		rolaTela();
+	}
+	
+	public void rolaTela(){  
+		try {
+			txaStatus.scrollRectToVisible(txaStatus.modelToView(txaStatus.getDocument().getLength()));
+			txaStatus.repaint();
+			
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 
 

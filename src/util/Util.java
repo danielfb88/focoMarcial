@@ -3,6 +3,8 @@ package util;
 import java.io.File;
 import java.io.FileFilter;
 
+import control.Aula;
+
 /**
  * Métodos estáticos uteis
  * 
@@ -15,6 +17,7 @@ public class Util {
 	
 	public static void tempo(int segundos) {
 		try {
+			Aula.getInstance().getJFrame().escreverStatus("\n *** Espere " + segundos + " segundo(s)... \n");
 			Thread.sleep(segundos * 1000);
 			
 		} catch (InterruptedException e) {

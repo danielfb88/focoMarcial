@@ -2,9 +2,11 @@ package tests.geral;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Timer;
 
+import sound.Mp3Player;
 import ddd.Config;
 
 public class Lacaio {
@@ -31,11 +33,20 @@ public class Lacaio {
 	}
 	
 	public static void main(String[] args) {
+		Lacaio lacaio = new Lacaio();
+		lacaio.mp3Player();
+	}
+	
+	public void mp3Player() {
+		File file = new File("core/sound/exercicios/abdominal_inferior.mp3");
+		Mp3Player player = new Mp3Player();
+		player.play(file);
+	}
+	
+	public void config() {
 		Config config = new Config().getByPerfil("default");
 		config.setAulaComExercicio(true);
 		System.out.println(config.salvar());
-		
-		
 	}
 	
 	
