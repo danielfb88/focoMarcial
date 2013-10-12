@@ -12,7 +12,7 @@ import ddd.Config;
 
 public class ConfigDAO extends DAO {
 
-	public int adicionar(String perfil, int tempoDescansoCurto,
+	public int adicionar(String perfil, int tempoDescansoCurto, int tempoDescansoMedio,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
 			String pathContagem, int aulaComExercicio) {
@@ -20,10 +20,11 @@ public class ConfigDAO extends DAO {
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("INSERT INTO config (");
-		builder.append("perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem, aulacomexercicio");
+		builder.append("perfil, tempo_descanso_curto, tempo_descanso_medio, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem, aulacomexercicio");
 		builder.append(") VALUES (");
 		builder.append("'" + perfil + "', ");
 		builder.append(tempoDescansoCurto + ", ");
+		builder.append(tempoDescansoMedio + ", ");
 		builder.append(tempoDescansoLongo + ", ");
 		builder.append(tempoAlongamento + ", ");
 		builder.append("'" + pathDescanso + "', ");
@@ -53,7 +54,7 @@ public class ConfigDAO extends DAO {
 	/**
 	 * Editar
 	 */
-	public int editar(int id, String perfil, int tempoDescansoCurto,
+	public int editar(int id, String perfil, int tempoDescansoCurto, int tempoDescansoMedio,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
 			String pathContagem, int aulaComExercicio) {
@@ -65,6 +66,7 @@ public class ConfigDAO extends DAO {
 
 		builder.append("perfil = '" + perfil + "', ");
 		builder.append("tempo_descanso_curto = " + tempoDescansoCurto + ", ");
+		builder.append("tempo_descanso_curto = " + tempoDescansoMedio + ", ");
 		builder.append("tempo_descanso_longo = " + tempoDescansoLongo + ", ");
 		builder.append("tempo_alongamento = " + tempoAlongamento + ", ");
 		builder.append("path_descanso = '" + pathDescanso + "', ");
@@ -132,6 +134,7 @@ public class ConfigDAO extends DAO {
 					rs.getInt("id_config"),
 					rs.getString("perfil"),
 					rs.getInt("tempo_descanso_curto"),
+					rs.getInt("tempo_descanso_medio"),
 					rs.getInt("tempo_descanso_longo"),
 					rs.getInt("tempo_alongamento"),
 					rs.getString("path_descanso"),

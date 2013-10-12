@@ -62,8 +62,6 @@ public class Movimento {
 
 	private WavPlayer player = new WavPlayer();
 
-	private boolean cancelar;
-
 	private Random random = new Random();
 
 	public Movimento() {
@@ -195,10 +193,6 @@ public class Movimento {
 		return retorno > 0;
 	}
 
-	public void cancelar() {
-		cancelar = true;
-	}
-
 	/**
 	 * Iniciar Movimento
 	 * 
@@ -215,24 +209,22 @@ public class Movimento {
 		Util.tempo(3);
 
 		for (int i = 0; i < this.qtdRepeticao; i++) {
-			
+			Aula.getInstance().verificarPausa();
+
 			// Próximo movimento foi solicitado?
-			if(Aula.getInstance().isProximo1()) {
+			if (Aula.getInstance().isProximo1()) {
 				Aula.getInstance().setProximo1(false);
 				break;
+
+				// Será tratado no for anterior
+			} else if (Aula.getInstance().isAnterior1() || Aula.getInstance().isAnterior2()) {
+				break;
 			}
-			
-			Aula.getInstance().verificarPausa();
-			
+
 			// Som aleatório
 			player.play(comandosVoz[(this.random.nextInt(comandosVoz.length))]);
 
 			Util.tempo(intervaloSegundos);
-
-			if (cancelar) {
-				cancelar = false;
-				break;
-			}
 		}
 	}
 

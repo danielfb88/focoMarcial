@@ -161,26 +161,10 @@ public class Main extends JFrame {
 		btnAnterior2 = new JButton("<<");
 		btnAnterior2.setPreferredSize(new Dimension(20, 20));
 
-//		btnCancelarExercicio = new JButton("Cancelar exercício");
-//		btnCancelarExercicio.setPreferredSize(new Dimension(55, 50));
-
 		/*
 		 * LAYOUT faixa
 		 */
-		GridBagConstraints c = new GridBagConstraints();
-
-//		c.fill = GridBagConstraints.CENTER; // natural height, maximum
-//		// width
-//		c.weightx = 0.5;
-//		c.anchor = GridBagConstraints.CENTER; // bottom of space
-//		c.gridwidth = 2; // 2 columns wide
-//		c.gridx = 0;
-//		c.gridy = 0;
-//		c.insets = new Insets(5, 5, 0, 5); // top padding
-//		// c.ipady = 0; // reset to default
-//
-//		pnlControle.add(new JLabel("Faixa"), c);
-		
+		GridBagConstraints c = new GridBagConstraints();		
 		
 		/*
 		 * Salvar - Play/Pause
@@ -362,15 +346,6 @@ public class Main extends JFrame {
 			}
 		}
 	}
-
-//	/**
-//	 * Action Performed do botão Cancelar Exercicio
-//	 * 
-//	 * @param evt
-//	 */
-//	private void btnCancelarExercicioActionPerformed(java.awt.event.ActionEvent evt) {
-//		aula.setCancelarExercicio(true);
-//	}
 
 	/**
 	 * Action Performed do botão Próximo movimento

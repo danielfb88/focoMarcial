@@ -175,6 +175,7 @@ public class Exercicio {
 		 * Séries
 		 */
 		for (int serie = 1; serie <= this.qtdSerie; serie++) {
+
 			// Próximo exercício foi solicitado?
 			if (Aula.getInstance().isProximo2()) {
 				Aula.getInstance().setProximo2(false);
@@ -188,14 +189,15 @@ public class Exercicio {
 			 * Repetições
 			 */
 			for (int i = 0; i < this.qtdRepeticao; i++) {
+				Aula.getInstance().verificarPausa();
+
 				// Próxima série foi solicitada?
 				if (Aula.getInstance().isProximo1()) {
 					Aula.getInstance().setProximo1(false);
+					x = 1;
 					break;
 				}
-				
 
-				Aula.getInstance().verificarPausa();
 
 				System.out.println(i + 1);
 				player.play(config.getPathContagem() + (x) + ".wav");
@@ -208,7 +210,7 @@ public class Exercicio {
 			}
 			Util.tempo(config.getTempoDescansoCurto());
 		}
-		Util.tempo(config.getTempoDescansoLongo());
+		Util.tempo(config.getTempoDescansoMedio());
 	}
 
 	public List<Exercicio> getTodosOsExercicios() {

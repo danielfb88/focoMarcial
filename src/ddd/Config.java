@@ -10,6 +10,7 @@ public class Config {
 	private int id;
 	private String perfil;
 	private int tempoDescansoCurto;
+	private int tempoDescansoMedio;
 	private int tempoDescansoLongo;
 	private int tempoAlongamento;
 	private String pathDescanso;
@@ -24,10 +25,10 @@ public class Config {
 	private ConfigDAO configDAO = new ConfigDAO();
 
 	public Config() {
-		
+
 	}
-	
-	public Config(int id, String perfil, int tempoDescansoCurto,
+
+	public Config(int id, String perfil, int tempoDescansoCurto, int tempoDescansoMedio,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
 			String pathContagem, boolean aulaComExercicio) {
@@ -35,6 +36,7 @@ public class Config {
 		this.id = id;
 		this.perfil = perfil;
 		this.tempoDescansoCurto = tempoDescansoCurto;
+		this.tempoDescansoMedio = tempoDescansoMedio;
 		this.tempoDescansoLongo = tempoDescansoLongo;
 		this.tempoAlongamento = tempoAlongamento;
 		this.pathDescanso = pathDescanso;
@@ -45,13 +47,14 @@ public class Config {
 		this.aulaComExercicio = aulaComExercicio;
 	}
 
-	public Config(String perfil, int tempoDescansoCurto,
+	public Config(String perfil, int tempoDescansoCurto, int tempoDescansoMedio,
 			int tempoDescansoLongo, int tempoAlongamento, String pathDescanso,
 			String pathAlongamento, String pathAtencao, String pathComando,
 			String pathContagem, boolean aulaComExercicio) {
 		super();
 		this.perfil = perfil;
 		this.tempoDescansoCurto = tempoDescansoCurto;
+		this.tempoDescansoMedio = tempoDescansoMedio;
 		this.tempoDescansoLongo = tempoDescansoLongo;
 		this.tempoAlongamento = tempoAlongamento;
 		this.pathDescanso = pathDescanso;
@@ -92,6 +95,14 @@ public class Config {
 
 	public void setTempoDescansoCurto(int tempoDescansoCurto) {
 		this.tempoDescansoCurto = tempoDescansoCurto;
+	}
+
+	public int getTempoDescansoMedio() {
+		return tempoDescansoMedio;
+	}
+
+	public void setTempoDescansoMedio(int tempoDescansoMedio) {
+		this.tempoDescansoMedio = tempoDescansoMedio;
 	}
 
 	public int getTempoDescansoLongo() {
@@ -141,11 +152,11 @@ public class Config {
 	public void setPathContagem(String pathContagem) {
 		this.pathContagem = pathContagem;
 	}
-	
+
 	public void setAulaComExercicio(boolean flag) {
 		this.aulaComExercicio = flag;
 	}
-	
+
 	public boolean isAulaComExercicio() {
 		return this.aulaComExercicio;
 	}
@@ -155,13 +166,13 @@ public class Config {
 
 		if (this.id == 0) {
 			retorno = configDAO.adicionar(this.perfil, this.tempoDescansoCurto,
-					this.tempoDescansoLongo, this.tempoAlongamento,
-					this.pathDescanso, this.pathAlongamento, this.pathAtencao,
+					this.tempoDescansoMedio, this.tempoDescansoLongo,
+					this.tempoAlongamento, this.pathDescanso, this.pathAlongamento, this.pathAtencao,
 					this.pathComando, this.pathContagem, (this.aulaComExercicio) ? 1 : 0);
 
 		} else {
 			retorno = configDAO.editar(this.id, this.perfil,
-					this.tempoDescansoCurto, this.tempoDescansoLongo,
+					this.tempoDescansoCurto, this.tempoDescansoMedio, this.tempoDescansoLongo,
 					this.tempoAlongamento, this.pathDescanso,
 					this.pathAlongamento, this.pathAtencao, this.pathComando,
 					this.pathContagem, (this.aulaComExercicio) ? 1 : 0);

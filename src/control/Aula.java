@@ -45,9 +45,6 @@ public class Aula extends Thread {
 	 */
 	private WavPlayer player;
 
-	/**
-	 * TODO: INSERIR LÓGICA PARA PROXIMO E ANTERIOR DE FAIXA E MOVIMENTO.
-	 */
 	private boolean proximo1;
 	private boolean proximo2;
 
@@ -82,7 +79,7 @@ public class Aula extends Thread {
 	 * TODO: Gravar voz dos exerciícios.
 	 */
 	public void iniciarAula() {
-		
+
 		/*
 		 * Exercícios
 		 */
@@ -117,15 +114,9 @@ public class Aula extends Thread {
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 
 			/*
-			 * Loop de Movimento
+			 * Movimento
 			 */
 			for (int j = 0; j < movimentos.size(); j++) {
-				
-				// Próxima faixa solicitada?
-				if (Aula.getInstance().isProximo2()) {
-					Aula.getInstance().setProximo2(false);
-					break;
-				}
 				
 				movimentos.get(j).setConfig(config);
 
@@ -134,6 +125,30 @@ public class Aula extends Thread {
 
 				} catch (Exception e) {
 					e.printStackTrace();
+				}
+
+				// Próxima faixa solicitada?
+				if (Aula.getInstance().isProximo2()) {
+					Aula.getInstance().setProximo2(false);
+					break;
+
+				} else if (Aula.getInstance().isAnterior1()) {
+					Aula.getInstance().setAnterior1(false);
+
+					if(j == 0)
+						j--;
+					else if (j > 0)
+						j -= 2;
+
+				} else if (Aula.getInstance().isAnterior2()) {
+					Aula.getInstance().setAnterior2(false);
+
+					if(i == 0)
+						i--;
+					else if (i > 0)
+						i -= 2;
+
+					break;
 				}
 			}
 
@@ -195,7 +210,7 @@ public class Aula extends Thread {
 	}
 
 	public void setProximo2(boolean flag) {
-		this.proximo1 = flag;		
+		this.proximo1 = flag;
 		this.proximo2 = flag;
 	}
 

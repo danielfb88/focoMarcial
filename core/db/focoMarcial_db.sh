@@ -34,6 +34,7 @@ CREATE TABLE config (
 id_config INTEGER PRIMARY KEY, 
 perfil VARCHAR(20) NOT NULL,
 tempo_descanso_curto INTEGER NOT NULL,
+tempo_descanso_medio INTEGER NOT NULL,
 tempo_descanso_longo INTEGET NOT NULL,
 tempo_alongamento INTEGER NOT NULL,
 path_descanso VARCHAR(200) NOT NULL,
@@ -198,9 +199,9 @@ INSERT INTO exercicio (descricao, qtd_repeticao, qtd_serie, intervalo_segundos, 
 
 
 INSERT INTO config 
-(perfil, tempo_descanso_curto, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem, aulacomexercicio) 
+(perfil, tempo_descanso_curto, tempo_descanso_medio, tempo_descanso_longo, tempo_alongamento, path_descanso, path_alongamento, path_atencao, path_comando, path_contagem, aulacomexercicio) 
 VALUES
-('default', 30, 120, 180, 'core/sound/exercicios/descansar.wav', 'core/sound/exercicios/alongamento.wav', 'core/sound/exercicios/atencao.wav', 'core/sound/comando/', 'core/sound/contagem/', 1);
+('default', 30, 60, 120, 180, 'core/sound/exercicios/descansar.wav', 'core/sound/exercicios/alongamento.wav', 'core/sound/exercicios/atencao.wav', 'core/sound/comando/', 'core/sound/contagem/', 1);
 
 "
 
