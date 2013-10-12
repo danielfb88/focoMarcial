@@ -205,6 +205,7 @@ public class Movimento {
 		File[] comandosVoz = config.getComandosVoz();
 
 		Util.tempo(2);
+		Aula.getInstance().getTextAreaStatus().append(this.descricao + "\n");
 		player.play(this.path);
 		Util.tempo(3);
 

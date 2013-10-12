@@ -1,8 +1,11 @@
 package control;
 
+import gui.Main;
+
 import java.util.List;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 
 import util.Util;
 import ddd.Config;
@@ -39,6 +42,8 @@ public class Aula extends Thread {
 	 * TabbedPane contendo as faixas
 	 */
 	private JTabbedPane tabbedPane;
+	
+	private Main jFrame;
 
 	/**
 	 * Tocador Wav
@@ -79,6 +84,7 @@ public class Aula extends Thread {
 	 * TODO: Gravar voz dos exerciícios.
 	 */
 	public void iniciarAula() {
+		this.tabbedPane = this.jFrame.getPanelCentral().getTabbedPane();
 
 		/*
 		 * Exercícios
@@ -107,9 +113,15 @@ public class Aula extends Thread {
 			// Mudar pane a cada nova faixa
 			tabbedPane.setSelectedIndex(i);
 
-			Util.tempo(5);
+			int segundosIniciais = 5;
+			this.jFrame.getTextAreaStatus().append("*** Espere " + segundosIniciais + " segundo(s)... \n");
+			
+			Util.tempo(segundosIniciais);
+			
+			this.jFrame.getTextAreaStatus().append("\n FAIXA: " + faixas.get(i).getDescricao() + "\n\n");
 			player.play(faixas.get(i).getPath());
-			Util.tempo(5);
+			
+			Util.tempo(segundosIniciais);
 
 			List<Movimento> movimentos = faixas.get(i).getMovimentos();
 
@@ -157,7 +169,7 @@ public class Aula extends Thread {
 			Util.tempo(config.getTempoAlongamento());
 
 			player.play(config.getPathAtencao());
-			System.out.println("*** Fim do Descanso ***");
+			this.jFrame.getTextAreaStatus().append("*** Fim do Descanso *** \n");
 		}
 
 	}
@@ -166,8 +178,8 @@ public class Aula extends Thread {
 		return new Config().getByPerfil("default");
 	}
 
-	public void manipularElementoTabbedPane(JTabbedPane tabbedPane) {
-		this.tabbedPane = tabbedPane;
+	public void setJFrame(Main jFrame) {
+		this.jFrame = jFrame;
 	}
 
 	public void continuar() {
@@ -185,10 +197,10 @@ public class Aula extends Thread {
 	public synchronized void pausar() {
 		pause = true;
 	}
-
+	
 	public void verificarPausa() {
 		if (pause)
-			System.out.println("*** PAUSADO ***");
+			this.jFrame.getTextAreaStatus().append("*** PAUSADO *** \n");
 
 		synchronized (this) {
 			while (pause) {
@@ -199,10 +211,14 @@ public class Aula extends Thread {
 				}
 
 				if (!pause)
-					System.out.println("*** CONTINUANDO ***");
+					this.jFrame.getTextAreaStatus().append("*** CONTINUANDO *** \n");
 			}
 		}
 
+	}
+	
+	public JTextArea getTextAreaStatus() {
+		return this.jFrame.getTextAreaStatus();
 	}
 
 	public void setProximo1(boolean flag) {

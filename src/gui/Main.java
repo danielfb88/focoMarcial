@@ -18,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import control.Aula;
@@ -84,6 +86,8 @@ public class Main extends JFrame {
 	 * Botão para faixa anterior
 	 */
 	private JButton btnAnterior2;
+	
+	private JTextArea txaStatus;
 
 	/**
 	 * Thread responsável pela execução da aula
@@ -117,6 +121,14 @@ public class Main extends JFrame {
 
 		pack();
 	}
+	
+	public PanelCentral getPanelCentral() {
+		return this.panelCentral;
+	}
+	
+	public JTextArea getTextAreaStatus() {
+		return this.txaStatus;
+	}
 
 	/**
 	 * Criar e configurar o Painel Sul
@@ -128,9 +140,24 @@ public class Main extends JFrame {
 		panelSul.setPreferredSize(new Dimension(dimension.width, 150));
 		panelSul.setBackground(Color.BLACK);
 
+		panelSul.add(criarPanelStatus());
 		panelSul.add(criarPanelControle());
 
 		return panelSul;
+	}
+	
+	private JPanel criarPanelStatus() {
+		JPanel pnlStatus = new JPanel();
+		
+		txaStatus = new JTextArea();
+		JScrollPane areaScrollPane = new JScrollPane(txaStatus); 
+		areaScrollPane.setPreferredSize(new Dimension(565, 125));
+		areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		txaStatus.setEditable(false);
+		
+		pnlStatus.add(areaScrollPane);
+		
+		return pnlStatus;
 	}
 
 
@@ -332,7 +359,8 @@ public class Main extends JFrame {
 		if (aula == null) {
 			// Arte Marcial = Hapkido
 			aula = Aula.getInstance();
-			aula.manipularElementoTabbedPane(this.panelCentral.getTabbedPane());
+//			aula.manipularElementoTabbedPane(this.panelCentral.getTabbedPane());
+			aula.setJFrame(this);
 			aula.start();
 			btnPlayPause.setText("Pause");
 

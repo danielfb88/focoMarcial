@@ -166,6 +166,8 @@ public class Exercicio {
 		if (config == null)
 			throw new Exception("Configurações não definidas");
 
+		Aula.getInstance().getTextAreaStatus().append("Exercicio: " + this.descricao + "\n");
+		
 		player.play(this.path);
 		Util.tempo(2);
 
@@ -175,15 +177,13 @@ public class Exercicio {
 		 * Séries
 		 */
 		for (int serie = 1; serie <= this.qtdSerie; serie++) {
+			Aula.getInstance().getTextAreaStatus().append("Serie: " + serie + "\n");
 
 			// Próximo exercício foi solicitado?
 			if (Aula.getInstance().isProximo2()) {
 				Aula.getInstance().setProximo2(false);
 				break;
 			}
-
-			System.out.println("Exercicio: " + this.descricao);
-			System.out.println("Serie: " + serie);
 
 			/*
 			 * Repetições
@@ -199,7 +199,7 @@ public class Exercicio {
 				}
 
 
-				System.out.println(i + 1);
+				Aula.getInstance().getTextAreaStatus().append(i + 1 + "\n");
 				player.play(config.getPathContagem() + (x) + ".wav");
 				Util.tempo(intervaloSegundos);
 
@@ -208,8 +208,10 @@ public class Exercicio {
 
 				x++;
 			}
+			Aula.getInstance().getTextAreaStatus().append("\n *** Espere " + config.getTempoDescansoCurto() + " segundo(s)... \n");
 			Util.tempo(config.getTempoDescansoCurto());
 		}
+		Aula.getInstance().getTextAreaStatus().append("\n *** Espere " + config.getTempoDescansoMedio() + " segundo(s)... \n");
 		Util.tempo(config.getTempoDescansoMedio());
 	}
 

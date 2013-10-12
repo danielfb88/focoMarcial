@@ -15,7 +15,6 @@ public class Util {
 	
 	public static void tempo(int segundos) {
 		try {
-			System.out.println("*** Espere " + segundos + " segundo(s)... \n");
 			Thread.sleep(segundos * 1000);
 			
 		} catch (InterruptedException e) {

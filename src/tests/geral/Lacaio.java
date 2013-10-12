@@ -32,7 +32,7 @@ public class Lacaio {
 	
 	public static void main(String[] args) {
 		Config config = new Config().getByPerfil("default");
-		config.setAulaComExercicio(false);
+		config.setAulaComExercicio(true);
 		System.out.println(config.salvar());
 		
 		
