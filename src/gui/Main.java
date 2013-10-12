@@ -16,13 +16,11 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import control.Aula;
-import ddd.ArteMarcial;
 import ddd.Faixa;
 import ddd.Movimento;
 
@@ -70,32 +68,22 @@ public class Main extends JFrame {
 	/**
 	 * Botão para próximo movimento
 	 */
-	private JButton btnProximoMovimento;
+	private JButton btnProximo1;
 
 	/**
 	 * Botão para movimento anterior
 	 */
-	private JButton btnAnteriorMovimento;
+	private JButton btnAnterior1;
 
 	/**
 	 * Botão para próxima faixa
 	 */
-	private JButton btnProximaFaixa;
+	private JButton btnProximo2;
 
 	/**
 	 * Botão para faixa anterior
 	 */
-	private JButton btnAnteriorFaixa;
-
-	/**
-	 * Botão para cancelar o exercicio corrente
-	 */
-	private JButton btnCancelarExercicio;
-
-	/**
-	 * Arte Marcial
-	 */
-	private ArteMarcial arteMarcial;
+	private JButton btnAnterior2;
 
 	/**
 	 * Thread responsável pela execução da aula
@@ -140,20 +128,142 @@ public class Main extends JFrame {
 		panelSul.setPreferredSize(new Dimension(dimension.width, 150));
 		panelSul.setBackground(Color.BLACK);
 
-		adicionarElementosAoPanelSul(panelSul);
+		panelSul.add(criarPanelControle());
 
 		return panelSul;
 	}
 
+
 	/**
-	 * Eventos para o Panel Sul
+	 * Cria o panel controlador da aula.
+	 * 
+	 * @return
 	 */
-	private void adicionarElementosAoPanelSul(JPanel panelSul) {
+	private JPanel criarPanelControle() {
+		JPanel pnlControle = new JPanel();
+
+		pnlControle.setLayout(new GridBagLayout());
+		pnlControle.setPreferredSize(new Dimension(180, 140));
+		pnlControle.setBackground(Color.WHITE);
+		
 		btnSalvar = new JButton("Salvar");
+		btnSalvar.setPreferredSize(new Dimension(20, 20));
 		btnPlayPause = new JButton("Play");
+		btnPlayPause.setPreferredSize(new Dimension(20, 20));
 
-		JPanel pnlControle = criarPanelControle();
+		btnProximo1 = new JButton(">");
+		btnProximo1.setPreferredSize(new Dimension(20, 20));
+		btnAnterior1= new JButton("<");
+		btnAnterior1.setPreferredSize(new Dimension(20, 20));
 
+		btnProximo2 = new JButton(">>");
+		btnProximo2.setPreferredSize(new Dimension(20, 20));
+		btnAnterior2 = new JButton("<<");
+		btnAnterior2.setPreferredSize(new Dimension(20, 20));
+
+//		btnCancelarExercicio = new JButton("Cancelar exercício");
+//		btnCancelarExercicio.setPreferredSize(new Dimension(55, 50));
+
+		/*
+		 * LAYOUT faixa
+		 */
+		GridBagConstraints c = new GridBagConstraints();
+
+//		c.fill = GridBagConstraints.CENTER; // natural height, maximum
+//		// width
+//		c.weightx = 0.5;
+//		c.anchor = GridBagConstraints.CENTER; // bottom of space
+//		c.gridwidth = 2; // 2 columns wide
+//		c.gridx = 0;
+//		c.gridy = 0;
+//		c.insets = new Insets(5, 5, 0, 5); // top padding
+//		// c.ipady = 0; // reset to default
+//
+//		pnlControle.add(new JLabel("Faixa"), c);
+		
+		
+		/*
+		 * Salvar - Play/Pause
+		 */
+		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
+		// width
+		c.weightx = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+		c.gridwidth = 1; // 1 columns wide
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(5, 5, 0, 5); // top padding
+
+		pnlControle.add(btnPlayPause, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
+		// width
+		c.weightx = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+		c.gridwidth = 1; // 1 columns wide
+		c.gridx = 1;
+		c.gridy = 1;
+		c.insets = new Insets(5, 5, 0, 5); // top padding
+
+		pnlControle.add(btnSalvar, c);
+		
+		
+		
+		
+
+		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
+		// width
+		c.weightx = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+		c.gridwidth = 1; // 1 columns wide
+		c.gridx = 0;
+		c.gridy = 2;
+		c.insets = new Insets(5, 5, 0, 5); // top padding
+
+		pnlControle.add(btnAnterior1, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
+		// width
+		c.weightx = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+		c.gridwidth = 1; // 1 columns wide
+		c.gridx = 1;
+		c.gridy = 2;
+		c.insets = new Insets(5, 5, 0, 5); // top padding
+
+		pnlControle.add(btnProximo1, c);
+
+		/*
+		 * LAYOUT movimento
+		 */
+
+		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
+		// width
+		c.weightx = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+		c.gridwidth = 1; // 1 columns wide
+		c.gridx = 0;
+		c.gridy = 3;
+		c.insets = new Insets(5, 5, 0, 5); // top padding
+
+		pnlControle.add(btnAnterior2, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
+		// width
+		c.weightx = 0.5;
+		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
+		c.gridwidth = 1; // 1 columns wide
+		c.gridx = 1;
+		c.gridy = 3;
+		c.insets = new Insets(5, 5, 0, 5); // top padding
+
+		pnlControle.add(btnProximo2, c);
+
+
+		/*
+		 * Eventos
+		 */
+		
 		/**
 		 * Botão Salvar
 		 */
@@ -172,173 +282,39 @@ public class Main extends JFrame {
 			}
 		});
 
-		panelSul.add(btnSalvar);
-		panelSul.add(btnPlayPause);
-		panelSul.add(pnlControle);
-	}
-
-	/**
-	 * Cria o panel controlador da aula.
-	 * 
-	 * @return
-	 */
-	private JPanel criarPanelControle() {
-		JPanel pnlControle = new JPanel();
-
-		pnlControle.setLayout(new GridBagLayout());
-		pnlControle.setPreferredSize(new Dimension(180, 140));
-		pnlControle.setBackground(Color.WHITE);
-
-		btnProximoMovimento = new JButton(">>");
-		btnProximoMovimento.setPreferredSize(new Dimension(55, 20));
-		btnAnteriorMovimento = new JButton("<<");
-		btnAnteriorMovimento.setPreferredSize(new Dimension(55, 20));
-
-		btnProximaFaixa = new JButton(">>");
-		btnProximaFaixa.setPreferredSize(new Dimension(55, 20));
-		btnAnteriorFaixa = new JButton("<<");
-		btnAnteriorFaixa.setPreferredSize(new Dimension(55, 20));
-
-		btnCancelarExercicio = new JButton("Cancelar exercício");
-		btnCancelarExercicio.setPreferredSize(new Dimension(55, 50));
-
-		/*
-		 * LAYOUT faixa
-		 */
-		GridBagConstraints c = new GridBagConstraints();
-
-		c.fill = GridBagConstraints.CENTER; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.CENTER; // bottom of space
-		c.gridwidth = 2; // 2 columns wide
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-		// c.ipady = 0; // reset to default
-
-		pnlControle.add(new JLabel("Faixa"), c);
-
-		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
-		c.gridwidth = 1; // 1 columns wide
-		c.gridx = 0;
-		c.gridy = 1;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-
-		pnlControle.add(btnAnteriorFaixa, c);
-
-		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
-		c.gridwidth = 1; // 1 columns wide
-		c.gridx = 1;
-		c.gridy = 1;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-
-		pnlControle.add(btnProximaFaixa, c);
-
-		/*
-		 * LAYOUT movimento
-		 */
-		c.fill = GridBagConstraints.CENTER; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.CENTER; // bottom of space
-		c.gridwidth = 2; // 2 columns wide
-		c.gridx = 0;
-		c.gridy = 2;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-		// c.ipady = 0; // reset to default
-
-		pnlControle.add(new JLabel("Movimento"), c);
-
-		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
-		c.gridwidth = 1; // 1 columns wide
-		c.gridx = 0;
-		c.gridy = 3;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-
-		pnlControle.add(btnAnteriorMovimento, c);
-
-		c.fill = GridBagConstraints.HORIZONTAL; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.PAGE_START; // bottom of space
-		c.gridwidth = 1; // 1 columns wide
-		c.gridx = 1;
-		c.gridy = 3;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-
-		pnlControle.add(btnProximoMovimento, c);
-
-		/*
-		 * CANCELAR EXERCICIO
-		 */
-		c.fill = GridBagConstraints.CENTER; // natural height, maximum
-		// width
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.CENTER; // bottom of space
-		c.gridwidth = 3; // 3 columns wide
-		c.gridx = 0;
-		c.gridy = 4;
-		c.insets = new Insets(5, 5, 0, 5); // top padding
-		// c.ipady = 0; // reset to default
-
-		pnlControle.add(btnCancelarExercicio, c);
-
-		/*
-		 * Eventos
-		 */
-
 		/**
 		 * Botão Proximo Movimento
 		 */
-		btnProximoMovimento.addActionListener(new ActionListener() {
+		btnProximo1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				btnProximoMovimentoActionPerformed(evt);
+				btnProximo1ActionPerformed(evt);
 			}
 		});
 
 		/**
 		 * Botão Movimento Anterior
 		 */
-		btnAnteriorMovimento.addActionListener(new ActionListener() {
+		btnAnterior1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				btnAnteriorMovimentoActionPerformed(evt);
+				btnAnterior1ActionPerformed(evt);
 			}
 		});
 
 		/**
 		 * Botão Proxima Faixa
 		 */
-		btnProximaFaixa.addActionListener(new ActionListener() {
+		btnProximo2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				btnProximaFaixaActionPerformed(evt);
+				btnProximo2ActionPerformed(evt);
 			}
 		});
 
 		/**
 		 * Botão Faixa Anterior
 		 */
-		btnAnteriorMovimento.addActionListener(new ActionListener() {
+		btnAnterior2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				btnAnteriorFaixaActionPerformed(evt);
-			}
-		});
-
-		/**
-		 * Botão Cancelar Exercício
-		 */
-		btnCancelarExercicio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				btnCancelarExercicioActionPerformed(evt);
+				btnAnterior2ActionPerformed(evt);
 			}
 		});
 
@@ -351,8 +327,7 @@ public class Main extends JFrame {
 	 * @param evt
 	 */
 	private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {
-		arteMarcial.setFaixas(panelCentral.getFaixas());
-		List<Faixa> faixas = arteMarcial.getFaixas();
+		List<Faixa> faixas = panelCentral.getFaixas();
 
 		for (Faixa faixa : faixas) {
 			List<Movimento> movimentos = faixa.getMovimentos();
@@ -388,22 +363,22 @@ public class Main extends JFrame {
 		}
 	}
 
-	/**
-	 * Action Performed do botão Cancelar Exercicio
-	 * 
-	 * @param evt
-	 */
-	private void btnCancelarExercicioActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.setCancelarExercicio(true);
-	}
+//	/**
+//	 * Action Performed do botão Cancelar Exercicio
+//	 * 
+//	 * @param evt
+//	 */
+//	private void btnCancelarExercicioActionPerformed(java.awt.event.ActionEvent evt) {
+//		aula.setCancelarExercicio(true);
+//	}
 
 	/**
 	 * Action Performed do botão Próximo movimento
 	 * 
 	 * @param evt
 	 */
-	private void btnProximoMovimentoActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.setProximoMovimento(true);
+	private void btnProximo1ActionPerformed(java.awt.event.ActionEvent evt) {
+		aula.setProximo1(true);
 	}
 
 	/**
@@ -411,8 +386,8 @@ public class Main extends JFrame {
 	 * 
 	 * @param evt
 	 */
-	private void btnAnteriorMovimentoActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.setAnteriorMovimento(true);
+	private void btnAnterior1ActionPerformed(java.awt.event.ActionEvent evt) {
+		aula.setAnterior1(true);
 	}
 
 	/**
@@ -420,8 +395,8 @@ public class Main extends JFrame {
 	 * 
 	 * @param evt
 	 */
-	private void btnProximaFaixaActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.setProximaFaixa(true);
+	private void btnProximo2ActionPerformed(java.awt.event.ActionEvent evt) {
+		aula.setProximo2(true);
 	}
 
 	/**
@@ -429,8 +404,8 @@ public class Main extends JFrame {
 	 * 
 	 * @param evt
 	 */
-	private void btnAnteriorFaixaActionPerformed(java.awt.event.ActionEvent evt) {
-		aula.setAnteriorFaixa(true);
+	private void btnAnterior2ActionPerformed(java.awt.event.ActionEvent evt) {
+		aula.setAnterior2(true);
 	}
 
 	public static void main(String[] args) {

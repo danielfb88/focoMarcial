@@ -18,11 +18,11 @@ import ddd.Movimento;
  * @since 08/08/2013
  * @version 1.2
  * 
- * 11/10/2013 - Transformado em um singleton
+ *          11/10/2013 - Transformado em um singleton
  * 
  */
 public class Aula extends Thread {
-	
+
 	private static Aula instance;
 
 	/**
@@ -48,13 +48,11 @@ public class Aula extends Thread {
 	/**
 	 * TODO: INSERIR LÓGICA PARA PROXIMO E ANTERIOR DE FAIXA E MOVIMENTO.
 	 */
-	private boolean proximoMovimento;
-	private boolean anteriorMovimento;
+	private boolean proximo1;
+	private boolean proximo2;
 
-	private boolean proximaFaixa;
-	private boolean anteriorFaixa;
-
-	private boolean cancelarExercicio;
+	private boolean anterior1;
+	private boolean anterior2;
 
 	private Config config;
 
@@ -66,11 +64,11 @@ public class Aula extends Thread {
 		faixas = new Faixa().getTodasAsFaixas();
 		exercicios = new Exercicio().getTodosOsExercicios();
 	}
-	
+
 	public static Aula getInstance() {
-		if(instance == null)
+		if (instance == null)
 			instance = new Aula();
-		
+
 		return instance;
 	}
 
@@ -82,16 +80,32 @@ public class Aula extends Thread {
 	/*
 	 * 
 	 * TODO: Gravar voz dos exerciícios.
-	 * 
 	 */
 	public void iniciarAula() {
-		if (config.isAulaComExercicio())
-			this.executarExercicios();
+		
+		/*
+		 * Exercícios
+		 */
+		if (config.isAulaComExercicio()) {
+			for (int i = 0; i < exercicios.size(); i++) {
+				exercicios.get(i).setConfig(config);
+
+				try {
+					exercicios.get(i).iniciar();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+		}
 
 		/*
-		 * Loop da faixa
+		 * Faixas
+		 * 
+		 * Inicia a partir do tabbedePane selecionado.
 		 */
-		for (int i = 0; i < faixas.size(); i++) {
+		for (int i = tabbedPane.getSelectedIndex(); i < faixas.size(); i++) {
 
 			// Mudar pane a cada nova faixa
 			tabbedPane.setSelectedIndex(i);
@@ -106,6 +120,13 @@ public class Aula extends Thread {
 			 * Loop de Movimento
 			 */
 			for (int j = 0; j < movimentos.size(); j++) {
+				
+				// Próxima faixa solicitada?
+				if (Aula.getInstance().isProximo2()) {
+					Aula.getInstance().setProximo2(false);
+					break;
+				}
+				
 				movimentos.get(j).setConfig(config);
 
 				try {
@@ -124,28 +145,6 @@ public class Aula extends Thread {
 			System.out.println("*** Fim do Descanso ***");
 		}
 
-	}
-
-	public void executarExercicios() {
-		for (int i = 0; i < exercicios.size(); i++) {
-			exercicios.get(i).setConfig(config);
-
-			for (int serie = 1; serie <= exercicios.get(i).getQtdSerie(); serie++) {
-				System.out.println("Exercicio: " + exercicios.get(i).getDescricao());
-				System.out.println("Serie: " + serie);
-
-				try {
-					exercicios.get(i).iniciar();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				Util.tempo(config.getTempoDescansoCurto());
-			}
-			Util.tempo(config.getTempoDescansoLongo());
-
-		}
 	}
 
 	private Config getConfig() {
@@ -191,44 +190,38 @@ public class Aula extends Thread {
 
 	}
 
-	public boolean isProximoMovimento() {
-		return proximoMovimento;
+	public void setProximo1(boolean flag) {
+		this.proximo1 = flag;
 	}
 
-	public void setProximoMovimento(boolean proximoMovimento) {
-		this.proximoMovimento = proximoMovimento;
+	public void setProximo2(boolean flag) {
+		this.proximo1 = flag;		
+		this.proximo2 = flag;
 	}
 
-	public boolean isAnteriorMovimento() {
-		return anteriorMovimento;
+	public void setAnterior1(boolean flag) {
+		this.anterior1 = flag;
 	}
 
-	public void setAnteriorMovimento(boolean anteriorMovimento) {
-		this.anteriorMovimento = anteriorMovimento;
+	public void setAnterior2(boolean flag) {
+		this.anterior1 = flag;
+		this.anterior2 = flag;
 	}
 
-	public boolean isProximaFaixa() {
-		return proximaFaixa;
+	public boolean isProximo1() {
+		return proximo1;
 	}
 
-	public void setProximaFaixa(boolean proximaFaixa) {
-		this.proximaFaixa = proximaFaixa;
+	public boolean isProximo2() {
+		return proximo2;
 	}
 
-	public boolean isAnteriorFaixa() {
-		return anteriorFaixa;
+	public boolean isAnterior1() {
+		return anterior1;
 	}
 
-	public void setAnteriorFaixa(boolean anteriorFaixa) {
-		this.anteriorFaixa = anteriorFaixa;
-	}
-
-	public boolean isCancelarExercicio() {
-		return cancelarExercicio;
-	}
-
-	public void setCancelarExercicio(boolean cancelarExercicio) {
-		this.cancelarExercicio = cancelarExercicio;
+	public boolean isAnterior2() {
+		return anterior2;
 	}
 
 }

@@ -30,7 +30,7 @@ public class Exercicio {
 	 * Número de repetições para o exercicio
 	 */
 	private int qtdRepeticao;
-	
+
 	/**
 	 * Número de séries
 	 */
@@ -111,7 +111,7 @@ public class Exercicio {
 	public void setQtdRepeticao(int qtdRepeticao) {
 		this.qtdRepeticao = qtdRepeticao;
 	}
-	
+
 	public int getQtdSerie() {
 		return qtdSerie;
 	}
@@ -171,18 +171,44 @@ public class Exercicio {
 
 		int x = 1;
 
-		for (int i = 0; i < this.qtdRepeticao; i++) {
-			Aula.getInstance().verificarPausa();
+		/*
+		 * Séries
+		 */
+		for (int serie = 1; serie <= this.qtdSerie; serie++) {
+			// Próximo exercício foi solicitado?
+			if (Aula.getInstance().isProximo2()) {
+				Aula.getInstance().setProximo2(false);
+				break;
+			}
 
-			System.out.println(i + 1);
-			player.play(config.getPathContagem() + (x) + ".wav");
-			Util.tempo(intervaloSegundos);
+			System.out.println("Exercicio: " + this.descricao);
+			System.out.println("Serie: " + serie);
 
-			if (x == 10)
-				x = 0;
+			/*
+			 * Repetições
+			 */
+			for (int i = 0; i < this.qtdRepeticao; i++) {
+				// Próxima série foi solicitada?
+				if (Aula.getInstance().isProximo1()) {
+					Aula.getInstance().setProximo1(false);
+					break;
+				}
+				
 
-			x++;
+				Aula.getInstance().verificarPausa();
+
+				System.out.println(i + 1);
+				player.play(config.getPathContagem() + (x) + ".wav");
+				Util.tempo(intervaloSegundos);
+
+				if (x == 10)
+					x = 0;
+
+				x++;
+			}
+			Util.tempo(config.getTempoDescansoCurto());
 		}
+		Util.tempo(config.getTempoDescansoLongo());
 	}
 
 	public List<Exercicio> getTodosOsExercicios() {

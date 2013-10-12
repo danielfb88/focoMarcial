@@ -215,10 +215,17 @@ public class Movimento {
 		Util.tempo(3);
 
 		for (int i = 0; i < this.qtdRepeticao; i++) {
+			
+			// Próximo movimento foi solicitado?
+			if(Aula.getInstance().isProximo1()) {
+				Aula.getInstance().setProximo1(false);
+				break;
+			}
+			
 			Aula.getInstance().verificarPausa();
-
+			
 			// Som aleatório
-			player.play(comandosVoz[(this.random.nextInt(comandosVoz.length) + 1)]);
+			player.play(comandosVoz[(this.random.nextInt(comandosVoz.length))]);
 
 			Util.tempo(intervaloSegundos);
 
